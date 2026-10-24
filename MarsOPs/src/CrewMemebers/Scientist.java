@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marsops;
+package CrewMemebers;
 
 /**
  *
  * @author HP
  */
-public class Engineer extends CrewMember{
+public class Scientist extends CrewMember{
 
-    public Engineer(String name, String idNo, String healthStatus, String currentLocation, String[] skills, int fatigueLevel, boolean isavailable) {
+    public Scientist(String name, String idNo, String healthStatus, String currentLocation, String[] skills, int fatigueLevel, boolean isavailable) {
         super(name, idNo, healthStatus, currentLocation, skills, fatigueLevel, isavailable);
     }
 
@@ -19,9 +19,9 @@ public class Engineer extends CrewMember{
         System.out.println(getName()+" is performing their duty.");
     }
     
-    public void repair()
+    public void research()
     {
-        System.out.println(getName()+" is repairing.");
+        System.out.println(getName()+ " is researching.");
     }
     
     
