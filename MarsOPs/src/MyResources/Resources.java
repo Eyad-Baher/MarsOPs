@@ -3,20 +3,20 @@ package MyResources;
 
 
 public class Resources {
-  protected double oxygen;
-  protected double water;
+  protected int oxygen;
+  protected int water;
   protected int food;
-  protected double fuel;
-  protected int batterPower;
+  protected int fuel;
+  protected int batteryPower;
   protected int medicalSupplies;
   protected int spareParts;
 
-    public Resources(double oxygen, double water, int food, double fuel, int batterPower, int medicalSupplies, int spareParts) {
+    public Resources(int oxygen, int water, int food, int fuel, int batteryPower, int medicalSupplies, int spareParts) {
         this.oxygen = oxygen;
         this.water = water;
         this.food = food;
         this.fuel = fuel;
-        this.batterPower = batterPower;
+        this.batteryPower = batteryPower;
         this.medicalSupplies = medicalSupplies;
         this.spareParts = spareParts;
     }
@@ -25,16 +25,22 @@ public class Resources {
         return oxygen;
     }
 
-    public void setOxygen(double oxygen) {
+    public void setOxygen(int oxygen) {
+        if (oxygen>0)
         this.oxygen = oxygen;
+        else
+            this.oxygen=0;
     }
 
     public double getWater() {
         return water;
     }
 
-    public void setWater(double water) {
+    public void setWater(int water) {
+        if (water>0)
         this.water = water;
+        else
+            this.water=0;
     }
 
     public int getFood() {
@@ -42,23 +48,32 @@ public class Resources {
     }
 
     public void setFood(int food) {
+       if (food>0)
         this.food = food;
+       else
+           this.food=0;
     }
 
     public double getFuel() {
         return fuel;
     }
 
-    public void setFuel(double fuel) {
+    public void setFuel(int fuel) {
+        if(fuel>0)
         this.fuel = fuel;
+        else 
+            this.fuel=0;
     }
 
-    public int getBatterPower() {
-        return batterPower;
+    public int getBatteryPower() {
+        return batteryPower;
     }
 
-    public void setBatterPower(int batterPower) {
-        this.batterPower = batterPower;
+    public void setBatteryPower(int batteryPower) {
+        if (batteryPower>0)
+        this.batteryPower = batteryPower;
+        else
+            this.batteryPower=0;
     }
 
     public int getMedicalSupplies() {
@@ -66,7 +81,10 @@ public class Resources {
     }
 
     public void setMedicalSupplies(int medicalSupplies) {
+        if (medicalSupplies>0)
         this.medicalSupplies = medicalSupplies;
+        else
+            this.medicalSupplies=0;
     }
 
     public int getSpareParts() {
@@ -74,7 +92,10 @@ public class Resources {
     }
 
     public void setSpareParts(int spareParts) {
+        if (spareParts>0)
         this.spareParts = spareParts;
+        else
+            this.spareParts=0;
     }
   
   

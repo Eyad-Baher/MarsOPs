@@ -4,6 +4,8 @@
  */
 package Facility;
 
+import MyResources.Resources;
+
 
 /**
  *
@@ -13,7 +15,8 @@ public abstract class ColonyFacility {
     private String location;
     private int capacity;
     private boolean operationalStatus;
-
+    private Resources resources;
+    
     public void setLocation(String location) {
         this.location = location;
     }
@@ -36,6 +39,14 @@ public abstract class ColonyFacility {
 
     public boolean isOperationalStatus() {
         return operationalStatus;
+    }
+
+    public Resources getResources() {
+        return resources;
+    }
+
+    public void setResources(Resources resources) {
+        this.resources = resources;
     }
     
     
