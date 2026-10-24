@@ -10,9 +10,10 @@ package CrewMemebers;
  */
 public class Scientist extends CrewMember{
 
-    public Scientist(String name, String idNo, String healthStatus, String currentLocation, String[] skills, int fatigueLevel, boolean isavailable) {
-        super(name, idNo, healthStatus, currentLocation, skills, fatigueLevel, isavailable);
+    public Scientist(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
     }
+
 
     @Override
     public void performDuty() {
