@@ -9,6 +9,7 @@ public class Equipment {
     private String name;
     private int TotalAmount;
     private boolean broken;
+    private int numBroken;
 
     public Equipment(String name, int TotalAmount, boolean broken) {
         this.name = name;
@@ -43,9 +44,14 @@ public class Equipment {
         this.broken = broken;
     }
     
-    public void repair()
+    public void repair(int num)
     {
-        broken = false;
+        numBroken-=num;
+        if(numBroken==0)
+        {
+            broken = false;
+        }else
+            broken = true;
     }
     
     public void damage()
