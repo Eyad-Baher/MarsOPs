@@ -9,6 +9,8 @@ package marsops;
  * @author maria
  */
 public class testmariam {
-    
+    public static void main(String[] args) {
+        System.out.println("hi");
+    }
     
 }
