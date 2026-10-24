@@ -50,7 +50,6 @@ public abstract class ColonyMemebers {
     public abstract void advanceTime();
     public abstract void getStatusSummary();
     public abstract void performDuty();
-    
- 
+
     
 }
