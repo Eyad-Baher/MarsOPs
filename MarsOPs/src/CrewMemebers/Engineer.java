@@ -4,6 +4,12 @@
  */
 package CrewMemebers;
 
+import MyResources.Equipment;
+
+import Emergency.Emergency;
+import Missions.Missions;
+import MyResources.Equipment;
+
 /**
  *
  * @author HP
@@ -17,14 +23,25 @@ public class Engineer extends CrewMember{
 
     @Override
     public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
+        
     }
     
-    public void repair()
+    public void repair(Equipment equipment,int num)
     {
-        System.out.println(getName()+" is repairing.");
+        equipment.repair(num);
     }
     
+    @Override
+    public boolean canPerformMission(Missions mission)
+    {
+        return false;
+    }
+    
+    @Override
+    public boolean canHandleEmergency(Emergency emergency)
+    {
+        return false;
+    }
     
     
     
