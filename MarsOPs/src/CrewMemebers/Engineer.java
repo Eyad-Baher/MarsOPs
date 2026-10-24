@@ -4,7 +4,6 @@
  */
 package CrewMemebers;
 
-import MyResources.Equipment;
 
 import Emergency.Emergency;
 import Missions.Missions;
