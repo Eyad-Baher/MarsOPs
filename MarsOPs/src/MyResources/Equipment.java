@@ -46,7 +46,7 @@ public class Equipment {
     
     public void repair(int num)
     {
-        numBroken-=num;
+        numBroken -= num;
         if(numBroken==0)
         {
             broken = false;
