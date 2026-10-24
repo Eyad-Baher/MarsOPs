@@ -4,6 +4,9 @@
  */
 package CrewMemebers;
 
+import Emergency.Emergency;
+import Missions.Missions;
+
 /**
  *
  * @author HP
@@ -26,6 +29,16 @@ public class MedicalOfficer extends CrewMember{
         System.out.println(getName()+ " is healing.");
     }
     
+        @Override
+    public boolean canPerformMission(Missions mission)
+    {
+        return false;
+    }
     
+    @Override
+    public boolean canHandleEmergency(Emergency emergency)
+    {
+        return false;
+    }
     
 }
