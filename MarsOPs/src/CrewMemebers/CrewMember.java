@@ -8,7 +8,7 @@ package CrewMemebers;
  *
  * @author HP
  */
-public abstract class CrewMember {
+public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
 
     private String name;
     private String idNo;
