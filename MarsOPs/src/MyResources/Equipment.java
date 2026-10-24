@@ -54,8 +54,9 @@ public class Equipment {
             broken = true;
     }
     
-    public void damage()
+    public void damage(int num)
     {
+        numBroken+=num;
         broken = true;
     }
     
