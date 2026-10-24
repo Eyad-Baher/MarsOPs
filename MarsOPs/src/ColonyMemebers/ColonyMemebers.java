@@ -49,6 +49,7 @@ public abstract class ColonyMemebers {
     public abstract boolean canHandleEmergency(Emergency emergency);
     public abstract void advanceTime();
     public abstract String getStatusSummary();
+    public abstract void performDuty();
     
  
     
