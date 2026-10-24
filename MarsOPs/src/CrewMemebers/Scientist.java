@@ -4,6 +4,9 @@
  */
 package CrewMemebers;
 
+import Emergency.Emergency;
+import Missions.Missions;
+
 /**
  *
  * @author HP
@@ -26,6 +29,16 @@ public class Scientist extends CrewMember{
     }
     
     
+        @Override
+    public boolean canPerformMission(Missions mission)
+    {
+        return false;
+    }
     
+    @Override
+    public boolean canHandleEmergency(Emergency emergency)
+    {
+        return false;
+    }
     
 }
