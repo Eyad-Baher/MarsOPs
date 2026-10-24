@@ -11,6 +11,7 @@ package marsops;
 public class testmariam {
     public static void main(String[] args) {
         System.out.println("hi");
+        System.out.println("hello");
     }
     
 }
