@@ -1,5 +1,7 @@
 package ColonyMemebers;
 
+import Missions.Missions;
+import Emergency.Emergency;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -42,5 +44,12 @@ public abstract class ColonyMemebers {
         this.isAvaialble = isAvaialble;
     }
     
+    public abstract boolean isUseable();
+    public abstract boolean canPerformMission(Missions mission);
+    public abstract boolean canHandleEmergency(Emergency emergency);
+    public abstract void advanceTime();
+    public abstract String getStatusSummary();
+    
+ 
     
 }
