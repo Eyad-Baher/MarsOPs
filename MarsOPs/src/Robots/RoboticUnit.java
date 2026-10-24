@@ -1,18 +1,18 @@
 
+
 package Robots;
 
+import ColonyMemebers.ColonyMemebers;
 
-public class RoboticUnit {
+
+public abstract class RoboticUnit extends ColonyMemebers{
     private double batteryLevel;
-    private String healthStatus;
-    private String currentLocation;
-    private boolean availability;
+    private boolean healthStatus;
 
-    public RoboticUnit(double batteryLevel, String healthStatus, String currentLocation, boolean availability) {
+    public RoboticUnit(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+        super(IdNo, currentLocation, isAvaialble);
         this.batteryLevel = batteryLevel;
         this.healthStatus = healthStatus;
-        this.currentLocation = currentLocation;
-        this.availability = availability;
     }
 
     
@@ -20,34 +20,50 @@ public class RoboticUnit {
     public double getBatteryLevel() {
         return batteryLevel;
     }
-
+    public boolean getHealthStatus() {
+        return healthStatus;
+    }
+    
+    //setters
+    public void setHealthStatus(boolean healthStatus) {
+        this.healthStatus = healthStatus;
+    }
+    
     public void setBatteryLevel(double batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
-
-    public String getHealthStatus() {
-        return healthStatus;
-    }
-
     
-    //setters
-    public void setHealthStatus(String healthStatus) {
-        this.healthStatus = healthStatus;
+    
+    
+    @Override
+    public boolean isUseable()
+    {
+        if(batteryLevel>0 && healthStatus)
+            return true;
+        return false;
     }
-
-    public String getCurrentLocation() {
-        return currentLocation;
+     
+    @Override
+    public void advanceTime()
+    {
+        batteryLevel-=batteryLevel;
     }
-
-    public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
+    
+    @Override
+    public void getStatusSummary()
+    {
+        System.out.println("ID: "+ getIdNo());
+        System.out.println("Current Location: "+getCurrentLocation());
+        if (isIsAvaialble())
+            System.out.println("Availability: available.");
+        else
+            System.out.println("Availability: unavailable");
+        System.out.println("Battery Level: "+batteryLevel);
+        if(healthStatus)
+            System.out.println("Health Status: Not damaged");
+        else
+            System.out.println("Health Status: Damaged");
     }
-
-    public boolean isAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
+    
 }
+
