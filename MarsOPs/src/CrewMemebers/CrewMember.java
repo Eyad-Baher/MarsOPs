@@ -56,9 +56,38 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
     
     
+    @Override
+    public boolean isUseable()
+    {
+        if(fatigueLevel>0 && healthStatus != "DEAD")
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+            
+    }
+    
+    @Override
+    public void advanceTime()
+    {
+        fatigueLevel+=1;
+    }
+    
+    @Override
+    public void getStatusSummary()
+    {
+        System.out.println("Name: "+ name);
+        System.out.println("Id: "+super.getIdNo());
+        System.out.println("Health status: "+healthStatus);
+        System.out.println("Availablity: "+super.isIsAvaialble());
+        System.out.println("Fatigue level: "+fatigueLevel);
+    }
+    
 
-
-    public abstract void performDuty();
+    
+    
     
     
     
