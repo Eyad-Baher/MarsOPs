@@ -43,5 +43,15 @@ public class Equipment {
         this.broken = broken;
     }
     
+    public void repair()
+    {
+        broken = false;
+    }
+    
+    public void damage()
+    {
+        broken = true;
+    }
+    
     
 }
