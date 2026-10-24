@@ -10,7 +10,7 @@ package ColonyMemebers;
  * @author HP
  */
 public abstract class ColonyMemebers {
-    private final String IdNo;
+    private  String IdNo;
     private String currentLocation;
     private boolean isAvaialble;
 
