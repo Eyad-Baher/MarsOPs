@@ -21,7 +21,7 @@ public class Resources {
         this.spareParts = spareParts;
     }
 
-    public double getOxygen() {
+    public int getOxygen() {
         return oxygen;
     }
 
@@ -32,7 +32,7 @@ public class Resources {
             this.oxygen=0;
     }
 
-    public double getWater() {
+    public int getWater() {
         return water;
     }
 
@@ -54,7 +54,7 @@ public class Resources {
            this.food=0;
     }
 
-    public double getFuel() {
+    public int getFuel() {
         return fuel;
     }
 
