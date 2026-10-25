@@ -4,6 +4,8 @@
  */
 package Facility;
 
+import MyResources.Resources;
+
 
 /**
  *
@@ -11,8 +13,11 @@ package Facility;
  */
 public class PowerStation extends ColonyFacility {
 
-    public PowerStation() {
+    public PowerStation(String location, int capacity, boolean operationalStatus, Resources resources) {
+        super(location, capacity, operationalStatus, resources);
     }
+
+    
     
     
 }

@@ -4,10 +4,17 @@
  */
 package Emergency;
 
+import ColonyMemebers.ColonyMemebers;
+
 /**
  *
  * @author abdel
  */
 public class Medical extends Emergency{
+
+    public Medical(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
+        super(emergencyLocation, resolvedState, responders);
+    }
+    
     
 }

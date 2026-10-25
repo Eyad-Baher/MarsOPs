@@ -16,6 +16,15 @@ public abstract class ColonyFacility {
     private int capacity;
     private boolean operationalStatus;
     private Resources resources;
+
+    public ColonyFacility(String location, int capacity, boolean operationalStatus, Resources resources) {
+        this.location = location;
+        this.capacity = capacity;
+        this.operationalStatus = operationalStatus;
+        this.resources = resources;
+    }
+    
+    
     
     public void setLocation(String location) {
         this.location = location;

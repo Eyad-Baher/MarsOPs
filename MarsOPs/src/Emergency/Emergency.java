@@ -10,6 +10,13 @@ public abstract class Emergency {
     private boolean resolvedState;
     private ColonyMemebers responders;
 
+    public Emergency(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
+        this.emergencyLocation = emergencyLocation;
+        this.resolvedState = resolvedState;
+        this.responders = responders;
+    }
+    
+    
     public void setEmergencyLocation(String emergencyLocation) {
         this.emergencyLocation = emergencyLocation;
     }
