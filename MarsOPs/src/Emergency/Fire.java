@@ -11,9 +11,19 @@ import ColonyMemebers.ColonyMemebers;
  * @author abdel
  */
 public class Fire extends Emergency {
-    
-    public Fire(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
-        super(emergencyLocation, resolvedState, responders);
+    private boolean availability;
+
+    public Fire(ColonyMemebers responders) {
+        super("Laboratory", false, responders);
+        this.availability = false;
+        
     }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
+    
+    
+    
     
 }

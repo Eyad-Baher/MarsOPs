@@ -15,15 +15,18 @@ import java.util.ArrayList;
 public class OxygenLeak extends Emergency {
     private Habitat affectedHabitat;
     private int oxygenLoss;
+    private boolean detected;
+    private boolean penaltyApplied;
     
     public OxygenLeak(Habitat affectedHabitat, int oxygenLoss, ColonyMemebers responders) {
         super("Habitat: " + affectedHabitat.getLocation(), false, responders);
         this.affectedHabitat = affectedHabitat;
         this.oxygenLoss = oxygenLoss;
-        detectOxygenLoss();
+        this.detected=false;
     }
     
     private void detectOxygenLoss(){
+        detected = true;
         affectedHabitat.reduceOxygen(this.oxygenLoss);
     }
 
@@ -36,13 +39,13 @@ public class OxygenLeak extends Emergency {
     }
 
     public int totalOxygenLoss(){
-        if(super.isResolvedState())
-            return oxygenLoss;
-        else 
+         if(!isResolvedState() && !penaltyApplied)
         {
             detectOxygenLoss();
-            return 2*oxygenLoss;
+            penaltyApplied=true;
+            oxygenLoss=2*oxygenLoss;
         }
+         return oxygenLoss;
     }
 
     

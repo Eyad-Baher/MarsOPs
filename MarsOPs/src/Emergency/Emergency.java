@@ -9,6 +9,7 @@ public abstract class Emergency {
     private String emergencyLocation;
     private boolean resolvedState;
     private ColonyMemebers responders;
+    private String failureReason;
 
     public Emergency(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
         this.emergencyLocation = emergencyLocation;
