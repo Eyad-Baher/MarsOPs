@@ -7,7 +7,7 @@ import Missions.Missions;
 
 public class ExplorationRover extends RoboticUnit{
     
-    public ExplorationRover(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public ExplorationRover(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble ,batteryLevel, healthStatus);
     }
     

@@ -12,7 +12,7 @@ import MyResources.Equipment;
 
 public class RepairRobot extends RoboticUnit {
     
-    public RepairRobot(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public RepairRobot(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble ,batteryLevel, healthStatus);
     }
     

@@ -9,9 +9,10 @@ import MyResources.Equipment;
 import MyResources.Resources;
 import java.util.ArrayList;
 import Facility.ColonyFacility;
-
+import Robots.RepairRobot;
 import Robots.RoboticUnit;
 import CrewMemebers.CrewMember;
+import CrewMemebers.Engineer;
 
 /**
  *
@@ -80,16 +81,45 @@ public class RepairMission extends Missions {
 
     }
     
+    @Override
     public void advanceTime()
     {
+        boolean object_break = true;
+        
+        if (this.numOfBroken == 0)
+        {
+         object_break = false;
+        }
         for (ColonyMemebers missionAgent : this.agents) {
             
-            
-            if(missionAgent instanceof CrewMember)
+            if(object_break == true)
             {
-                
+               if(missionAgent instanceof CrewMember)
+               {
+                   ((Engineer)missionAgent).repair(targetEquipment,numOfBroken);
+                   ((CrewMember) missionAgent).incFatigue((int) (numOfBroken*1.5));
+               }else
+               {
+                   ((RepairRobot)missionAgent).repair(targetEquipment,numOfBroken);
+                   ((RoboticUnit)missionAgent).drainBattery((int) (numOfBroken*1.5));
+                   
+               }
+            }else{
+                if(missionAgent instanceof CrewMember)
+               {
+                   ((Engineer)missionAgent).repair(targetFacility);
+                   ((CrewMember) missionAgent).incFatigue((int) (numOfBroken*1.5));
+
+               }else
+               {
+                   ((RepairRobot)missionAgent).repair(targetFacility);
+                   ((RoboticUnit)missionAgent).drainBattery((int) (numOfBroken*1.5));
+
+               }
+
             }
-            
+                
+                        
         }
         
     }
