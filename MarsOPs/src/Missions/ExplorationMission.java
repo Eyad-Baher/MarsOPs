@@ -2,6 +2,7 @@ package Missions;
 
 import CrewMemebers.CrewMember;
 import ColonyMemebers.ColonyMemebers;
+import MyResources.Equipment;
 import MyResources.Resources;
 import java.util.ArrayList;
 import jdk.jfr.FlightRecorder;
@@ -16,8 +17,8 @@ public class ExplorationMission extends Missions {
     private String targetLocation;
     private String requiredSkill;
 
-    public ExplorationMission(String missionID, int duration, Resources missionResources, String targetLocation, String requiredSkill) {
-        super(missionID, duration, missionResources);
+    public ExplorationMission(String targetLocation, String requiredSkill, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
+        super(missionID, duration, missionResources, missionEquipment);
         this.targetLocation = targetLocation;
         this.requiredSkill = requiredSkill;
     }
@@ -41,21 +42,24 @@ public class ExplorationMission extends Missions {
 
         for (ColonyMemebers candidate : candidates) {
             if (candidate.isIsAvaialble() && candidate.isUseable() && candidate.canPerformMission(this)) {
-                if (candidate instanceof CrewMember && numAgents!=1) {
+                if (candidate instanceof CrewMember && numAgents != 1) {
                     numAgents++;
                     readyAgents.add(candidate);
                 }
             }
-            if (candidate instanceof RoboticUnit && numAgents!=1) {
+            if (candidate instanceof RoboticUnit && numAgents != 1) {
                 numRobots++;
                 readyAgents.add(candidate);
             }
-        if (numAgents>0 && numRobots>0){
-            assignAgents(readyAgents);
-          return true;
+            if (numAgents > 0 && numRobots > 0) {
+                assignAgents(readyAgents);
+                return true;
+            }
         }
-        }
-return false;
+        return false;
     }
 
+    
+    
+    
 }
