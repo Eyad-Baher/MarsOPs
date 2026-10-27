@@ -22,7 +22,7 @@ public class RepairMission extends Missions {
 
     private Equipment targetEquipment;
     private int numOfBroken;
-    private ColonyFacility targetFacility;
+    private ColonyFacility targetFacility = null;
 
     public RepairMission(Equipment targetEquipment, int numOfBroken, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
@@ -86,7 +86,7 @@ public class RepairMission extends Missions {
     {
         boolean object_break = true;
         
-        if (this.numOfBroken == 0)
+        if (this.targetEquipment == null)
         {
          object_break = false;
         }
@@ -108,12 +108,12 @@ public class RepairMission extends Missions {
                 if(missionAgent instanceof CrewMember)
                {
                    ((Engineer)missionAgent).repair(targetFacility);
-                   ((CrewMember) missionAgent).incFatigue((int) (numOfBroken*1.5));
+                   ((CrewMember) missionAgent).incFatigue((int) (20));
 
                }else
                {
                    ((RepairRobot)missionAgent).repair(targetFacility);
-                   ((RoboticUnit)missionAgent).drainBattery((int) (numOfBroken*1.5));
+                   ((RoboticUnit)missionAgent).drainBattery((int) (20));
 
                }
 
