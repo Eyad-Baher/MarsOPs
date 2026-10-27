@@ -10,6 +10,7 @@ import MyResources.Resources;
 import Robots.ExplorationRover;
 import Robots.RepairRobot;
 import Robots.RoboticUnit;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,8 +22,8 @@ public class RoverBreakdown extends Emergency {
     Resources repairCosts;
     
     //constructor
-    public RoverBreakdown(String emergencyLocation, ColonyMemebers[] responders, ExplorationRover brokenRover, Resources repairCosts) {
-        super(emergencyLocation, responders);
+    public RoverBreakdown(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders, ExplorationRover brokenRover, Resources repairCosts) {
+        super(emergencyLocation, resolvedState, responders);
         this.brokenRover=brokenRover;
         this.repairCosts=repairCosts;
     }
@@ -30,21 +31,21 @@ public class RoverBreakdown extends Emergency {
     public void TriggerRoverBreakdown()
     {
         brokenRover.setHealthStatus(false);
-        for (int i=0;i<responders.length ; i++)
+        for (int i=0;i<getResponders().size() ; i++)
         {
-            if(!responders[i].canHandleEmergency(this))
+            if(!getResponders().get(i).canHandleEmergency(this))
             {
                 System.out.println("The responder is not suitable for handling this type of emergency.");
                 System.out.println("---FAILED TO RESOLVE ROVER BREAKDOWN EMERGENCY---");
                 return;
             }
-            else if(!responders[i].isUseable())
+            else if(!getResponders().get(i).isUseable())
             {
-                if(responders[i] instanceof RepairRobot)
+                if(getResponders().get(i) instanceof RepairRobot)
                 {
                     System.out.println("The rapair robot is out of battery.");
                 }
-                if(responders[i] instanceof Engineer)
+                if(getResponders().get(i) instanceof Engineer)
                 {
                     System.out.println("The engineer is dead..."); //SOUNDS TOO HARSH
                 }
@@ -52,7 +53,7 @@ public class RoverBreakdown extends Emergency {
                 return;
                     
             }
-            else if(!responders[i].isIsAvaialble())
+            else if(!getResponders().get(i).isIsAvaialble())
             {
                 System.out.println("The responder is not available(It is currently part of an active mission)");
                 System.out.println("---FAILED TO RESOLVE ROVER BREAKDOWN EMERGENCY---");
@@ -67,6 +68,21 @@ public class RoverBreakdown extends Emergency {
         
     }
     
+    private void damageRover(ExplorationRover brokenRover)
+    {
+        brokenRover.setHealthStatus(false);
+    }
+    
+    private void dispatchEngineer(Engineer e)
+    {
+        e.setCurrentLocation(this.getEmergencyLocation());
+    }
+    private void dispatchRepairRobot(RepairRobot r)
+    {
+        r.setCurrentLocation(this.getEmergencyLocation());
+    }
+    
+    
     //loop on responders to find suitable engineer & robot
    /* public void ResolveEmergency()
     {
@@ -80,5 +96,40 @@ public class RoverBreakdown extends Emergency {
         }
     }*/
     
+    @Override
+    public ColonyMemebers[] findResponders()
+    {
+        int numResponders=0;
+        boolean foundEngineer=false; 
+        boolean foundRepairRobot=false;
+        ColonyMemebers[] availableResponders=new ColonyMemebers[2];
+        for(int i=0;i<getResponders().size();i++)
+        {
+            if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
+            {
+                if(getResponders().get(i) instanceof Engineer && foundEngineer==false)
+                {
+                    foundEngineer=true;
+                    availableResponders[numResponders]=getResponders().get(i);
+                    numResponders++;
+                }
+                if(getResponders().get(i) instanceof RepairRobot && foundRepairRobot==false)
+                {
+                    foundRepairRobot=true;
+                    availableResponders[numResponders]=getResponders().get(i);
+                    numResponders++;
+                }
+                
+            }
+            if(foundEngineer&&foundRepairRobot)
+            {
+                return availableResponders;
+            }
+            
+            
+        }
+        setFailureReason("There are no suitable responders");
+        return null;
+    }
     
 }
