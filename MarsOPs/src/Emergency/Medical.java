@@ -5,6 +5,7 @@
 package Emergency;
 
 import ColonyMemebers.ColonyMemebers;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,9 +13,11 @@ import ColonyMemebers.ColonyMemebers;
  */
 public class Medical extends Emergency{
 
-    public Medical(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
+    public Medical(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders) {
         super(emergencyLocation, resolvedState, responders);
+    }
+
+    
     }
     
     
-}

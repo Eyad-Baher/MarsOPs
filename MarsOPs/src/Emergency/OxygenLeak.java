@@ -18,7 +18,7 @@ public class OxygenLeak extends Emergency {
     private boolean detected;
     private boolean penaltyApplied;
     
-    public OxygenLeak(Habitat affectedHabitat, int oxygenLoss, ColonyMemebers responders) {
+    public OxygenLeak(Habitat affectedHabitat, int oxygenLoss, ArrayList<ColonyMemebers> responders) {
         super("Habitat: " + affectedHabitat.getLocation(), false, responders);
         this.affectedHabitat = affectedHabitat;
         this.oxygenLoss = oxygenLoss;
