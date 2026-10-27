@@ -20,12 +20,16 @@ import CrewMemebers.CrewMember;
 public class RepairMission extends Missions {
 
     private Equipment targetEquipment;
+    private int numOfBroken;
     private ColonyFacility targetFacility;
 
-    public RepairMission(Equipment targetEquipment, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
+    public RepairMission(Equipment targetEquipment, int numOfBroken, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
         this.targetEquipment = targetEquipment;
+        this.numOfBroken = numOfBroken;
     }
+
+        
 
     public RepairMission(ColonyFacility targetFacility, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
@@ -74,6 +78,20 @@ public class RepairMission extends Missions {
         }
         return false;
 
+    }
+    
+    public void advanceTime()
+    {
+        for (ColonyMemebers missionAgent : this.agents) {
+            
+            
+            if(missionAgent instanceof CrewMember)
+            {
+                
+            }
+            
+        }
+        
     }
 
 }

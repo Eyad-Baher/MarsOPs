@@ -12,9 +12,9 @@ public abstract class Missions {
     private String failureReason;
     private final int duration;
     private int elapsedTime = 0;
-    private ArrayList<ColonyMemebers> agents = new ArrayList<>();
-    private Resources missionResources;
-    private Equipment missionEquipment;
+    protected ArrayList<ColonyMemebers> agents = new ArrayList<>();
+    protected Resources missionResources;
+    protected Equipment missionEquipment;
 
     public Missions(String missionID, int duration, Resources missionResources,Equipment missionEquipment) {
         this.missionID = missionID;
@@ -41,4 +41,5 @@ public abstract class Missions {
 
     public String getState() { return missionState; }
     public String getFailureReason() { return failureReason; }
+    public abstract void advanceTime();
 }
