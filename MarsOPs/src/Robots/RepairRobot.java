@@ -5,7 +5,9 @@
 package Robots;
 
 import Emergency.Emergency;
+import Facility.ColonyFacility;
 import Missions.Missions;
+import MyResources.Equipment;
 
 
 public class RepairRobot extends RoboticUnit {
@@ -32,11 +34,7 @@ public class RepairRobot extends RoboticUnit {
             return false;
     }
     
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Repair robot "+getIdNo()+ " is performing its duty...");
-    }
+
     
     @Override
     public void getStatusSummary()
@@ -44,6 +42,18 @@ public class RepairRobot extends RoboticUnit {
         System.out.println("---Repair Robot Information--- ");
         super.getStatusSummary();
     }
-    
+        public void repair(ColonyFacility damagedFacility)
+    {
+        damagedFacility.setOperationalStatus("OPERATIONAL");
+    }
+    public void repair(RoboticUnit damagedRobot)
+    {
+        damagedRobot.setHealthStatus(true);
+    }
+    public void repair(Equipment equipment,int num)
+    {
+        equipment.repair(num);
+        
+    }
     
 }

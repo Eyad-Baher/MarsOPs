@@ -10,6 +10,7 @@ import Missions.Missions;
 import Missions.RepairMission;
 import MyResources.Equipment;
 import Facility.ColonyFacility;
+import Robots.RoboticUnit;
 
 /**
  *
@@ -22,13 +23,14 @@ public class Engineer extends CrewMember{
     }
 
 
-    @Override
-    public void performDuty() {
-        
-    }
+
     public void repair(ColonyFacility damagedFacility)
     {
-        damagedFacility.setOperationalStatus(true);
+        damagedFacility.setOperationalStatus("OPERATIONAL");
+    }
+    public void repair(RoboticUnit damagedRobot)
+    {
+        damagedRobot.setHealthStatus(true);
     }
     public void repair(Equipment equipment,int num)
     {

@@ -20,10 +20,7 @@ public class Scientist extends CrewMember{
     }
 
 
-    @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
+
     
     public void research()
     {
