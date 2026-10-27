@@ -13,7 +13,7 @@ import MyResources.Resources;
  */
 public class PowerStation extends ColonyFacility {
 
-    public PowerStation(String location, int capacity, boolean operationalStatus, Resources resources) {
+    public PowerStation(String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);
     }
 

@@ -14,10 +14,10 @@ import MyResources.Resources;
 public abstract class ColonyFacility {
     private String location;
     private int capacity;
-    private boolean operationalStatus;
+    private String operationalStatus;
     private Resources resources;
 
-    public ColonyFacility(String location, int capacity, boolean operationalStatus, Resources resources) {
+    public ColonyFacility(String location, int capacity, String operationalStatus, Resources resources) {
         this.location = location;
         this.capacity = capacity;
         this.operationalStatus = operationalStatus;
@@ -34,7 +34,7 @@ public abstract class ColonyFacility {
         this.capacity = capacity;
     }
 
-    public void setOperationalStatus(boolean operationalStatus) {
+    public void setOperationalStatus(String operationalStatus) {
         this.operationalStatus = operationalStatus;
     }
 
@@ -46,7 +46,7 @@ public abstract class ColonyFacility {
         return capacity;
     }
 
-    public boolean isOperationalStatus() {
+    public String isOperationalStatus() {
         return operationalStatus;
     }
 
