@@ -5,6 +5,9 @@
 package Robots;
 
 import Emergency.Emergency;
+import Emergency.Fire;
+import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
 import Missions.Missions;
 
 
@@ -26,10 +29,16 @@ public class RepairRobot extends RoboticUnit {
     @Override
     public boolean canHandleEmergency(Emergency emergency)
     {
-        if(isUseable()&&isIsAvaialble())
+        /*if(isUseable()&&isIsAvaialble())
             return true;
         else
+            return false;*/
+        if(emergency instanceof RoverBreakdown || emergency instanceof OxygenLeak || emergency instanceof Fire)
+            return true;
+        else
+        {
             return false;
+        }
     }
     
     @Override
