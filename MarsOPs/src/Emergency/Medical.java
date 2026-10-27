@@ -12,7 +12,7 @@ import ColonyMemebers.ColonyMemebers;
  */
 public class Medical extends Emergency{
     
-    public Medical(String emergencyLocation, ColonyMemebers responders) {
+    public Medical(String emergencyLocation, ColonyMemebers[] responders) {
         super(emergencyLocation, responders);
     }
     
