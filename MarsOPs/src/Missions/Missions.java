@@ -23,6 +23,36 @@ public abstract class Missions {
         this.missionEquipment = missionEquipment;
     }
 
+    public String getMissionID() {
+        return missionID;
+    }
+
+    public String getMissionState() {
+        return missionState;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public ArrayList<ColonyMemebers> getAgents() {
+        return agents;
+    }
+
+    public Resources getMissionResources() {
+        return missionResources;
+    }
+
+    public Equipment getMissionEquipment() {
+        return missionEquipment;
+    }
+
+    
+    
     public abstract boolean acceptMission(ArrayList<ColonyMemebers> candidates,
             boolean anotherMissionActive, boolean enoughResources);
 
@@ -42,4 +72,12 @@ public abstract class Missions {
     public String getState() { return missionState; }
     public String getFailureReason() { return failureReason; }
     public abstract void advanceTime();
+
+    public void start(){
+    
+        if (missionState.equals("Assigned"))
+            missionState="In Progress";
+        
+       
+   }
 }
