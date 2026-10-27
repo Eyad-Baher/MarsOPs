@@ -5,24 +5,42 @@ import ColonyMemebers.ColonyMemebers;
 import MyResources.Equipment;
 import MyResources.Resources;
 import java.util.ArrayList;
-import jdk.jfr.FlightRecorder;
 import Robots.RoboticUnit;
-
+import RegionToExplore.Location;
 /**
  *
  * @author abdel
  */
 public class ExplorationMission extends Missions {
 
-    private String targetLocation;
+    private Location targetLocation;
     private String requiredSkill;
 
-    public ExplorationMission(String targetLocation, String requiredSkill, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
+    public ExplorationMission(Location targetLocation, String requiredSkill, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
         this.targetLocation = targetLocation;
         this.requiredSkill = requiredSkill;
     }
 
+    public void setTargetLocation(Location targetLocation) {
+        this.targetLocation = targetLocation;
+    }
+
+    public Location getTargetLocation() {
+        return targetLocation;
+    }
+
+    
+
+    public String getRequiredSkill() {
+        return requiredSkill;
+    }
+
+    public void setRequiredSkill(String requiredSkill) {
+        this.requiredSkill = requiredSkill;
+    }
+
+    
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {
         if (candidates == null) {
@@ -32,7 +50,7 @@ public class ExplorationMission extends Missions {
             fail("Not enough resources");
             return false;
         } else if (anotherMissionActive == true) {
-            fail("Another mission A ctive");
+            fail("Another mission Active");
             return false;
         }
 
@@ -57,6 +75,12 @@ public class ExplorationMission extends Missions {
             }
         }
         return false;
+    }
+
+    @Override
+    public void advanceTime() {
+        
+        
     }
 
     

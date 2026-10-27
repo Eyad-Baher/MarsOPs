@@ -4,6 +4,7 @@
  */
 package CrewMemebers;
 
+import Missions.ExplorationMission;
 import Emergency.Emergency;
 import Missions.Missions;
 
@@ -20,10 +21,7 @@ public class Scientist extends CrewMember{
     }
 
 
-    @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
+
     
     public void research()
     {
@@ -34,6 +32,11 @@ public class Scientist extends CrewMember{
         @Override
     public boolean canPerformMission(Missions mission)
     {
+        if (mission instanceof ExplorationMission){
+            if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())){
+                return true;
+            }
+        }
         return false;
     }
     

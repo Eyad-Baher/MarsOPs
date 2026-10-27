@@ -5,6 +5,7 @@
 package Emergency;
 
 import ColonyMemebers.ColonyMemebers;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,7 +14,7 @@ import ColonyMemebers.ColonyMemebers;
 public class Fire extends Emergency {
     private boolean availability;
 
-    public Fire(ColonyMemebers responders) {
+    public Fire(ArrayList<ColonyMemebers> responders) {
         super("Laboratory", false, responders);
         this.availability = false;
         

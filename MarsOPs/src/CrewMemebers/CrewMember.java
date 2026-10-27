@@ -77,7 +77,10 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
     
 
-    
+    public void incFatigue(int amount)
+    {
+        this.fatigueLevel+=amount;
+    }
     
     
     

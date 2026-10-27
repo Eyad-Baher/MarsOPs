@@ -27,13 +27,7 @@ public class ExplorationRover extends RoboticUnit{
     {
         return false;
     }
-    
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Exploration rover "+getIdNo()+" is performing its duty...");
-    }
-    
+
     @Override
     public void getStatusSummary()
     {

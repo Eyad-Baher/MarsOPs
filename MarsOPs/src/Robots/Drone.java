@@ -36,12 +36,7 @@ public class Drone extends RoboticUnit {
     }
     
     
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Drone "+getIdNo()+ " is performing its duty...");
-    }
-    
+        
     
     @Override
     public void getStatusSummary()

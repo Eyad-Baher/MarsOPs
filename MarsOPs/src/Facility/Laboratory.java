@@ -13,7 +13,7 @@ import MyResources.Resources;
  */
 public class Laboratory extends ColonyFacility {
 
-    public Laboratory(String location, int capacity, boolean operationalStatus, Resources resources) {
+    public Laboratory(String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);
     }
 

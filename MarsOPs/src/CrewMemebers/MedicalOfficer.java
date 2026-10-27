@@ -19,11 +19,7 @@ public class MedicalOfficer extends CrewMember{
 
 
 
-    @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
-    
+       
     public void heal()
     {
         System.out.println(getName()+ " is healing.");
