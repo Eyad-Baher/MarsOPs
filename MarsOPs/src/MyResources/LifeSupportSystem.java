@@ -7,28 +7,29 @@ import MyResources.Resources;
  */
 public class LifeSupportSystem {
     private Resources resources;
-    private boolean AirFiltrationStatus;
+    private boolean airFiltrationStatus;
 
     public LifeSupportSystem(Resources resources, boolean filtrationStatus) {
         this.resources = resources;
-        this.AirFiltrationStatus = filtrationStatus;
+        this.airFiltrationStatus = filtrationStatus;
     }
 
-    public void setAirFiltrationStatus(boolean AirFiltrationStatus) {
-        this.AirFiltrationStatus = AirFiltrationStatus;
+    public void setAirFiltrationStatus(boolean airFiltrationStatus) {
+        this.airFiltrationStatus = airFiltrationStatus;
     }
     
-    public double getOxygen(){
+    public int getOxygen(){
         return resources.getOxygen();
     }
     
-    public void reduceOxygen(double oxygen){
-        resources.oxygen-=oxygen;
+    public void reduceOxygen(int oxygen){
+        
+        resources.setOxygen(((resources.getOxygen())- oxygen));
         
     }
     
-    public void addOxygen(double oxygen){
-        resources.oxygen+=oxygen;
+    public void addOxygen(int oxygen){
+        resources.setOxygen(((resources.getOxygen())- oxygen));
     }
     
     

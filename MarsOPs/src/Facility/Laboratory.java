@@ -4,6 +4,8 @@
  */
 package Facility;
 
+import MyResources.Resources;
+
 
 /**
  *
@@ -11,8 +13,11 @@ package Facility;
  */
 public class Laboratory extends ColonyFacility {
 
-    public Laboratory() {
+    public Laboratory(String location, int capacity, boolean operationalStatus, Resources resources) {
+        super(location, capacity, operationalStatus, resources);
     }
+
+    
     
     
 }

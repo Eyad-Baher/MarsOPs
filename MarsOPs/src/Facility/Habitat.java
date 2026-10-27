@@ -4,6 +4,7 @@
  */
 package Facility;
 import MyResources.LifeSupportSystem;
+import MyResources.Resources;
 
 /**
  *
@@ -11,9 +12,24 @@ import MyResources.LifeSupportSystem;
  */
 public class Habitat extends ColonyFacility{
     private final LifeSupportSystem lifeSupport;
+
+    public Habitat(LifeSupportSystem lifeSupport, String location, int capacity, boolean operationalStatus, Resources resources) {
+        super(location, capacity, operationalStatus, resources);
+        this.lifeSupport = lifeSupport;
+    }
    
-    public Habitat(LifeSupportSystem LifeSupport) {
-        this.lifeSupport = LifeSupport;        
-        
-    }   
+    public void reduceOxygen(int amount) {
+    lifeSupport.reduceOxygen(amount);
+}
+    public void addOxygen(int amount) {
+    lifeSupport.addOxygen(amount);
+}
+    public void setAirFiltrationStatus(boolean airFiltrationStatus) {
+        lifeSupport.setAirFiltrationStatus(airFiltrationStatus);
+    }
+    
+    public int getOxygen(){
+        return lifeSupport.getOxygen();
+    }
+    
 }

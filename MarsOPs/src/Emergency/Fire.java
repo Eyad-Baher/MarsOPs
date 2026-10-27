@@ -4,10 +4,26 @@
  */
 package Emergency;
 
+import ColonyMemebers.ColonyMemebers;
+
 /**
  *
  * @author abdel
  */
 public class Fire extends Emergency {
+    private boolean availability;
+
+    public Fire(ColonyMemebers responders) {
+        super("Laboratory", false, responders);
+        this.availability = false;
+        
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
+    
+    
+    
     
 }
