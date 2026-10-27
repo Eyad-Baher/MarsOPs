@@ -6,6 +6,7 @@ package Robots;
 
 import Emergency.Emergency;
 import Missions.Missions;
+import MyResources.Equipment;
 
 
 public class RepairRobot extends RoboticUnit {
@@ -44,6 +45,12 @@ public class RepairRobot extends RoboticUnit {
         System.out.println("---Repair Robot Information--- ");
         super.getStatusSummary();
     }
+    
+   
+    public void repair(Equipment equipment, int num){
+     equipment.repair(num);
+    }
+    
     
     
 }

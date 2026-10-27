@@ -38,4 +38,12 @@ public abstract class Missions {
 
     public String getState() { return missionState; }
     public String getFailureReason() { return failureReason; }
+
+    public void start(){
+    
+        if (missionState.equals("Assigned"))
+            missionState="In Progress";
+        
+       
+   }
 }
