@@ -7,7 +7,9 @@ package CrewMemebers;
 
 import Emergency.Emergency;
 import Missions.Missions;
+import Missions.RepairMission;
 import MyResources.Equipment;
+import Facility.ColonyFacility;
 
 /**
  *
@@ -15,8 +17,8 @@ import MyResources.Equipment;
  */
 public class Engineer extends CrewMember{
 
-    public Engineer(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
-        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
+    public Engineer(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
     }
 
 
@@ -24,16 +26,24 @@ public class Engineer extends CrewMember{
     public void performDuty() {
         
     }
-    
+    public void repair(ColonyFacility damagedFacility)
+    {
+        damagedFacility.setOperationalStatus(true);
+    }
     public void repair(Equipment equipment,int num)
     {
         equipment.repair(num);
+        
     }
     
     @Override
     public boolean canPerformMission(Missions mission)
     {
-        return false;
+        if( mission instanceof RepairMission)
+        {
+            return true;
+            
+        }else return false;
     }
     
     @Override
