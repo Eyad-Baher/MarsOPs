@@ -12,9 +12,11 @@ import Missions.Missions;
  * @author HP
  */
 public class Scientist extends CrewMember{
+    private String skill;
 
-    public Scientist(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
-        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
+    public Scientist(String name, String healthStatus, String skill, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
+        this.skill = skill;
     }
 
 

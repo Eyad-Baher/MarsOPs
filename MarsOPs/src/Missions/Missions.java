@@ -1,6 +1,7 @@
 package Missions;
 
 import ColonyMemebers.ColonyMemebers;
+import MyResources.Equipment;
 import java.util.ArrayList;
 import MyResources.Resources;
 
@@ -13,11 +14,13 @@ public abstract class Missions {
     private int elapsedTime = 0;
     private ArrayList<ColonyMemebers> agents = new ArrayList<>();
     private Resources missionResources;
+    private Equipment missionEquipment;
 
-    public Missions(String missionID, int duration, Resources missionResources) {
+    public Missions(String missionID, int duration, Resources missionResources,Equipment missionEquipment) {
         this.missionID = missionID;
         this.duration = duration;
         this.missionResources = missionResources;
+        this.missionEquipment = missionEquipment;
     }
 
     public abstract boolean acceptMission(ArrayList<ColonyMemebers> candidates,
