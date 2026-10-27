@@ -17,6 +17,11 @@ public class Medical extends Emergency{
         super(emergencyLocation, resolvedState, responders);
     }
 
+    @Override
+    public ColonyMemebers[] findResponders() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
     }
     

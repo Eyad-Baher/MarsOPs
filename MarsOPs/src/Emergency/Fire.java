@@ -23,6 +23,11 @@ public class Fire extends Emergency {
     public void setAvailability(boolean availability) {
         this.availability = availability;
     }
+
+    @Override
+    public ColonyMemebers[] findResponders() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     

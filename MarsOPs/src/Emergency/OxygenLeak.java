@@ -5,7 +5,9 @@
 package Emergency;
 
 import ColonyMemebers.ColonyMemebers;
+import CrewMemebers.Engineer;
 import Facility.Habitat;
+import Robots.RepairRobot;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +39,12 @@ public class OxygenLeak extends Emergency {
     public int getOxygenLoss() {
         return oxygenLoss;
     }
-
+    public void triggerOxygenLeak(){
+        detectOxygenLoss();
+    }
+    
+    
+    
     public int totalOxygenLoss(){
          if(!isResolvedState() && !penaltyApplied)
         {
@@ -48,10 +55,41 @@ public class OxygenLeak extends Emergency {
          return oxygenLoss;
     }
 
-    
-
-    
-    
+    public ColonyMemebers[] findResponders()
+    {
+        int numResponders=0;
+        boolean foundEngineer=false; 
+        boolean foundRepairRobot=false;
+        ColonyMemebers[] availableResponders=new ColonyMemebers[2];
+        for(int i=0;i<getResponders().size();i++)
+        {
+            if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
+            {
+                if(getResponders().get(i) instanceof Engineer && foundEngineer==false)
+                {
+                    foundEngineer=true;
+                    availableResponders[numResponders]=getResponders().get(i);
+                    numResponders++;
+                }
+                if(getResponders().get(i) instanceof RepairRobot && foundRepairRobot==false)
+                {
+                    foundRepairRobot=true;
+                    availableResponders[numResponders]=getResponders().get(i);
+                    numResponders++;
+                }
+                
+            }
+            if(foundEngineer&&foundRepairRobot)
+            {
+                return availableResponders;
+            }
+            
+            
+        }
+        setFailureReason("There are no suitable responders.");
+        return null;
+        
+    }
     
     
     

@@ -17,7 +17,14 @@ public abstract class Emergency {
         this.resolvedState = resolvedState;
         this.responders = responders;
     }
-    
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
     
     public void setEmergencyLocation(String emergencyLocation) {
         this.emergencyLocation = emergencyLocation;
@@ -42,5 +49,7 @@ public abstract class Emergency {
     public ArrayList<ColonyMemebers> getResponders() {
         return responders;
     }
+    
+    public abstract ColonyMemebers[] findResponders();
     
 }
