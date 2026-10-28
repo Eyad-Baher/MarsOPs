@@ -59,7 +59,7 @@ public class ExplorationMission extends Missions {
         int numRobots = 0;
 
         for (ColonyMemebers candidate : candidates) {
-            if (candidate.isIsAvaialble() && candidate.isUseable() && candidate.canPerformMission(this)) {
+            if (candidate.canPerformMission(this)) {
                 if (candidate instanceof CrewMember && numAgents != 1) {
                     numAgents++;
                     readyAgents.add(candidate);
