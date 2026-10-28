@@ -11,7 +11,7 @@ package CrewMemebers;
 public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
 
     private String name;
-    private String healthStatus;
+    private String healthStatus; // IMJURED  or HEALTHY
     private int fatigueLevel;
 
     public CrewMember(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
