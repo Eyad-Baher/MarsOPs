@@ -46,13 +46,11 @@ public class RescueMission extends Missions {
             return false;
 
         }
-        if(strandedEntity == null )
-        {
+        if (strandedEntity == null) {
             fail("No missing Entity");
             return false;
         }
-        if(missingLocation == null || missingLocation.isBlank())
-        {
+        if (missingLocation == null || missingLocation.isBlank()) {
             fail("No Location Listed");
             return false;
         }
@@ -91,16 +89,15 @@ public class RescueMission extends Missions {
 
                 if (strandedEntity instanceof RoboticUnit && agent instanceof Engineer) {
                     ((Engineer) agent).repair((RoboticUnit) strandedEntity);
-                    ((CrewMember) agent).incFatigue(30);
                     entityFound = true;
+                    agent.advanceTime();
                 } else if (strandedEntity instanceof CrewMember && agent instanceof MedicalOfficer) {
                     ((MedicalOfficer) agent).heal((CrewMember) strandedEntity);
                     entityFound = true;
-                    ((CrewMember) agent).incFatigue(30);
+                    agent.advanceTime();
 
-                }else if(agent instanceof RoboticUnit)
-                {
-                    ((RoboticUnit)agent).drainBattery(30);
+                } else if (agent instanceof RoboticUnit) {
+                    agent.advanceTime();
                     entityFound = true;
                 }
 
