@@ -32,7 +32,7 @@ public class Scientist extends CrewMember{
         @Override
     public boolean canPerformMission(Missions mission)
     {
-        if (mission instanceof ExplorationMission){
+        if (isIsAvaialble() && isUseable() && mission instanceof ExplorationMission){
             if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())){
                 return true;
             }

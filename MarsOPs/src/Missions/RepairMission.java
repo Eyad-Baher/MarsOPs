@@ -60,7 +60,7 @@ public class RepairMission extends Missions {
 
         for (ColonyMemebers candidate : candidates) {
 
-            if (candidate.isIsAvaialble() && candidate.isUseable() && candidate.canPerformMission(this)) {
+            if (candidate.canPerformMission(this)) {
                 if (candidate instanceof CrewMember && numCrew != 1) {
                     numCrew++;
                     readyAgents.add(candidate);
