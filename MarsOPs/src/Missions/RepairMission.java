@@ -97,23 +97,23 @@ public class RepairMission extends Missions {
                if(missionAgent instanceof CrewMember)
                {
                    ((Engineer)missionAgent).repair(targetEquipment,numOfBroken);
-                   ((CrewMember) missionAgent).incFatigue((int) (numOfBroken*1.5));
+                   missionAgent.advanceTime();
                }else
                {
                    ((RepairRobot)missionAgent).repair(targetEquipment,numOfBroken);
-                   ((RoboticUnit)missionAgent).drainBattery((int) (numOfBroken*1.5));
+                   missionAgent.advanceTime();
                    
                }
             }else{
                 if(missionAgent instanceof CrewMember)
                {
                    ((Engineer)missionAgent).repair(targetFacility);
-                   ((CrewMember) missionAgent).incFatigue( (20));
+                   missionAgent.advanceTime();
 
                }else
                {
                    ((RepairRobot)missionAgent).repair(targetFacility);
-                   ((RoboticUnit)missionAgent).drainBattery( (20));
+                   missionAgent.advanceTime();
 
                }
 

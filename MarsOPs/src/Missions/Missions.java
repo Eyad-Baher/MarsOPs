@@ -75,22 +75,31 @@ public abstract class Missions {
 
     public void start(){
     
-        if (missionState.equals("Assigned"))
+        if (missionState.equals("ASSIGNED"))
             missionState="In Progress";
         for (ColonyMemebers agent : agents) {
             
             agent.setIsAvaialble(false);
             
         }
-        advanceTime();
-        for(int i=0;i<duration;i++)
-        {
-            elapsedTime++;
-        }
-        endMission();
+
        
        
    }
+    
+    public void updateProgress() {
+        if (!missionState.equals("In Progress")) {
+            return;
+        }
+
+        advanceTime(); 
+
+        elapsedTime++;
+
+        if (elapsedTime >= duration) {
+            endMission();
+        }
+    }
     
     public void endMission()
     {
