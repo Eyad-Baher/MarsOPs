@@ -6,6 +6,7 @@ package CrewMemebers;
 
 import Emergency.Emergency;
 import Missions.Missions;
+import Missions.RescueMission;
 
 /**
  *
@@ -13,26 +14,27 @@ import Missions.Missions;
  */
 public class MedicalOfficer extends CrewMember{
 
-    public MedicalOfficer(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
-        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
+    public MedicalOfficer(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
     }
 
 
 
-    @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
-    
-    public void heal()
+       
+    public void heal(CrewMember injuredMember)
     {
-        System.out.println(getName()+ " is healing.");
+        injuredMember.setHealthStatus("HEALTHY");
+        
     }
     
         @Override
     public boolean canPerformMission(Missions mission)
     {
-        return false;
+        if( isIsAvaialble()&& isUseable() && mission instanceof RescueMission)
+        {
+            return true;
+        }
+      return false;
     }
     
     @Override

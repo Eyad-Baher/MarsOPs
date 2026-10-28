@@ -2,12 +2,12 @@
 package Robots;
 import Emergency.Emergency;
 import Missions.Missions;
-
+import Missions.RescueMission;
 
 public class Drone extends RoboticUnit {
     
     
-    public Drone(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public Drone(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble, batteryLevel, healthStatus);
         
     }
@@ -19,7 +19,7 @@ public class Drone extends RoboticUnit {
     //Maybe it's part of the exploration mission?
     public boolean canPerformMission(Missions mission)
     {
-        if(isUseable()&&isIsAvaialble())
+        if(isUseable()&&isIsAvaialble()&& mission instanceof RescueMission)
         {
             return true;
         }
@@ -36,12 +36,7 @@ public class Drone extends RoboticUnit {
     }
     
     
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Drone "+getIdNo()+ " is performing its duty...");
-    }
-    
+        
     
     @Override
     public void getStatusSummary()

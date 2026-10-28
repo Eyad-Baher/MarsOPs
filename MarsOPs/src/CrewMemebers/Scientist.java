@@ -4,41 +4,48 @@
  */
 package CrewMemebers;
 
+import Missions.ExplorationMission;
 import Emergency.Emergency;
 import Missions.Missions;
+import Missions.ResearchMission;
 
 /**
  *
  * @author HP
  */
-public class Scientist extends CrewMember{
+public class Scientist extends CrewMember {
 
-    public Scientist(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
-        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
+    private String skill;
+
+    public Scientist(String name, String healthStatus, String skill, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
+        this.skill = skill;
     }
 
+    public void research() {
+        System.out.println(getName() + " is researching.");
+    }
 
     @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
-    
-    public void research()
-    {
-        System.out.println(getName()+ " is researching.");
-    }
-    
-    
-        @Override
-    public boolean canPerformMission(Missions mission)
-    {
+    public boolean canPerformMission(Missions mission) {
+        if (isIsAvaialble() && isUseable()) {
+            if (mission instanceof ExplorationMission) {
+                if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())) {
+                    return true;
+                }
+            }
+            else if (mission instanceof ResearchMission){
+                if(this.skill.equals(((ResearchMission) mission).getScientificSkill()))
+                    return true;
+                
+            }
+        }
         return false;
     }
-    
+
     @Override
-    public boolean canHandleEmergency(Emergency emergency)
-    {
+    public boolean canHandleEmergency(Emergency emergency) {
         return false;
     }
-    
+
 }

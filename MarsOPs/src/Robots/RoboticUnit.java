@@ -6,10 +6,10 @@ import ColonyMemebers.ColonyMemebers;
 
 
 public abstract class RoboticUnit extends ColonyMemebers{
-    private double batteryLevel;
+    private int batteryLevel;
     private boolean healthStatus;
 
-    public RoboticUnit(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public RoboticUnit(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble);
         this.batteryLevel = batteryLevel;
         this.healthStatus = healthStatus;
@@ -29,7 +29,7 @@ public abstract class RoboticUnit extends ColonyMemebers{
         this.healthStatus = healthStatus;
     }
     
-    public void setBatteryLevel(double batteryLevel) {
+    public void setBatteryLevel(int batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
     
@@ -46,7 +46,7 @@ public abstract class RoboticUnit extends ColonyMemebers{
     @Override
     public void advanceTime()
     {
-        batteryLevel-=batteryLevel;
+        batteryLevel-=1;
     }
     
     @Override
@@ -65,5 +65,9 @@ public abstract class RoboticUnit extends ColonyMemebers{
             System.out.println("Health Status: Damaged");
     }
     
+    public void drainBattery(int amount )
+    {
+        batteryLevel-=amount;
+    }
 }
 

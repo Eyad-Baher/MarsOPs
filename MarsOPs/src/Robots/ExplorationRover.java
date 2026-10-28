@@ -2,19 +2,20 @@
 package Robots;
 
 import Emergency.Emergency;
+import Missions.ExplorationMission;
 import Missions.Missions;
 
 
 public class ExplorationRover extends RoboticUnit{
     
-    public ExplorationRover(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public ExplorationRover(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble ,batteryLevel, healthStatus);
     }
     
     @Override
     public boolean canPerformMission(Missions mission)
     {
-        if(isUseable()&&isIsAvaialble())
+        if(isUseable()&&isIsAvaialble()&& mission instanceof ExplorationMission )
         {
             return true;
         }
@@ -27,13 +28,7 @@ public class ExplorationRover extends RoboticUnit{
     {
         return false;
     }
-    
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Exploration rover "+getIdNo()+" is performing its duty...");
-    }
-    
+
     @Override
     public void getStatusSummary()
     {
