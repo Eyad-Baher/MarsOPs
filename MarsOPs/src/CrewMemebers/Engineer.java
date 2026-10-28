@@ -41,7 +41,7 @@ public class Engineer extends CrewMember{
     @Override
     public boolean canPerformMission(Missions mission)
     {
-        if( mission instanceof RepairMission)
+        if( isIsAvaialble() && isUseable() && mission instanceof RepairMission)
         {
             return true;
             
