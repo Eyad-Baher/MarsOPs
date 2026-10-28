@@ -2,6 +2,7 @@
 package Robots;
 
 import Emergency.Emergency;
+import Missions.ExplorationMission;
 import Missions.Missions;
 
 
@@ -14,7 +15,7 @@ public class ExplorationRover extends RoboticUnit{
     @Override
     public boolean canPerformMission(Missions mission)
     {
-        if(isUseable()&&isIsAvaialble())
+        if(isUseable()&&isIsAvaialble()&& mission instanceof ExplorationMission )
         {
             return true;
         }
