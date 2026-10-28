@@ -2,7 +2,7 @@
 package Robots;
 import Emergency.Emergency;
 import Missions.Missions;
-
+import Missions.RescueMission;
 
 public class Drone extends RoboticUnit {
     
@@ -19,7 +19,7 @@ public class Drone extends RoboticUnit {
     //Maybe it's part of the exploration mission?
     public boolean canPerformMission(Missions mission)
     {
-        if(isUseable()&&isIsAvaialble())
+        if(isUseable()&&isIsAvaialble()&& mission instanceof RescueMission)
         {
             return true;
         }

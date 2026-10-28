@@ -6,6 +6,7 @@ package CrewMemebers;
 
 import Emergency.Emergency;
 import Missions.Missions;
+import Missions.RescueMission;
 
 /**
  *
@@ -20,15 +21,20 @@ public class MedicalOfficer extends CrewMember{
 
 
        
-    public void heal()
+    public void heal(CrewMember injuredMember)
     {
-        System.out.println(getName()+ " is healing.");
+        injuredMember.setHealthStatus("HEALTHY");
+        
     }
     
         @Override
     public boolean canPerformMission(Missions mission)
     {
-        return false;
+        if( isIsAvaialble()&& isUseable() && mission instanceof RescueMission)
+        {
+            return true;
+        }
+      return false;
     }
     
     @Override
