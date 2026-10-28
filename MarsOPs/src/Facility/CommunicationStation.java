@@ -14,9 +14,11 @@ import MyResources.Resources;
  */
 public class CommunicationStation extends ColonyFacility {
 
-    public CommunicationStation(String location, int capacity, boolean operationalStatus, Resources resources) {
+    public CommunicationStation(String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);
     }
+
+    
 
     
 

@@ -4,6 +4,7 @@
  */
 package CrewMemebers;
 
+import Missions.ExplorationMission;
 import Emergency.Emergency;
 import Missions.Missions;
 
@@ -12,16 +13,15 @@ import Missions.Missions;
  * @author HP
  */
 public class Scientist extends CrewMember{
+    private String skill;
 
-    public Scientist(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
-        super(name, healthStatus, skills, fatigueLevel, IdNo, currentLocation, isAvaialble);
+    public Scientist(String name, String healthStatus, String skill, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+        super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
+        this.skill = skill;
     }
 
 
-    @Override
-    public void performDuty() {
-        System.out.println(getName()+" is performing their duty.");
-    }
+
     
     public void research()
     {
@@ -32,6 +32,11 @@ public class Scientist extends CrewMember{
         @Override
     public boolean canPerformMission(Missions mission)
     {
+        if (mission instanceof ExplorationMission){
+            if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())){
+                return true;
+            }
+        }
         return false;
     }
     

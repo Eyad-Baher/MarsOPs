@@ -7,7 +7,7 @@ import Missions.Missions;
 public class Drone extends RoboticUnit {
     
     
-    public Drone(String IdNo, String currentLocation, boolean isAvaialble, double batteryLevel, boolean healthStatus) {
+    public Drone(String IdNo, String currentLocation, boolean isAvaialble, int batteryLevel, boolean healthStatus) {
         super(IdNo, currentLocation, isAvaialble, batteryLevel, healthStatus);
         
     }
@@ -36,12 +36,7 @@ public class Drone extends RoboticUnit {
     }
     
     
-    @Override
-    public void performDuty()
-    {
-        System.out.println("Drone "+getIdNo()+ " is performing its duty...");
-    }
-    
+        
     
     @Override
     public void getStatusSummary()

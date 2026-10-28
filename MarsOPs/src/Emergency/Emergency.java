@@ -1,6 +1,7 @@
 
 package Emergency;
 import ColonyMemebers.ColonyMemebers;
+import java.util.ArrayList;
 /**
  *
  * @author HP
@@ -8,10 +9,10 @@ import ColonyMemebers.ColonyMemebers;
 public abstract class Emergency {
     private String emergencyLocation;
     private boolean resolvedState;
-    private ColonyMemebers responders;
+    private ArrayList<ColonyMemebers> responders;
     private String failureReason;
 
-    public Emergency(String emergencyLocation, boolean resolvedState, ColonyMemebers responders) {
+    public Emergency(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders) {
         this.emergencyLocation = emergencyLocation;
         this.resolvedState = resolvedState;
         this.responders = responders;
@@ -26,7 +27,7 @@ public abstract class Emergency {
         this.resolvedState = resolvedState;
     }
 
-    public void setResponders(ColonyMemebers responders) {
+    public void setResponders(ArrayList<ColonyMemebers> responders) {
         this.responders = responders;
     }
 
@@ -38,7 +39,7 @@ public abstract class Emergency {
         return resolvedState;
     }
 
-    public ColonyMemebers getResponders() {
+    public ArrayList<ColonyMemebers> getResponders() {
         return responders;
     }
     

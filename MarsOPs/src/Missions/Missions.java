@@ -1,6 +1,7 @@
 package Missions;
 
 import ColonyMemebers.ColonyMemebers;
+import MyResources.Equipment;
 import java.util.ArrayList;
 import MyResources.Resources;
 
@@ -11,15 +12,47 @@ public abstract class Missions {
     private String failureReason;
     private final int duration;
     private int elapsedTime = 0;
-    private ArrayList<ColonyMemebers> agents = new ArrayList<>();
-    private Resources missionResources;
+    protected ArrayList<ColonyMemebers> agents = new ArrayList<>();
+    protected Resources missionResources;
+    protected Equipment missionEquipment;
 
-    public Missions(String missionID, int duration, Resources missionResources) {
+    public Missions(String missionID, int duration, Resources missionResources,Equipment missionEquipment) {
         this.missionID = missionID;
         this.duration = duration;
         this.missionResources = missionResources;
+        this.missionEquipment = missionEquipment;
     }
 
+    public String getMissionID() {
+        return missionID;
+    }
+
+    public String getMissionState() {
+        return missionState;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public ArrayList<ColonyMemebers> getAgents() {
+        return agents;
+    }
+
+    public Resources getMissionResources() {
+        return missionResources;
+    }
+
+    public Equipment getMissionEquipment() {
+        return missionEquipment;
+    }
+
+    
+    
     public abstract boolean acceptMission(ArrayList<ColonyMemebers> candidates,
             boolean anotherMissionActive, boolean enoughResources);
 
@@ -38,4 +71,13 @@ public abstract class Missions {
 
     public String getState() { return missionState; }
     public String getFailureReason() { return failureReason; }
+    public abstract void advanceTime();
+
+    public void start(){
+    
+        if (missionState.equals("Assigned"))
+            missionState="In Progress";
+        
+       
+   }
 }

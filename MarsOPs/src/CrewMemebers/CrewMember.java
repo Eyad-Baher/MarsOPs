@@ -12,14 +12,12 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
 
     private String name;
     private String healthStatus;
-    private String[] skills;
     private int fatigueLevel;
 
-    public CrewMember(String name, String healthStatus, String[] skills, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
+    public CrewMember(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
         super(IdNo, currentLocation, isAvaialble);
         this.name = name;
         this.healthStatus = healthStatus;
-        this.skills = skills;
         this.fatigueLevel = fatigueLevel;
     }
 
@@ -39,14 +37,7 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
         this.healthStatus = healthStatus;
     }
 
-    public String[] getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String[] skills) {
-        this.skills = skills;
-    }
-
+    
     public int getFatigueLevel() {
         return fatigueLevel;
     }
@@ -59,7 +50,7 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     @Override
     public boolean isUseable()
     {
-        if(fatigueLevel>0 && healthStatus != "INJURED")
+        if(fatigueLevel>0 && healthStatus.equals("INJURED"))
         {
             return true;
         }
@@ -86,7 +77,10 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
     
 
-    
+    public void incFatigue(int amount)
+    {
+        this.fatigueLevel+=amount;
+    }
     
     
     
