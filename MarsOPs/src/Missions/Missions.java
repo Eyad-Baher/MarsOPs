@@ -4,7 +4,8 @@ import ColonyMemebers.ColonyMemebers;
 import MyResources.Equipment;
 import java.util.ArrayList;
 import MyResources.Resources;
-
+import EnvironmentConditions.Environment;
+import EnvironmentConditions.Normal;
 public abstract class Missions {
 
     private final String missionID;
@@ -15,12 +16,14 @@ public abstract class Missions {
     protected ArrayList<ColonyMemebers> agents = new ArrayList<>();
     protected Resources missionResources;
     protected Equipment missionEquipment;
+    protected Environment currentCondition;
 
     public Missions(String missionID, int duration, Resources missionResources,Equipment missionEquipment) {
         this.missionID = missionID;
         this.duration = duration;
         this.missionResources = missionResources;
         this.missionEquipment = missionEquipment;
+        this.currentCondition = new Normal();
     }
 
     public String getMissionID() {
@@ -76,7 +79,7 @@ public abstract class Missions {
     public void start(){
     
         if (missionState.equals("ASSIGNED"))
-            missionState="In Progress";
+            missionState="IN PROGRESS";
         for (ColonyMemebers agent : agents) {
             
             agent.setIsAvaialble(false);
