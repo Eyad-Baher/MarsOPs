@@ -4,6 +4,8 @@
  */
 package Facility;
 
+import MyResources.Resources;
+
 
 
 /**
@@ -12,8 +14,36 @@ package Facility;
  */
 public class CommunicationStation extends ColonyFacility {
 
-    public CommunicationStation() {
+    private boolean channelOpen;
+    
+    public CommunicationStation(String location, int capacity, boolean operationalStatus, Resources resources) {
+        super(location, capacity, operationalStatus, resources);
+        channelOpen=true;
     }
+    
+    public boolean isChannelOpen() {
+        return channelOpen;
+    }
+
+    public void disruptChannel() {
+        this.channelOpen = false;
+    }
+    
+    public void restoreChannel()
+    {
+        this.channelOpen=true;
+    }
+
+    public boolean isAvailable()
+    {
+        if(isOperationalStatus()&&isChannelOpen())
+            return true;
+        else
+            return false;
+    }
+            
+
+    
     
     
 }
