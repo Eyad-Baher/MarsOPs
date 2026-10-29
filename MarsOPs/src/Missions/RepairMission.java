@@ -53,6 +53,7 @@ public class RepairMission extends Missions {
             return false;
 
         }
+
         ArrayList<ColonyMemebers> readyAgents = new ArrayList<>();
 
         int numRobots = 0;
@@ -69,10 +70,13 @@ public class RepairMission extends Missions {
                     readyAgents.add(candidate);
                 }
             }
+                
+
             
             if(numCrew>0 && numRobots>0)
             {
                 assignAgents(readyAgents);
+      
                 return true;
             }
             

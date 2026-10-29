@@ -75,6 +75,10 @@ public class RescueMission extends Missions {
         }
         if (numcrew > 0 && numcrew > 0) {
             assignAgents(readyAgents);
+            if (currentCondition.canDisruptMission(this) == true) {
+                fail("Unsuitable Conditions for mission");
+                return false;
+            }
             return true;
 
         } else {

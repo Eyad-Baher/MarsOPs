@@ -7,6 +7,7 @@ import MyResources.Resources;
 import java.util.ArrayList;
 import Robots.RoboticUnit;
 import RegionToExplore.Location;
+
 /**
  *
  * @author abdel
@@ -15,7 +16,6 @@ public class ExplorationMission extends Missions {
 
     private Location targetLocation;
     private String requiredSkill;
-    
 
     public ExplorationMission(Location targetLocation, String requiredSkill, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
@@ -31,8 +31,6 @@ public class ExplorationMission extends Missions {
         return targetLocation;
     }
 
-    
-
     public String getRequiredSkill() {
         return requiredSkill;
     }
@@ -41,7 +39,6 @@ public class ExplorationMission extends Missions {
         this.requiredSkill = requiredSkill;
     }
 
-    
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {
         if (candidates == null) {
@@ -54,9 +51,9 @@ public class ExplorationMission extends Missions {
             fail("Another mission Active");
             return false;
         }
-        if (missionEquipment==null){
-           fail("Not enough equipment");
-            return false; 
+        if (missionEquipment == null) {
+            fail("Not enough equipment");
+            return false;
         }
         ArrayList<ColonyMemebers> readyAgents = new ArrayList<>();
         int numAgents = 0;
@@ -75,6 +72,10 @@ public class ExplorationMission extends Missions {
             }
             if (numAgents > 0 && numRobots > 0) {
                 assignAgents(readyAgents);
+                if (currentCondition.canDisruptMission(this) == true) {
+                    fail("Unsuitable Conditions for mission");
+                    return false;
+                }
                 return true;
             }
         }
@@ -83,31 +84,25 @@ public class ExplorationMission extends Missions {
 
     @Override
     public void advanceTime() {
-        boolean location= true;
-        
-        if (this.targetLocation == null)
-        {
-         location = false;
+        boolean location = true;
+
+        if (this.targetLocation == null) {
+            location = false;
         }
-        if(location == true){
-        for (ColonyMemebers missionAgent : this.agents) {
-            
-            
-            
-               if(missionAgent instanceof CrewMember)
-               {
-                   missionAgent.advanceTime();
-               }else
-               {
-                   missionAgent.advanceTime();
-                   
-               }
-              
-        }
-       targetLocation.Explore(); 
-    } 
-        else{
+        if (location == true) {
+            for (ColonyMemebers missionAgent : this.agents) {
+
+                if (missionAgent instanceof CrewMember) {
+                    missionAgent.advanceTime();
+                } else {
+                    missionAgent.advanceTime();
+
+                }
+
+            }
+            targetLocation.Explore();
+        } else {
             System.out.println("no location to be explored, mission failed.");
         }
-}
+    }
 }
