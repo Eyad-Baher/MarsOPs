@@ -7,6 +7,8 @@ package EnvironmentConditions;
 import Missions.ExplorationMission;
 import Missions.Missions;
 import Missions.RescueMission;
+import ColonyMemebers.ColonyMemebers;
+import Robots.Drone;
 
 /**
  *
@@ -19,6 +21,15 @@ public class CommunicationDisruption implements Environment{
         if (mission instanceof RescueMission || mission instanceof ExplorationMission)
         {
             return true;
+        }
+        
+        for (ColonyMemebers agent: mission.getAgents()) {
+            
+            if (agent instanceof Drone) {
+                return true;
+                
+            }
+            
         }
         
         return false;

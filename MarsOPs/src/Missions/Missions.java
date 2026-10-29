@@ -96,9 +96,6 @@ public abstract class Missions {
 
     public void updateProgress() {
 
-        if (currentCondition.canDisruptMission() == true) {
-            fail("Unsuitable Conditions.");
-        }
 
         if (!missionState.equals("IN PROGRESS")) {
             return;
