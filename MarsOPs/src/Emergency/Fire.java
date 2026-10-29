@@ -5,6 +5,7 @@
 package Emergency;
 
 import ColonyMemebers.ColonyMemebers;
+import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
 import CrewMemebers.MedicalOfficer;
 import Facility.Laboratory;
@@ -32,13 +33,20 @@ public class Fire extends Emergency {
         System.out.println("All lab equipment got damaged!!");   
      }
        
-  
+     public void injurePersonnel() {
+    for (CrewMember p : affectedLaboratory.getPersonnelPresent()) {
+        p.setHealthStatus("INJURED");
+    }
+    System.out.println("All Lab personnel are injured and require medical assistance.");
+}
     
     public void triggerFire(int oxygenConsumption){
         if(!triggered){
         affectedLaboratory.setavailable(false);
         damageAllEquipment();
         increaseOxygenConsumption(oxygenConsumption);
+        injurePersonnel();
+        
         }
         
         
@@ -92,7 +100,7 @@ public class Fire extends Emergency {
         
     }
            
-     public void repairFire(){
+     public void resolveFire(){
         if(getResolvedState().equals("UNRESOLVED"))
         {
         if(getSuitableResponders()==null )
@@ -134,3 +142,6 @@ public class Fire extends Emergency {
     
     
 }
+
+
+    

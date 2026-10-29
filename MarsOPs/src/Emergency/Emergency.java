@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public abstract class Emergency {
     private String emergencyLocation;
-    private String resolvedState;
+    private String resolvedState; //   RESOLVED or UNRESOLVED
     private ArrayList<ColonyMemebers> responders;
     private ColonyMemebers[] suitableResponders;
     private String failureReason;

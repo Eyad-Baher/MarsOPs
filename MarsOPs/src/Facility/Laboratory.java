@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Laboratory extends ColonyFacility {
     private boolean available;
     private ArrayList<Equipment> equipment;
-    private ArrayList<CrewMember> personnelPresent; // scientist or engineer or medical fficer
+    private ArrayList<CrewMember> personnelPresent; // scientist or engineer or medical officer
 
     public Laboratory(boolean isAvailable, ArrayList<Equipment> equipment, ArrayList<ColonyMemebers> PersonnelPresent, String location, Resources resources) {
         super(location, 3000, "UNOPERATIONAL", resources);
