@@ -64,8 +64,7 @@ public class Medical extends Emergency{
             System.out.println(getFailureReason());
             setResolvedState(false);
         }
-        //if medic's fatigue level is too low.
-        //needs a method in crew member
+        //if medic's fatigue level is too high.
         
         if(!isResolvedState())
         {
@@ -85,6 +84,7 @@ public class Medical extends Emergency{
             System.out.println("__MEDICAL EMERGENCY IS SUCCESSFULLY RESOLVED__");
     }
     
+    
     private void changeRespondersLocation()
     {
         ((MedicalOfficer)availableResponder[0]).setCurrentLocation("Facility: "+facility.getLocation());
@@ -98,6 +98,7 @@ public class Medical extends Emergency{
     private void responderHealsPatient()
     {
         ((MedicalOfficer)availableResponder[0]).heal();
+        ((MedicalOfficer)availableResponder[0]).incFatigue(fatigueAmount);
     }
     
     private void releaseResponder()

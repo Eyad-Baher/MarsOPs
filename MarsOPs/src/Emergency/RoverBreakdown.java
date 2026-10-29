@@ -92,6 +92,7 @@ public class RoverBreakdown extends Emergency {
             
     }
     
+    
     private void changeRespondersLocation()
     {
         for(ColonyMemebers availableResponder : availableResponders)
@@ -119,13 +120,6 @@ public class RoverBreakdown extends Emergency {
         }
     }
     
-    private void drainRespondersEnergy()
-    {
-        for(ColonyMemebers availableResponder: availableResponders)
-        {
-            if(availableResponder instanceof Eng)
-        }
-    }
     
     private void makeRespondersUnavailable()
     {
@@ -149,7 +143,6 @@ public class RoverBreakdown extends Emergency {
         {
             if ( (((Engineer)r).getFatigueLevel()+fatigueAmount) <=100)
             {
-                //((Engineer)r).incFatigue(fatigueAmount);
                 return true;
             }
             return false;
@@ -158,7 +151,6 @@ public class RoverBreakdown extends Emergency {
         {
             if ( (((RepairRobot)r).getBatteryLevel()-batteryDrainage) >= ((RepairRobot)r).getBatteryLevel())
             {
-                //((RepairRobot)r).drainBattery(batteryDrainage);
                 return true;
             }
             return false;
