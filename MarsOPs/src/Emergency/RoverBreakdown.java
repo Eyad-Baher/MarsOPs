@@ -6,6 +6,7 @@ package Emergency;
 
 import ColonyMemebers.ColonyMemebers;
 import CrewMemebers.Engineer;
+import Missions.Missions;
 import MyResources.Resources;
 import Robots.ExplorationRover;
 import Robots.RepairRobot;
@@ -18,83 +19,101 @@ import java.util.ArrayList;
  */
 public class RoverBreakdown extends Emergency {
 
-    ExplorationRover brokenRover;
-    Resources repairCosts;
+    private ExplorationRover brokenRover;
+    private Resources repairCosts;
+    private Missions mission;
+    private ColonyMemebers[] availableResponders=new ColonyMemebers[2];
+    private final int fatigueAmount=5;
+    private final int batteryDrainage=3;
     
     //constructor
-    public RoverBreakdown(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders, ExplorationRover brokenRover, Resources repairCosts) {
+    public RoverBreakdown(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders, ExplorationRover brokenRover, Missions mission, Resources repairCosts) {
         super(emergencyLocation, resolvedState, responders);
         this.brokenRover=brokenRover;
         this.repairCosts=repairCosts;
+        this.mission=mission;
     }
     
-    public void TriggerRoverBreakdown()
+    public void triggerEmergency()
     {
         brokenRover.setHealthStatus(false);
-        for (int i=0;i<getResponders().size() ; i++)
-        {
-            if(!getResponders().get(i).canHandleEmergency(this))
-            {
-                System.out.println("The responder is not suitable for handling this type of emergency.");
-                System.out.println("---FAILED TO RESOLVE ROVER BREAKDOWN EMERGENCY---");
-                return;
-            }
-            else if(!getResponders().get(i).isUseable())
-            {
-                if(getResponders().get(i) instanceof RepairRobot)
-                {
-                    System.out.println("The rapair robot is out of battery.");
-                }
-                if(getResponders().get(i) instanceof Engineer)
-                {
-                    System.out.println("The engineer is dead..."); //SOUNDS TOO HARSH
-                }
-                System.out.println("---FAILED TO RESOLVE ROVER BREAKDOWN EMERGENCY---");
-                return;
-                    
-            }
-            else if(!getResponders().get(i).isIsAvaialble())
-            {
-                System.out.println("The responder is not available(It is currently part of an active mission)");
-                System.out.println("---FAILED TO RESOLVE ROVER BREAKDOWN EMERGENCY---");
-                return;
-            }
-            else
-            {
-                //resolve the emergency
-            }
-            
-        }
+        //change mission status
+        brokenRover.setCurrentLocation(getEmergencyLocation());
+        System.out.println("----!!ROVER BREAKDOWN EMERGENCY!!----");
         
     }
     
-    private void damageRover(ExplorationRover brokenRover)
+    public void handleEmergency()
     {
-        brokenRover.setHealthStatus(false);
-    }
-    
-    private void dispatchEngineer(Engineer e)
-    {
-        e.setCurrentLocation(this.getEmergencyLocation());
-    }
-    private void dispatchRepairRobot(RepairRobot r)
-    {
-        r.setCurrentLocation(this.getEmergencyLocation());
-    }
-    
-    
-    //loop on responders to find suitable engineer & robot
-   /* public void ResolveEmergency()
-    {
-        for(int i=0;i<responders.length;i++)
+        //ColonyMemebers[] availableResponders= new ColonyMemebers[2];
+        availableResponders=findResponders();
+        //SCENARIOS TO MAKE HANDLING EMERGENCY FAIL
+        //if there are no responders:
+        if(availableResponders==null)
         {
-            if(responders[i] instanceof Engineer)
+            System.out.println(getFailureReason());
+            setResolvedState(false);
+        }
+        //if spare parts are insufficient 
+        if(!repairCosts.areSparePartsSufficient(3))
+        {
+            setFailureReason("Insufficient spare parts to repair the broken rover.");
+            System.out.println(getFailureReason());
+            setResolvedState(false);
+        }
+        
+        //if respponders are out of battery
+        for (ColonyMemebers availableResponder : availableResponders) 
+        {
+            if (!isResponderEnergySufficient(availableResponder))
             {
-                if(responders[i].canHandleEmergency)
-                    
+                if(availableResponder instanceof Engineer)
+                    System.out.println("Engineer does not have sufficient energy to repair rover.");
+                if(availableResponder instanceof RepairRobot)
+                    System.out.println("Repair robot does not have sufficient battery to repair rover.");
+                setResolvedState(false);
             }
         }
-    }*/
+        if(!isResolvedState())
+        {
+            System.out.println("__FAILED TO HANDLE EMERGENCY. EMERGENCY UNRESOLVED__");
+            return;
+        }
+        
+        //emergency can be handled.
+        
+        //change locations of engineer and repair robot
+        for(ColonyMemebers availableResponder : availableResponders)
+        {
+            availableResponder.setCurrentLocation(getEmergencyLocation());
+            
+        }
+        
+        
+    }
+    
+    private boolean isResponderEnergySufficient(ColonyMemebers r)
+    {
+        if(r instanceof Engineer)
+        {
+            if ( (((Engineer)r).getFatigueLevel()+fatigueAmount) <=100)
+            {
+                //((Engineer)r).incFatigue(fatigueAmount);
+                return true;
+            }
+            return false;
+        }
+        if (r instanceof RepairRobot)
+        {
+            if ( (((RepairRobot)r).getBatteryLevel()-batteryDrainage) >= ((RepairRobot)r).getBatteryLevel())
+            {
+                //((RepairRobot)r).drainBattery(batteryDrainage);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
     
     @Override
     public ColonyMemebers[] findResponders()
@@ -102,7 +121,7 @@ public class RoverBreakdown extends Emergency {
         int numResponders=0;
         boolean foundEngineer=false; 
         boolean foundRepairRobot=false;
-        ColonyMemebers[] availableResponders=new ColonyMemebers[2];
+        //ColonyMemebers[] availableResponders=new ColonyMemebers[2];
         for(int i=0;i<getResponders().size();i++)
         {
             if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
