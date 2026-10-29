@@ -108,12 +108,22 @@ public class RoverBreakdown extends Emergency {
             if(availableResponder instanceof Engineer)
             {
                 //((Engineer)availableResponder).repair();
+                ((Engineer)availableResponder).incFatigue(fatigueAmount);
             }
             if(availableResponder instanceof RepairRobot)
             {
                 //((RepairRobot)availableResponder).repair();
+                ((RepairRobot)availableResponder).drainBattery(batteryDrainage);
             }
             
+        }
+    }
+    
+    private void drainRespondersEnergy()
+    {
+        for(ColonyMemebers availableResponder: availableResponders)
+        {
+            if(availableResponder instanceof Eng)
         }
     }
     
