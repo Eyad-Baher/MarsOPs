@@ -8,11 +8,12 @@ import java.util.ArrayList;
  */
 public abstract class Emergency {
     private String emergencyLocation;
-    private boolean resolvedState;
+    private String resolvedState;
     private ArrayList<ColonyMemebers> responders;
+    private ColonyMemebers[] suitableResponders;
     private String failureReason;
 
-    public Emergency(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders) {
+    public Emergency(String emergencyLocation, String resolvedState, ArrayList<ColonyMemebers> responders) {
         this.emergencyLocation = emergencyLocation;
         this.resolvedState = resolvedState;
         this.responders = responders;
@@ -30,7 +31,7 @@ public abstract class Emergency {
         this.emergencyLocation = emergencyLocation;
     }
 
-    public void setResolvedState(boolean resolvedState) {
+    public void setResolvedState(String resolvedState) {
         this.resolvedState = resolvedState;
     }
 
@@ -38,11 +39,20 @@ public abstract class Emergency {
         this.responders = responders;
     }
 
+    public ColonyMemebers[] getSuitableResponders() {
+        return suitableResponders;
+    }
+
+    public void setSuitableResponders(ColonyMemebers[] suitableResponders) {
+        this.suitableResponders = suitableResponders;
+    }
+    
+
     public String getEmergencyLocation() {
         return emergencyLocation;
     }
 
-    public boolean isResolvedState() {
+    public String getResolvedState() {
         return resolvedState;
     }
 

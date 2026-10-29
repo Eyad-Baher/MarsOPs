@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class RoverBreakdown extends Emergency {
 
-    public RoverBreakdown(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders) {
+    public RoverBreakdown(String emergencyLocation, String resolvedState, ArrayList<ColonyMemebers> responders) {
         super(emergencyLocation, resolvedState, responders);
     }
 

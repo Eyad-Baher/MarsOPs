@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Medical extends Emergency{
 
-    public Medical(String emergencyLocation, boolean resolvedState, ArrayList<ColonyMemebers> responders) {
+    public Medical(String emergencyLocation, String resolvedState, ArrayList<ColonyMemebers> responders) {
         super(emergencyLocation, resolvedState, responders);
     }
 
