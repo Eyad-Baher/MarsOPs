@@ -62,7 +62,7 @@ public class RoverBreakdown extends Emergency {
             setResolvedState(false);
         }
         
-        //if respponders are out of battery
+        //if respponders are out of energy
         for (ColonyMemebers availableResponder : availableResponders) 
         {
             if (!isResponderEnergySufficient(availableResponder))
@@ -84,7 +84,11 @@ public class RoverBreakdown extends Emergency {
         this.changeRespondersLocation();
         this.makeRespondersUnavailable();
         this.respondersRepair();
+        releaseResponders();
         setResolvedState(true);
+        
+        if(isResolvedState())
+            System.out.println("__ROVER BREAKDOWN EMERGENCY IS SUCCESSFULLY RESOLVED__");
             
     }
     
@@ -103,11 +107,11 @@ public class RoverBreakdown extends Emergency {
         {
             if(availableResponder instanceof Engineer)
             {
-                ((Engineer)availableResponder).repair();
+                //((Engineer)availableResponder).repair();
             }
             if(availableResponder instanceof RepairRobot)
             {
-                ((RepairRobot)availableResponder).repair();
+                //((RepairRobot)availableResponder).repair();
             }
             
         }
@@ -123,7 +127,10 @@ public class RoverBreakdown extends Emergency {
     
     private void releaseResponders()
     {
-        
+        for(ColonyMemebers availableResponder: availableResponders)
+        {
+            availableResponder.setIsAvaialble(true);
+        }
     }
     
     private boolean isResponderEnergySufficient(ColonyMemebers r)
