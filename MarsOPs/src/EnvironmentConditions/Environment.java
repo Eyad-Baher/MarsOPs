@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package EnvironmentConditions;
+import Missions.Missions;
+import Missions.ExplorationMission;
+import Missions.RescueMission;
 
 /**
  *
@@ -10,7 +13,7 @@ package EnvironmentConditions;
  */
 public interface Environment {
     
-    public abstract boolean canDisruptMission();
+    public abstract boolean canDisruptMission(Missions mission);
     
     
 }

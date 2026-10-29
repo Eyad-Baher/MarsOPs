@@ -4,6 +4,8 @@
  */
 package EnvironmentConditions;
 
+import Missions.Missions;
+
 /**
  *
  * @author HP
@@ -11,9 +13,11 @@ package EnvironmentConditions;
 public class Normal implements Environment{
 
     @Override
-    public boolean canDisruptMission() {
+    public boolean canDisruptMission(Missions mission) {
         return false;
     }
+
+
     
     
     
