@@ -46,7 +46,7 @@ public abstract class RoboticUnit extends ColonyMemebers{
     @Override
     public void advanceTime()
     {
-        batteryLevel-=batteryLevel;
+        batteryLevel-=1;
     }
     
     @Override

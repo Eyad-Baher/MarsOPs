@@ -4,56 +4,54 @@
  */
 package CrewMemebers;
 
-
 import Emergency.Emergency;
 import Missions.Missions;
 import Missions.RepairMission;
 import MyResources.Equipment;
 import Facility.ColonyFacility;
+import Missions.RescueMission;
 import Robots.RoboticUnit;
 
 /**
  *
  * @author HP
  */
-public class Engineer extends CrewMember{
+public class Engineer extends CrewMember {
 
     public Engineer(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
         super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
     }
 
-
-
-    public void repair(ColonyFacility damagedFacility)
-    {
+    public void repair(ColonyFacility damagedFacility) {
         damagedFacility.setOperationalStatus("OPERATIONAL");
     }
-    public void repair(RoboticUnit damagedRobot)
-    {
+
+    public void repair(RoboticUnit damagedRobot) {
         damagedRobot.setHealthStatus(true);
     }
-    public void repair(Equipment equipment,int num)
-    {
+
+    public void repair(Equipment equipment, int num) {
         equipment.repair(num);
-        
+
     }
-    
+
     @Override
-    public boolean canPerformMission(Missions mission)
-    {
-        if( mission instanceof RepairMission)
-        {
-            return true;
-            
-        }else return false;
-    }
-    
-    @Override
-    public boolean canHandleEmergency(Emergency emergency)
-    {
+    public boolean canPerformMission(Missions mission) {
+        if (isIsAvaialble() && isUseable()) {
+            if (mission instanceof RepairMission) {
+                return true;
+
+            } else if (mission instanceof RescueMission) {
+                return true;
+            }
+
+        }
         return false;
     }
-    
-    
-    
+
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+        return false;
+    }
+
 }

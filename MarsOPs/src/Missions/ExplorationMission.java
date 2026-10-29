@@ -15,6 +15,7 @@ public class ExplorationMission extends Missions {
 
     private Location targetLocation;
     private String requiredSkill;
+    
 
     public ExplorationMission(Location targetLocation, String requiredSkill, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
@@ -53,13 +54,16 @@ public class ExplorationMission extends Missions {
             fail("Another mission Active");
             return false;
         }
-
+        if (missionEquipment==null){
+           fail("Not enough equipment");
+            return false; 
+        }
         ArrayList<ColonyMemebers> readyAgents = new ArrayList<>();
         int numAgents = 0;
         int numRobots = 0;
 
         for (ColonyMemebers candidate : candidates) {
-            if (candidate.isIsAvaialble() && candidate.isUseable() && candidate.canPerformMission(this)) {
+            if (candidate.canPerformMission(this)) {
                 if (candidate instanceof CrewMember && numAgents != 1) {
                     numAgents++;
                     readyAgents.add(candidate);
@@ -79,11 +83,31 @@ public class ExplorationMission extends Missions {
 
     @Override
     public void advanceTime() {
+        boolean location= true;
         
-        
-    }
-
-    
-    
-    
+        if (this.targetLocation == null)
+        {
+         location = false;
+        }
+        if(location == true){
+        for (ColonyMemebers missionAgent : this.agents) {
+            
+            
+            
+               if(missionAgent instanceof CrewMember)
+               {
+                   missionAgent.advanceTime();
+               }else
+               {
+                   missionAgent.advanceTime();
+                   
+               }
+              
+        }
+       targetLocation.Explore(); 
+    } 
+        else{
+            System.out.println("no location to be explored, mission failed.");
+        }
+}
 }

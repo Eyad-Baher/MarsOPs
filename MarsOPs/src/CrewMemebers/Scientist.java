@@ -7,12 +7,14 @@ package CrewMemebers;
 import Missions.ExplorationMission;
 import Emergency.Emergency;
 import Missions.Missions;
+import Missions.ResearchMission;
 
 /**
  *
  * @author HP
  */
-public class Scientist extends CrewMember{
+public class Scientist extends CrewMember {
+
     private String skill;
 
     public Scientist(String name, String healthStatus, String skill, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
@@ -20,30 +22,30 @@ public class Scientist extends CrewMember{
         this.skill = skill;
     }
 
-
-
-    
-    public void research()
-    {
-        System.out.println(getName()+ " is researching.");
+    public void research() {
+        System.out.println(getName() + " is researching.");
     }
-    
-    
-        @Override
-    public boolean canPerformMission(Missions mission)
-    {
-        if (mission instanceof ExplorationMission){
-            if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())){
-                return true;
+
+    @Override
+    public boolean canPerformMission(Missions mission) {
+        if (isIsAvaialble() && isUseable()) {
+            if (mission instanceof ExplorationMission) {
+                if (this.skill.equals(((ExplorationMission) mission).getRequiredSkill())) {
+                    return true;
+                }
+            }
+            else if (mission instanceof ResearchMission){
+                if(this.skill.equals(((ResearchMission) mission).getScientificSkill()))
+                    return true;
+                
             }
         }
         return false;
     }
-    
+
     @Override
-    public boolean canHandleEmergency(Emergency emergency)
-    {
+    public boolean canHandleEmergency(Emergency emergency) {
         return false;
     }
-    
+
 }
