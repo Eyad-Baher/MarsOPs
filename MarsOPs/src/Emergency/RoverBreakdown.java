@@ -81,14 +81,48 @@ public class RoverBreakdown extends Emergency {
         }
         
         //emergency can be handled.
-        
-        //change locations of engineer and repair robot
+        this.changeRespondersLocation();
+        this.makeRespondersUnavailable();
+        this.respondersRepair();
+        setResolvedState(true);
+            
+    }
+    
+    private void changeRespondersLocation()
+    {
         for(ColonyMemebers availableResponder : availableResponders)
         {
             availableResponder.setCurrentLocation(getEmergencyLocation());
             
         }
-        
+    }
+    
+    private void respondersRepair()
+    {
+        for(ColonyMemebers availableResponder : availableResponders)
+        {
+            if(availableResponder instanceof Engineer)
+            {
+                ((Engineer)availableResponder).repair();
+            }
+            if(availableResponder instanceof RepairRobot)
+            {
+                ((RepairRobot)availableResponder).repair();
+            }
+            
+        }
+    }
+    
+    private void makeRespondersUnavailable()
+    {
+        for(ColonyMemebers availableResponder : availableResponders)
+        {
+            availableResponder.setIsAvaialble(false);
+        }
+    }
+    
+    private void releaseResponders()
+    {
         
     }
     
