@@ -35,7 +35,7 @@ public class RoverBreakdown extends Emergency {
         this.mission=mission;
     }
     
-    public void triggerEmergency()
+    public void triggerRoverBreakdown()
     {
         brokenRover.setHealthStatus(false);
         //change mission status
@@ -44,7 +44,7 @@ public class RoverBreakdown extends Emergency {
         
     }
     
-    public void handleEmergency()
+    public void handleRoverBreakdown()
     {
         //ColonyMemebers[] availableResponders= new ColonyMemebers[2];
         availableResponders=findResponders();
