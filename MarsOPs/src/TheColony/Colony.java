@@ -29,8 +29,8 @@ public class Colony {
     private ArrayList<Missions> allMissions = new ArrayList<>();
     private Environment currentCondition = new Normal();
     private boolean activeMission;
-    private Resources colonyResources;  
-    
+    private Resources colonyResources;
+
     public Colony(Resources colonyResources) {
         this.colonyResources = colonyResources;
     }
@@ -63,34 +63,35 @@ public class Colony {
         }
 
         allMissions.add(currentMission);
-        currentMission.setCurrentCondition(currentCondition);   
+        currentMission.setCurrentCondition(currentCondition);
 
         boolean enoughResources = hasEnoughResources(currentMission.getMissionResources());
 
         if (!currentMission.acceptMission(allAgents, activeMission, enoughResources)) {
-            System.out.println("Mission " + currentMission.getMissionID() + " rejected: " + currentMission.getFailureReason());
+            System.out.println("Mission " + currentMission.getMissionID() + " cannot be assigned.");
+            System.out.println("Reason: " + currentMission.getFailureReason());
             return;
         }
 
         deductResources(currentMission.getMissionResources());
         activeMission = true;
 
-            currentMission.start();
+        currentMission.start();
 
-            for (int time = 0; time < currentMission.getDuration(); time++) {
-                if (!currentMission.getState().equals("IN PROGRESS")) {
-                    break;
-                }
-                currentMission.updateProgress();
+        for (int time = 0; time < currentMission.getDuration(); time++) {
+            if (!currentMission.getState().equals("IN PROGRESS")) {
+                break;
             }
-       
-            activeMission = false;      
-        
+            currentMission.updateProgress();
+        }
+
+        activeMission = false;
+
     }
 
     private boolean hasEnoughResources(Resources needed) {
         if (needed == null) {
-            return true;               
+            return true;
         }
         return colonyResources.getOxygen() >= needed.getOxygen()
                 && colonyResources.getWater() >= needed.getWater()
