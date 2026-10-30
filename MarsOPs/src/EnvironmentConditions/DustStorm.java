@@ -1,4 +1,3 @@
-
 package EnvironmentConditions;
 
 import ColonyMemebers.ColonyMemebers;
@@ -10,22 +9,25 @@ import Robots.ExplorationRover;
  *
  * @author abdel
  */
-public class DustStorms implements Environment{
+public class DustStorm implements Environment {
 
     @Override
     public boolean canDisruptMission(Missions mission) {
-        if  (mission instanceof ExplorationMission){
+        if (mission instanceof ExplorationMission) {
             return true;
-      }
+        }
         for (ColonyMemebers agent : mission.getAgents()) {
-            if (agent instanceof ExplorationRover)
+            if (agent instanceof ExplorationRover) {
                 return true;
-            
+            }
+
         }
         return false;
     }
 
-    
-    
-    
+    @Override
+    public boolean canShutDownLocation() {
+        return false;
+    }
+
 }
