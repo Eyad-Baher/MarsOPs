@@ -5,6 +5,7 @@
 package Facility;
 
 import MyResources.Resources;
+import Robots.RoboticUnit;
 
 
 /**
@@ -12,12 +13,30 @@ import MyResources.Resources;
  * @author Lina Islam
  */
 public class PowerStation extends ColonyFacility {
+    private int powerOutput;//efficiency of powerstation
+    private static final int MAX_BATTERY= 100;
 
-    public PowerStation(String location, int capacity, String operationalStatus, Resources resources) {
+    public PowerStation(int powerOutput, String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);
+        this.powerOutput = powerOutput;
     }
 
-    
-    
+    public int getPowerOutput() {
+        return powerOutput;
+    }
+
+    public void setPowerOutput(int powerOutput) {
+        this.powerOutput = powerOutput;
+    }
+
+    public void rechargeBattery(RoboticUnit robot){
+        if(!robot.isIsAvaialble())
+            System.out.println("Robit is unavailabe, can't be recharged.");
+        else if(robot.getBatteryLevel()==100)
+            System.out.println("Rbot already charged.");
+        else
+        robot.setBatteryLevel(MAX_BATTERY);
+    }
+      
     
 }
