@@ -99,7 +99,7 @@ public class Fire extends Emergency {
         setSuitableResponders(new ColonyMemebers[3]);
         for(int i=0;i<getResponders().size();i++)
         {
-            if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
+            if(getResponders().get(i).canHandleEmergency(this) )
             {
                 if(getResponders().get(i) instanceof Engineer && foundEngineer==false)
                 {
