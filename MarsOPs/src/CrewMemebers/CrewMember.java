@@ -50,7 +50,7 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     @Override
     public boolean isUseable()
     {
-        if(fatigueLevel>0 && healthStatus.equals("INJURED"))
+        if(fatigueLevel<100 && !healthStatus.equals("INJURED"))
         {
             return true;
         }

@@ -65,18 +65,19 @@ public class ExplorationMission extends Missions {
                     numAgents++;
                     readyAgents.add(candidate);
                 }
-            }
-            if (candidate instanceof RoboticUnit && numAgents != 1) {
-                numRobots++;
-                readyAgents.add(candidate);
-            }
-            if (numAgents > 0 && numRobots > 0) {
-                assignAgents(readyAgents);
-                if (currentCondition.canDisruptMission(this) == true) {
-                    fail("Unsuitable Conditions for mission");
-                    return false;
+
+                if (candidate instanceof RoboticUnit && numRobots != 1) {
+                    numRobots++;
+                    readyAgents.add(candidate);
                 }
-                return true;
+                if (numAgents > 0 && numRobots > 0) {
+                    if (currentCondition.canDisruptMission(this) == true) {
+                        fail("Unsuitable Conditions for mission");
+                        return false;
+                    }
+                    assignAgents(readyAgents);
+                    return true;
+                }
             }
         }
         return false;
