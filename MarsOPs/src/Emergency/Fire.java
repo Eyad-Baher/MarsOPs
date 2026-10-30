@@ -25,6 +25,7 @@ public class Fire extends Emergency {
     public Fire(Laboratory affectedLaboratory, ArrayList<ColonyMemebers> responders) {
         super("Laboratory: " + affectedLaboratory.getLocation(), null, responders);
         this.triggered=false;
+        this.affectedLaboratory=affectedLaboratory;
         
     }
 
@@ -89,7 +90,7 @@ public class Fire extends Emergency {
         if (r != null)  
             r.setIsAvaialble(true);                     
     }
-    affectedLaboratory.setCapacity(affectedLaboratory.getCapacity()-2);
+    affectedLaboratory.setCapacity(affectedLaboratory.getCapacity()-3);
       System.out.println("Responders are now available");  
     }
     
@@ -134,6 +135,7 @@ public class Fire extends Emergency {
             
         }
         setFailureReason("There are no suitable responders.");
+        setSuitableResponders(null);
         return null;
         
     }
@@ -151,10 +153,7 @@ public class Fire extends Emergency {
             setFailureReason("Insufficient spareparts");
             return;
         }
-        else {
-            colony.deductTotalResource("spareparts", 2);
-            colony.distributeSpareParts();
-        }
+        
         if(!colony.getTotalResources().areMedicalSuppliesSufficient(2))
             {
             System.out.println("Insufficient medical supplies, leak can't be repaired.");
@@ -162,6 +161,8 @@ public class Fire extends Emergency {
             return;
         }
         else {
+            colony.deductTotalResource("spareparts", 3);
+            colony.distributeSpareParts();
             colony.deductTotalResource("medicalSupplies", 2);
             colony.distributeMedicalSupplies();
         }
@@ -190,7 +191,7 @@ public class Fire extends Emergency {
                         }
                     }
              } 
-            // resources consumption (colony-wide),add after colony class is done
+            
             setResolvedState("RESOLVED");
             System.out.println("Fire got repaired successfully");
             System.out.println("All personnel in the Laboratory are healed");
