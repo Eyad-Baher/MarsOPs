@@ -4,6 +4,7 @@
  */
 package marsops;
 
+import CrewMemebers.Engineer;
 import CrewMemebers.Scientist;
 import Missions.ExplorationMission;
 import MyResources.Equipment;
@@ -25,7 +26,7 @@ public class MarsOPs {
      */
     
     // Scenario 1: Successful Exploration
-    public void scenarioONE()
+    public static void scenarioONE()
     {
         System.out.println("===== Scenario 1: Successful Exploration =====");
 
@@ -39,7 +40,7 @@ public class MarsOPs {
 
         Equipment equipment = new Equipment("Sample Drill", 5, false);
         Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
-        Location target = new Location("Olympus Ridge");
+        Location  target = new Location("Olympus Ridge");
 
         ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-01", 3, missionResources, equipment);
 
@@ -56,8 +57,39 @@ public class MarsOPs {
         System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
     }
 
+    // Scenario 2: Mission Rejection
+public static void scenarioTWO()
+{
+    System.out.println("\n===== Scenario 2: Mission Rejection =====");
+
+    Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
+    Colony colonyTWO = new Colony(colonyResources);
+
+    // An engineer cannot perform an exploration mission, so this agent is unsuitable
+    Engineer engineer = new Engineer("Eng. Omar", "HEALTHY", 10, "E-01", "Habitat", true);
+    colonyTWO.addAgent(engineer);
+
+    Equipment equipment = new Equipment("Sample Drill", 5, false);
+    Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
+    Location target = new Location("Valles Marineris");
+    ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-02", 3, missionResources, equipment);
+
+    System.out.println("\n--- System state BEFORE submission ---");
+    colonyTWO.showState();
+    System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+
+    System.out.println("\n--- Submitting mission ---");
+    colonyTWO.startMission(mission);
+
+    System.out.println("\n--- System state AFTER submission ---");
+    colonyTWO.showState();
+    System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+    System.out.println("Mission ever active: " + (mission.getElapsedTime() > 0 || mission.getState().equals("IN PROGRESS")));
+    System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
+}
     public static void main(String[] args) {
-        new MarsOPs().scenarioONE();
+       // new MarsOPs().scenarioONE();
+       scenarioTWO();
     }
     
 }
