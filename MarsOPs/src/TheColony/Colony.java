@@ -5,10 +5,16 @@
 package TheColony;
 
 import ColonyMemebers.ColonyMemebers;
+import Emergency.Emergency;
+import Emergency.Fire;
+import Emergency.Medical;
+import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
 import EnvironmentConditions.Environment;
 import EnvironmentConditions.Normal;
 import Facility.ColonyFacility;
 import Facility.CommunicationStation;
+import Facility.Habitat;
 import Missions.Missions;
 import MyResources.Equipment;
 import MyResources.LifeSupportSystem;
@@ -40,8 +46,7 @@ public class Colony {
         boolean enoughResources = hasEnoughResources(currentMission.getMissionResources());
 
         if (!currentMission.acceptMission(allAgents, activeMission, enoughResources)) {
-            System.out.println("Mission " + currentMission.getMissionID()
-                    + " rejected: " + currentMission.getFailureReason());
+            System.out.println("Mission " + currentMission.getMissionID() + " rejected: " + currentMission.getFailureReason());
             return;
         }
 
@@ -86,20 +91,5 @@ public class Colony {
         colonyResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
         colonyResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
-    
-    public void shutDownStation()
-    {
-        if(currentCondition.canShutDownLocation()==true)
-        {
-            for (ColonyFacility colonyFacility : allFacility) {
-                
-                if( colonyFacility instanceof CommunicationStation)
-                {
-                    colonyFacility.setOperationalStatus("NON-OPERATRIONAL");
-                }
-                
-            }
-        }
-            
-    }
+
 }

@@ -31,12 +31,12 @@ public class Medical extends Emergency{
         this.facility=facility;
     }
     
-    public void triggerEmergency()
+    public void triggerMedical()
     {
         patient.setHealthStatus("INJURED");
     }
     
-    public void handleEmergency()
+    public void handleMedical()
     {
         availableResponder=findResponders();
         //SCENARIOS TO MAKE HANDLING EMERGENCY FAIL
