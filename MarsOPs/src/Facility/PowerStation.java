@@ -31,9 +31,9 @@ public class PowerStation extends ColonyFacility {
 
     public void rechargeBattery(RoboticUnit robot){
         if(!robot.isIsAvaialble())
-            System.out.println("Robit is unavailabe, can't be recharged.");
-        else if(robot.getBatteryLevel()==100)
-            System.out.println("Rbot already charged.");
+            System.out.println("Robot is unavailabe, can't be recharged.");
+        else if(robot.getBatteryLevel()==MAX_BATTERY)
+            System.out.println("Robot is already charged.");
         else
         robot.setBatteryLevel(MAX_BATTERY);
     }

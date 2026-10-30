@@ -43,6 +43,7 @@ public class Fire extends Emergency {
     public void triggerFire(int oxygenConsumption){
         if(!triggered){
         affectedLaboratory.setavailable(false);
+        affectedLaboratory.setOperationalStatus("NON-OPERATIONAL");
         damageAllEquipment();
         increaseOxygenConsumption(oxygenConsumption);
         injurePersonnel();
@@ -112,11 +113,13 @@ public class Fire extends Emergency {
         {
             for(ColonyMemebers r:getSuitableResponders())
             { if(r instanceof Engineer){// engineer rapairs laboratory , stopping fire
+                ((Engineer)r).setCurrentLocation(getEmergencyLocation());
               ((Engineer)r).repair(affectedLaboratory);
             }
             else
                 if(r instanceof RepairRobot){ // robot repairs laboratory with engineer and fixes damaged equipment
-                ((RepairRobot)r).repair(affectedLaboratory);
+                    ((RepairRobot)r).setCurrentLocation(getEmergencyLocation());
+                    ((RepairRobot)r).repair(affectedLaboratory);
                 for(int i=0; i<affectedLaboratory.getEquipment().size();i++)
                         {
                             ((RepairRobot)r).repair(affectedLaboratory.getEquipment().get(i), affectedLaboratory.getEquipment().get(i).getTotalAmount());
@@ -125,6 +128,7 @@ public class Fire extends Emergency {
                 else
                     if(r instanceof MedicalOfficer) // medical officer heals lab personnel
                     {
+                        ((MedicalOfficer) r).setCurrentLocation(getEmergencyLocation());
                         for(int i=0; i<affectedLaboratory.getPersonnelPresent().size();i++)
                         {
                             ((MedicalOfficer) r).heal(affectedLaboratory.getPersonnelPresent().get(i));

@@ -33,6 +33,7 @@ public class OxygenLeak extends Emergency {
         {
         detected = true;
         affectedHabitat.reduceOxygen(oxygenLoss);
+        affectedHabitat.setOperationalStatus("NON-OPERATIONAL");
         }
         else 
             System.out.println("Oxygen loss already detected.");
@@ -47,6 +48,7 @@ public class OxygenLeak extends Emergency {
     }
     public void triggerOxygenLeak(){
         detectOxygenLoss();
+        System.out.println("!! EMERGECY:OXYGEN LEAK !!");
     }
     
     
@@ -105,10 +107,15 @@ public class OxygenLeak extends Emergency {
         else 
         {
             for(ColonyMemebers r:getSuitableResponders())
-            {if(r instanceof Engineer)
+            {if(r instanceof Engineer){
+               ((Engineer)r).setCurrentLocation(getEmergencyLocation());
               ((Engineer)r).repair(affectedHabitat);
+            }
             else
-                ((RepairRobot)r).repair(affectedHabitat);   
+            {
+                ((RepairRobot)r).repair(affectedHabitat); 
+                ((RepairRobot)r).setCurrentLocation(getEmergencyLocation());
+            }
              } 
             // resources consumption (colony-wide)add after colony class is done
             setResolvedState("RESOLVED");

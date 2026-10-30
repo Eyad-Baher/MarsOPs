@@ -14,7 +14,7 @@ import MyResources.Resources;
 public abstract class ColonyFacility {
     private String location;
     private int capacity;
-    private String operationalStatus;
+    private String operationalStatus; // OPERATION or NON-OPERATIONAL
     private Resources resources;
 
     public ColonyFacility(String location, int capacity, String operationalStatus, Resources resources) {
