@@ -27,6 +27,12 @@ public abstract class Missions {
         this.currentCondition = new Normal();
     }
 
+    public void setCurrentCondition(Environment currentCondition) {
+        this.currentCondition = currentCondition;
+    }
+    
+    
+
     public String getMissionID() {
         return missionID;
     }
@@ -69,6 +75,11 @@ public abstract class Missions {
         }
         missionState = "FAILED";
         failureReason = reason;
+
+        for (ColonyMemebers agent : agents) {
+            agent.setIsAvaialble(true);
+
+        }
     }
 
     public String getState() {
@@ -83,26 +94,26 @@ public abstract class Missions {
 
     public void start() {
 
-        if (missionState.equals("ASSIGNED")) {
-            missionState = "IN PROGRESS";
-        }
         for (ColonyMemebers agent : agents) {
 
             agent.setIsAvaialble(false);
 
         }
 
+        if (missionState.equals("ASSIGNED")) {
+            missionState = "IN PROGRESS";
+        }
+
     }
 
     public void updateProgress() {
-        
-        if(currentCondition.canDisruptMission(this)==true)
-        {
+
+        if (currentCondition.canDisruptMission(this) == true) {
             fail("Conditions worsened. Unsuitable to continue");
             return;
-            
+
         }
-        
+
         if (!missionState.equals("IN PROGRESS")) {
             return;
         }
