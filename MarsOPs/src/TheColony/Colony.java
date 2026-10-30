@@ -35,6 +35,28 @@ public class Colony {
         this.colonyResources = colonyResources;
     }
 
+    public void addAgent(ColonyMemebers agent) {
+        if (agent != null) {
+            allAgents.add(agent);
+        }
+    }
+
+    public void showState() {
+        System.out.println("Resources: " + colonyResources);
+        System.out.println("Active mission: " + activeMission);
+        System.out.println("Agents (" + allAgents.size() + "):");
+        for (ColonyMemebers agent : allAgents) {
+            agent.getStatusSummary();
+            System.out.println();
+        }
+        System.out.println("Missions (" + allMissions.size() + "):");
+        for (Missions m : allMissions) {
+            System.out.println("  " + m.getMissionID() + " -> " + m.getState()
+                    + " (" + m.getElapsedTime() + "/" + m.getDuration() + ")"
+                    + (m.getFailureReason() != null ? " reason: " + m.getFailureReason() : ""));
+        }
+    }
+
     public void startMission(Missions currentMission) {
         if (currentMission == null) {
             return;

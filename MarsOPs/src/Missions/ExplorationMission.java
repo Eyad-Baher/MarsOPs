@@ -66,7 +66,7 @@ public class ExplorationMission extends Missions {
                     readyAgents.add(candidate);
                 }
 
-                if (candidate instanceof RoboticUnit && numAgents != 1) {
+                if (candidate instanceof RoboticUnit && numRobots != 1) {
                     numRobots++;
                     readyAgents.add(candidate);
                 }
