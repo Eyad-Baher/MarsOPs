@@ -14,27 +14,29 @@ import Robots.Drone;
  *
  * @author HP
  */
-public class CommunicationDisruption implements Environment{
+public class CommunicationDisruption implements Environment {
 
     @Override
     public boolean canDisruptMission(Missions mission) {
-        if (mission instanceof RescueMission || mission instanceof ExplorationMission)
-        {
+        if (mission instanceof RescueMission || mission instanceof ExplorationMission) {
             return true;
         }
-        
-        for (ColonyMemebers agent: mission.getAgents()) {
-            
+
+        for (ColonyMemebers agent : mission.getAgents()) {
+
             if (agent instanceof Drone) {
                 return true;
-                
+
             }
-            
+
         }
-        
+
         return false;
     }
 
+    @Override
+    public boolean canShutDownLocation() {
+        return true;
+    }
 
-    
 }

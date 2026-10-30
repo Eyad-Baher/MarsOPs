@@ -10,16 +10,16 @@ import Missions.Missions;
  *
  * @author HP
  */
-public class Normal implements Environment{
+public class Normal implements Environment {
 
     @Override
     public boolean canDisruptMission(Missions mission) {
         return false;
     }
 
+    @Override
+    public boolean canShutDownLocation() {
+        return false;
+    }
 
-    
-    
-    
-    
 }

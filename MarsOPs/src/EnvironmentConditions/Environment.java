@@ -12,7 +12,7 @@ import Missions.RescueMission;
  * @author HP
  */
 public interface Environment {
-    
+    public abstract boolean canShutDownLocation();
     public abstract boolean canDisruptMission(Missions mission);
     
     
