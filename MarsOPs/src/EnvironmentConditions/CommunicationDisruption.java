@@ -34,6 +34,7 @@ public class CommunicationDisruption implements Environment {
         return false;
     }
 
+    @Override
     public boolean canShutDownLocation() {
         return true;
     }
