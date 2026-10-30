@@ -98,6 +98,38 @@ public class Resources {
             this.spareParts=0;
     }
   
-  
+    public boolean areSparePartsSufficient(int numOfSpareParts)
+    {
+        if( numOfSpareParts>this.spareParts || numOfSpareParts<0)
+        {
+            //cannot use up more spare parts than available & cannot use up a -ve number of spare parts
+            return false;
+        }
+        return true;
+    }
+    public boolean useSpareParts(int numOfSpareParts)
+    {
+        if(!areSparePartsSufficient(numOfSpareParts))
+        {
+            return false;
+        }
+        this.spareParts-=numOfSpareParts;
+        return true;
+    }
+    
+    public boolean areMedicalSuppliesSufficient(int numOfMedicalSupplies)
+    {
+        if(numOfMedicalSupplies>this.medicalSupplies || numOfMedicalSupplies<0)
+            return false;
+        return true;
+    }
+    public boolean useMedicalSupplies(int numOfMedicalSupplies)
+    {
+        if(!areMedicalSuppliesSufficient(numOfMedicalSupplies))
+            return false;
+        this.medicalSupplies-=numOfMedicalSupplies;
+        return true;
+        
+    }
     
 }

@@ -46,6 +46,7 @@ public class Fire extends Emergency {
         damageAllEquipment();
         increaseOxygenConsumption(oxygenConsumption);
         injurePersonnel();
+            System.out.println("!! EMERGECY:FIRE ALARM !!");
         
         }
         
@@ -103,8 +104,10 @@ public class Fire extends Emergency {
      public void resolveFire(){
         if(getResolvedState().equals("UNRESOLVED"))
         {
-        if(getSuitableResponders()==null )
+        if(getSuitableResponders()==null ){
             System.out.println("No responders, Leak can't be repaired");
+            
+        }
         else 
         {
             for(ColonyMemebers r:getSuitableResponders())
