@@ -1,4 +1,3 @@
-
 package MyResources;
 
 
@@ -10,6 +9,14 @@ public class Resources {
   protected int batteryPower;
   protected int medicalSupplies;
   protected int spareParts;
+  
+  public static final String OXYGEN="oxygen";
+  public static final String WATER="water";
+  public static final String FOOD="food";
+  public static final String FUEL="fuel";
+  public static final String BATTERYPOWER="batteryPower";
+  public static final String MEDICALSUPPLIES="medicalSupplies";
+  public static final String SPAREPARTS="spareParts";
 
     public Resources(int oxygen, int water, int food, int fuel, int batteryPower, int medicalSupplies, int spareParts) {
         this.oxygen = oxygen;
@@ -98,6 +105,127 @@ public class Resources {
             this.spareParts=0;
     }
   
+    public int getTotalResources()
+    {
+        return oxygen+water+food+fuel+batteryPower+medicalSupplies+spareParts;
+    }
+    
+    public int getAmount(String name)
+    {
+        if(!isValidName(name))
+            return -1;
+        if(OXYGEN.equals(name))
+            return oxygen;
+        if(WATER.equals(name))
+            return water;
+        if(FOOD.equals(name))
+            return food;
+        if(FUEL.equals(name))
+            return fuel;
+        if(BATTERYPOWER.equals(name))
+            return batteryPower;
+        if(MEDICALSUPPLIES.equals(name))
+            return medicalSupplies;
+        if(SPAREPARTS.equals(name))
+            return spareParts;
+        return -1;
+    }
+    
+    public boolean deductResource(String name, int amount)
+    {
+        if(!isValidName(name) || amount<0 )
+            return false;
+        if(amount> getAmount(name))
+            return false;
+        if(OXYGEN.equals(name))
+            oxygen-=amount;
+        else if(WATER.equals(name))
+            water-=amount;
+        else if(FOOD.equals(name))
+            food-=amount;
+        else if(FUEL.equals(name))
+            fuel-=amount;
+        else if(BATTERYPOWER.equals(name))
+            batteryPower-=amount;
+        else if(MEDICALSUPPLIES.equals(name))
+            medicalSupplies-=amount;
+        else if(SPAREPARTS.equals(name))
+            spareParts-=amount;
+        else
+            return false;
+        return true;
+    }
+    
+    public boolean addResource(String name, int amount)
+    {
+        if(!isValidName(name) || amount<0 )
+            return false;
+        if(OXYGEN.equals(name))
+            oxygen+=amount;
+        else if(WATER.equals(name))
+            water+=amount;
+        else if(FOOD.equals(name))
+            food+=amount;
+        else if(FUEL.equals(name))
+            fuel+=amount;
+        else if(BATTERYPOWER.equals(name))
+            batteryPower+=amount;
+        else if(MEDICALSUPPLIES.equals(name))
+            medicalSupplies+=amount;
+        else if(SPAREPARTS.equals(name))
+            spareParts+=amount;
+        else
+            return false;
+        return true;
+    }
+    
+    public boolean areSparePartsSufficient(int numOfSpareParts)
+    {
+        if( numOfSpareParts>this.spareParts || numOfSpareParts<0)
+        {
+            //cannot use up more spare parts than available & cannot use up a -ve number of spare parts
+            return false;
+        }
+        return true;
+    }
+    public boolean useSpareParts(int numOfSpareParts)
+    {
+        if(!areSparePartsSufficient(numOfSpareParts))
+        {
+            return false;
+        }
+        this.spareParts-=numOfSpareParts;
+        return true;
+    }
+    
+    public boolean areMedicalSuppliesSufficient(int numOfMedicalSupplies)
+    {
+        if(numOfMedicalSupplies>this.medicalSupplies || numOfMedicalSupplies<0)
+            return false;
+        return true;
+    }
+    public boolean useMedicalSupplies(int numOfMedicalSupplies)
+    {
+        if(!areMedicalSuppliesSufficient(numOfMedicalSupplies))
+            return false;
+        this.medicalSupplies-=numOfMedicalSupplies;
+        return true;
+        
+    }
+    
+  @Override
+    public String toString()
+    {
+        return "oxygen "+oxygen+", water "+water+", food "+food+", fuel "+fuel+", battery power "+batteryPower+", medical supplies "+medicalSupplies+", spare parts "+spareParts;
+    }
   
+    //helper method
+    private boolean isValidName(String name)
+    {
+        if(name!= null && (OXYGEN.equals(name) || WATER.equals(name) || FOOD.equals(name) || FUEL.equals(name) || BATTERYPOWER.equals(name) || MEDICALSUPPLIES.equals(name) || SPAREPARTS.equals(name) ))
+            return true;
+        return false;
+    }
+    
     
 }

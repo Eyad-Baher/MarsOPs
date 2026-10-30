@@ -6,7 +6,7 @@ import MyResources.Resources;
  * @author abdel
  */
 public class LifeSupportSystem {
-    private Resources resources;
+    private final Resources resources;
     private boolean airFiltrationStatus;
 
     public LifeSupportSystem(Resources resources, boolean filtrationStatus) {

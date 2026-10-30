@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Facility;
 
 import MyResources.Resources;
@@ -14,12 +10,15 @@ import MyResources.Resources;
 public abstract class ColonyFacility {
     private String location;
     private int capacity;
-    private String operationalStatus;
+    private String operationalStatus; //change to string
     private Resources resources;
 
     public ColonyFacility(String location, int capacity, String operationalStatus, Resources resources) {
         this.location = location;
-        this.capacity = capacity;
+        if(capacity<=0)
+            this.capacity=0;
+        else
+            this.capacity = capacity;
         this.operationalStatus = operationalStatus;
         this.resources = resources;
     }
@@ -31,7 +30,10 @@ public abstract class ColonyFacility {
     }
 
     public void setCapacity(int capacity) {
-        this.capacity = capacity;
+        if(capacity<=0)
+            this.capacity=0;
+        else
+            this.capacity = capacity;
     }
 
     public void setOperationalStatus(String operationalStatus) {
@@ -55,8 +57,31 @@ public abstract class ColonyFacility {
     }
 
     public void setResources(Resources resources) {
+        if(resources==null)
+            return;
         this.resources = resources;
     }
     
     
+    public int getStoredResource(String name)
+    {
+        if(isOperationalStatus().equals("NON-OPERATIONAL") || resources.getAmount(name)==-1)
+            return 0;
+        return getResources().getAmount(name);
+    }
+    
+    public boolean withdrawResource(String name, int amount)
+    {
+        if(isOperationalStatus().equals("NON-OPERATIONAL"))
+            return false;
+        return resources.deductResource(name, amount);
+    }
+    
+    public void getStatusSummary()
+    {
+        System.out.println("Location: "+location);
+        System.out.println("Status: "+operationalStatus);
+        System.out.println("Capacity: "+capacity);
+        System.out.println("Resources: "+resources.toString());
+    }
 }

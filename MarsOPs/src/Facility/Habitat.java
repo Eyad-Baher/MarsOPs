@@ -13,9 +13,9 @@ import MyResources.Resources;
 public class Habitat extends ColonyFacility{
     private final LifeSupportSystem lifeSupport;
 
-    public Habitat(LifeSupportSystem lifeSupport, String location, int capacity, String operationalStatus, Resources resources) {
+    public Habitat( String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);
-        this.lifeSupport = lifeSupport;
+        this.lifeSupport = new LifeSupportSystem(resources,true);
     }
    
     public void reduceOxygen(int amount) {
