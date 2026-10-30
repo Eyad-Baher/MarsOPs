@@ -65,7 +65,6 @@ public static void scenarioTWO()
     Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
     Colony colonyTWO = new Colony(colonyResources);
 
-    // An engineer cannot perform an exploration mission, so this agent is unsuitable
     Engineer engineer = new Engineer("Eng. Omar", "HEALTHY", 10, "E-01", "Habitat", true);
     colonyTWO.addAgent(engineer);
 
