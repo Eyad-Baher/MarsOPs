@@ -6,6 +6,7 @@ package marsops;
 
 import CrewMemebers.Engineer;
 import CrewMemebers.Scientist;
+import EnvironmentConditions.DustStorm;
 import Missions.ExplorationMission;
 import MyResources.Equipment;
 import MyResources.Resources;
@@ -17,17 +18,12 @@ import TheColony.Colony;
  *
  * @author HP
  */
- 
-
-
 public class MarsOPs {
 
     /**
      */
-    
     // Scenario 1: Successful Exploration
-    public static void scenarioONE()
-    {
+    public static void scenarioONE() {
         System.out.println("===== Scenario 1: Successful Exploration =====");
 
         Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
@@ -40,7 +36,7 @@ public class MarsOPs {
 
         Equipment equipment = new Equipment("Sample Drill", 5, false);
         Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
-        Location  target = new Location("Olympus Ridge");
+        Location target = new Location("Olympus Ridge");
 
         ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-01", 3, missionResources, equipment);
 
@@ -58,41 +54,71 @@ public class MarsOPs {
     }
 
     // Scenario 2: Mission Rejection
-public static void scenarioTWO()
-{
-    System.out.println("\n===== Scenario 2: Mission Rejection =====");
+    public static void scenarioTWO() {
+        System.out.println("\n===== Scenario 2: Mission Rejection =====");
 
-    Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
-    Colony colonyTWO = new Colony(colonyResources);
+        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
+        Colony colonyTWO = new Colony(colonyResources);
 
-    Engineer engineer = new Engineer("Eng. Omar", "HEALTHY", 10, "E-01", "Habitat", true);
-    colonyTWO.addAgent(engineer);
+        Engineer engineer = new Engineer("Eng. Omar", "HEALTHY", 10, "E-01", "Habitat", true);
+        colonyTWO.addAgent(engineer);
 
-    Equipment equipment = new Equipment("Sample Drill", 5, false);
-    Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
-    Location target = new Location("Valles Marineris");
-    ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-02", 3, missionResources, equipment);
+        Equipment equipment = new Equipment("Sample Drill", 5, false);
+        Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
+        Location target = new Location("Valles Marineris");
+        ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-02", 3, missionResources, equipment);
 
-    System.out.println("\n--- System state BEFORE submission ---");
-    colonyTWO.showState();
-    System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyTWO.showState();
+        System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
 
-    System.out.println("\n--- Submitting mission ---");
-    colonyTWO.startMission(mission);
+        System.out.println("\n--- Submitting mission ---");
+        colonyTWO.startMission(mission);
 
-    System.out.println("\n--- System state AFTER submission ---");
-    colonyTWO.showState();
-    System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
-    System.out.println("Mission ever active: " + (mission.getElapsedTime() > 0 || mission.getState().equals("IN PROGRESS")));
-    System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
-}
-public static void scenarioTHREE()
-{
-    
-}
-    public static void main(String[] args) {
-       // new MarsOPs().scenarioONE();
-       scenarioTWO();
+        System.out.println("\n--- System state AFTER submission ---");
+        colonyTWO.showState();
+        System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+        System.out.println("Mission ever active: " + (mission.getElapsedTime() > 0 || mission.getState().equals("IN PROGRESS")));
+        System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
     }
-    
+// Scenario 5: Environmental Effect
+
+    public void scenarioFIVE() {
+        System.out.println("\n===== Scenario 5: Environmental Effect =====");
+
+        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
+        Colony colonyFIVE = new Colony(colonyResources);
+
+        // Fully suitable agents, so the ONLY thing that can stop the mission is the environment
+        Scientist scientist = new Scientist("Dr. Sara", "HEALTHY", "Geology", 10, "S-05", "Habitat", true);
+        ExplorationRover rover = new ExplorationRover("R-05", "Habitat", true, 100, true);
+        colonyFIVE.addAgent(scientist);
+        colonyFIVE.addAgent(rover);
+
+        Equipment equipment = new Equipment("Sample Drill", 5, false);
+        Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
+        Location target = new Location("Gale Crater");
+        ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-05", 3, missionResources, equipment);
+
+        System.out.println("\n--- Introducing environmental condition: DUST STORM ---");
+        colonyFIVE.setCurrentCondition(new DustStorm());
+
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyFIVE.showState();
+        System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+
+        System.out.println("\n--- Submitting exploration mission ---");
+        colonyFIVE.startMission(mission);
+
+        System.out.println("\n--- System state AFTER submission ---");
+        colonyFIVE.showState();
+        System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
+        System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
+    }
+
+    public static void main(String[] args) {
+        // new MarsOPs().scenarioONE();
+        scenarioTWO();
+    }
+
 }
