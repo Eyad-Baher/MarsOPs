@@ -27,7 +27,7 @@ public class Colony {
     private ArrayList<ColonyFacility> allFacility = new ArrayList<>();
     private ArrayList<ColonyMemebers> allAgents = new ArrayList<>();
     private ArrayList<Missions> allMissions = new ArrayList<>();
-    private Environment currentCondition;
+    private Environment currentCondition = new Normal();
     private ArrayList<Emergency> emergencies = new ArrayList<>();
     private ArrayList<ColonyMemebers> responders = new ArrayList<>();
     private int numEmergencyResources;
