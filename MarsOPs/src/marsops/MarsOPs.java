@@ -8,6 +8,7 @@ import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
 import CrewMemebers.Scientist;
 import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
 import Facility.Habitat;
 import Facility.Laboratory;
 import Missions.ExplorationMission;
@@ -105,15 +106,30 @@ public static void scenarioTWO()
         Equipment equipment1 = new Equipment("Seismometer", 3, false);
         Equipment equipment2 = new Equipment("Microscope", 10, false);
         labEquipment.add(equipment1); labEquipment.add(equipment2);
+        
         ArrayList<CrewMember> labPersonnel = new ArrayList<>();
         Engineer e1= new Engineer("Eng. Ahmed", "HEALTHY", 4, "E-01", "Arcadia Outpost", true);
         Scientist s1= new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
         labPersonnel.add(e1); labPersonnel.add(s1);
-        Resources labResources = new Resources(50, 50, 50, 50, 50, 50, 50);
+        colonyTHREE.addAgent(e1); colonyTHREE.addAgent(s1);
+        
+        Resources labResources = new Resources(10, 10, 10, 10, 10, 10, 10);
         Laboratory lab=new Laboratory(true, 5, labEquipment, labPersonnel, "Sector 04", labResources);
         colonyTHREE.addFacility(lab);
         
-        //ResearchMission researchMission= new ResearchMission("Soil analysis", lab, "Marsquake Monitoring", "M-01", 3, )
+        Resources missionResources= new Resources(50,50,0,0,50,0,0);
+        ResearchMission researchMission= new ResearchMission("Soil analysis", lab, "Marsquake Monitoring", "M-01", 3, missionResources, equipment1);
+        
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyTHREE.showState();
+        System.out.println("Mission " + researchMission.getMissionID() + ": " + researchMission.getState());
+        
+        System.out.println("---Starting Research Mission---");
+        colonyTHREE.startMission(researchMission);
+        
+        System.out.println("---System state AFTER submission---");
+        colonyTHREE.showState();
+        
         
     }
     
@@ -133,6 +149,8 @@ public static void scenarioTWO()
         Habitat habitat= new Habitat("Sector 01", 400, "OPERATIONAL", habitatResources);
         colonyFOUR.addFacility(habitat);
         OxygenLeak oxygenLeak = new OxygenLeak(habitat, 5, colonyFOUR.getResponders());
+        colonyFOUR.addEmergency(oxygenLeak);
+        
         colonyFOUR.startEmergency();
         
         
@@ -142,7 +160,9 @@ public static void scenarioTWO()
 
     public static void main(String[] args) {
        // new MarsOPs().scenarioONE();
-       scenarioTWO();
+       //scenarioTWO();
+       //scenarioTHREE();
+       scenarioFOUR();
     }
     
 }
