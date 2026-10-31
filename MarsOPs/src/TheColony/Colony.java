@@ -76,6 +76,10 @@ public class Colony {
 
     }
 
+    public ArrayList<ColonyMemebers> getResponders() {
+        return responders;
+    }
+
     public Resources getTotalResources() {
         return totalResources;
     }
@@ -122,6 +126,15 @@ public class Colony {
     public void addAgent(ColonyMemebers agent) {
         if (agent != null) {
             allAgents.add(agent);
+        }
+    }
+    
+    public void addFacility(ColonyFacility facility)
+    {
+        if(facility!=null)
+        {
+            allFacility.add(facility);
+            distributeTotalResources();
         }
     }
 
