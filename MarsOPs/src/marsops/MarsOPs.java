@@ -197,7 +197,8 @@ public class MarsOPs {
         System.out.println("Gale Crater explored? " + gale.isExplored());
 
         // storm is over, try again with a new mission
-        System.out.println("\nThe storm clears. Trying again...");
+        System.out.println("\nThe storm clears.");
+        System.out.println("\nMission Can't be retried. Creating new mission.");
         colony.setCurrentCondition(new Normal());
 
         Location jezero = new Location("Jezero Crater");
