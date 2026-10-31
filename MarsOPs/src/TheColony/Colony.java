@@ -29,7 +29,7 @@ public class Colony {
     private ArrayList<Missions> allMissions = new ArrayList<>();
     private Environment currentCondition = new Normal();
     private ArrayList<Emergency> emergencies = new ArrayList<>();
-    private ArrayList<ColonyMemebers> responders = new ArrayList<>();
+    //private ArrayList<ColonyMemebers> responders = new ArrayList<>();
     private int numEmergencyResources;
     private Resources totalResources;
     private boolean activeMission;
@@ -75,8 +75,10 @@ public class Colony {
 
     }
 
-    public ArrayList<ColonyMemebers> getResponders() {
-        return responders;
+    
+    public ArrayList<ColonyMemebers> getResponders()
+    {
+        return allAgents;
     }
 
     public Resources getTotalResources() {
