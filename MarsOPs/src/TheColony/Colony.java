@@ -35,8 +35,9 @@ public class Colony {
     private boolean activeMission;
     private Resources colonyResources;
 
-    public Colony(Resources colonyResources) {
-        this.colonyResources = colonyResources;
+    public Colony(Resources totalResources) {
+        this.totalResources = totalResources;
+        colonyResources=totalResources;
     }
 
     public void startEmergency() {
@@ -136,6 +137,12 @@ public class Colony {
             allFacility.add(facility);
             distributeTotalResources();
         }
+    }
+    
+    public void addEmergency(Emergency emergency)
+    {
+        if(emergency!=null)
+            emergencies.add(emergency);
     }
 
     public void showState() {
