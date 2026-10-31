@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public abstract class Emergency {
     private String emergencyLocation;
     private String resolvedState; //   RESOLVED or UNRESOLVED
-    private ArrayList<ColonyMemebers> responders;
+    private ArrayList<ColonyMemebers> responders =new ArrayList<>();
     private ColonyMemebers[] suitableResponders;
     private String failureReason;
 
