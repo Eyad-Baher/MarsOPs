@@ -9,32 +9,31 @@ package RegionToExplore;
  * @author abdel
  */
 public class Location {
+
     private String locationName;
     private boolean explored;
-
+    
     public Location(String locationName) {
-        this.locationName = locationName;
+        setLocationName(locationName);
         this.explored = false;
     }
-
+    
     public String getLocationName() {
         return locationName;
     }
-
+    
     public void setLocationName(String locationName) {
-        if (locationName!=null && !locationName.isBlank())
-        this.locationName = locationName;
+        if (locationName != null && !locationName.isBlank()) {
+            this.locationName = locationName;
+        }
     }
-
+    
     public boolean isExplored() {
         return explored;
     }
-
+    
     public void Explore() {
         this.explored = true;
     }
-    
-    
-    
     
 }
