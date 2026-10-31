@@ -33,11 +33,10 @@ public class Colony {
     private int numEmergencyResources;
     private Resources totalResources;
     private boolean activeMission;
-    private Resources colonyResources;
+    //private Resources colonyResources;
 
     public Colony(Resources totalResources) {
         this.totalResources = totalResources;
-        colonyResources=totalResources;
     }
 
     public void startEmergency() {
@@ -146,7 +145,7 @@ public class Colony {
     }
 
     public void showState() {
-        System.out.println("Resources: " + colonyResources);
+        System.out.println("Resources: " + totalResources);
         System.out.println("Active mission: " + activeMission);
         System.out.println("Agents (" + allAgents.size() + "):");
         for (ColonyMemebers agent : allAgents) {
@@ -197,26 +196,26 @@ public class Colony {
         if (needed == null) {
             return true;
         }
-        return colonyResources.getOxygen() >= needed.getOxygen()
-                && colonyResources.getWater() >= needed.getWater()
-                && colonyResources.getFood() >= needed.getFood()
-                && colonyResources.getFuel() >= needed.getFuel()
-                && colonyResources.getBatteryPower() >= needed.getBatteryPower()
-                && colonyResources.getMedicalSupplies() >= needed.getMedicalSupplies()
-                && colonyResources.getSpareParts() >= needed.getSpareParts();
+        return totalResources.getOxygen() >= needed.getOxygen()
+                && totalResources.getWater() >= needed.getWater()
+                && totalResources.getFood() >= needed.getFood()
+                && totalResources.getFuel() >= needed.getFuel()
+                && totalResources.getBatteryPower() >= needed.getBatteryPower()
+                && totalResources.getMedicalSupplies() >= needed.getMedicalSupplies()
+                && totalResources.getSpareParts() >= needed.getSpareParts();
     }
 
     private void deductResources(Resources used) {
         if (used == null) {
             return;
         }
-        colonyResources.deductResource(Resources.OXYGEN, used.getOxygen());
-        colonyResources.deductResource(Resources.WATER, used.getWater());
-        colonyResources.deductResource(Resources.FOOD, used.getFood());
-        colonyResources.deductResource(Resources.FUEL, used.getFuel());
-        colonyResources.deductResource(Resources.BATTERYPOWER, used.getBatteryPower());
-        colonyResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
-        colonyResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
+        totalResources.deductResource(Resources.OXYGEN, used.getOxygen());
+        totalResources.deductResource(Resources.WATER, used.getWater());
+        totalResources.deductResource(Resources.FOOD, used.getFood());
+        totalResources.deductResource(Resources.FUEL, used.getFuel());
+        totalResources.deductResource(Resources.BATTERYPOWER, used.getBatteryPower());
+        totalResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
+        totalResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
 
 }
