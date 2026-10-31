@@ -33,7 +33,6 @@ public class Colony {
     private int numEmergencyResources;
     private Resources totalResources;
     private boolean activeMission;
-    //private Resources colonyResources;
 
     public Colony(Resources totalResources) {
         this.totalResources = totalResources;
