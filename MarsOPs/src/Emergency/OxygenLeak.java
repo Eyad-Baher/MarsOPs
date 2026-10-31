@@ -22,21 +22,21 @@ public class OxygenLeak extends Emergency {
     private boolean penaltyApplied;
     
     public OxygenLeak(Habitat affectedHabitat, int oxygenLoss, ArrayList<ColonyMemebers> responders) {
-        super("Habitat: " + affectedHabitat.getLocation(), null, responders);
+        super(affectedHabitat != null ? "Habitat: " + affectedHabitat.getLocation() : "Unknown Habitat", null, responders);
         this.affectedHabitat = affectedHabitat;
         this.oxygenLoss = oxygenLoss;
-        detected=false;
-        penaltyApplied=false;
+        this.detected = false;
     }
     
-    private void detectOxygenLoss(){
-        if(detected==false)
-        {
-        detected = true;
-        affectedHabitat.reduceOxygen(oxygenLoss);
-        }
-        else 
+    private void detectOxygenLoss() {
+        if (!detected) {
+            detected = true;
+            if (affectedHabitat != null) {
+                affectedHabitat.reduceOxygen(oxygenLoss);
+            }
+        } else {
             System.out.println("Oxygen loss already detected.");
+        }
     }
 
     public Habitat getAffectedHabitat() {
@@ -46,151 +46,177 @@ public class OxygenLeak extends Emergency {
     public int getOxygenLoss() {
         return oxygenLoss;
     }
-    public void triggerOxygenLeak(){
+
+    public void triggerOxygenLeak() {
         detectOxygenLoss();
         setResolvedState("UNRESOLVED");
-        affectedHabitat.setOperationalStatus("NON-OPERATIONAL");
-        System.out.println("!! EMERGECY:OXYGEN LEAK !!");
+        if (affectedHabitat != null) {
+            affectedHabitat.setOperationalStatus("NON-OPERATIONAL");
+        }
+        System.out.println("!! EMERGENCY: OXYGEN LEAK !!");
     }
     
-    public void handleOxygenLeak(Colony colony){
+    public void handleOxygenLeak(Colony colony) {
+        
         findResponders();
+
+        
+        if (getSuitableResponders() == null) {
+            System.out.println("No responders.");
+            applyUnresolvedLoss(colony);
+            return;
+        }
+
+        if (colony != null && colony.getTotalResources() != null) {
+            if (!colony.getTotalResources().areSparePartsSufficient(2)) {
+                System.out.println("Insufficient spareparts, leak can't be repaired.");
+                setFailureReason("Insufficient spareparts");
+                applyUnresolvedLoss(colony);
+                return;
+            }
+        } else if (colony != null && colony.getTotalResources() == null) {
+            System.out.println("Colony resources are not initialized. Cannot verify spare parts.");
+            setFailureReason("Colony resources unavailable");
+            applyUnresolvedLoss(colony);
+            return;
+        }
+
         dispatchResponders(colony);
         repairLeak(colony);
         releaseResponders();   
     }
     
-    
-    
-    public int totalOxygenLoss(){
-    if(getResolvedState().equals("UNRESOLVED") && !penaltyApplied)
-    {
-        detectOxygenLoss();     
-        penaltyApplied=true;
-       
-    }
-    return penaltyApplied ? 2*oxygenLoss : oxygenLoss;
-}
 
     private void applyUnresolvedLoss(Colony colony) {
-    if (!penaltyApplied) {
-        penaltyApplied = true;
-        affectedHabitat.reduceOxygen(oxygenLoss);                
-        colony.deductTotalResource("oxygen", 2 * oxygenLoss);    
-    }
-}
-    public ColonyMemebers[] findResponders()
-    {
-        int numResponders=0;
-        boolean foundEngineer=false; 
-        boolean foundRepairRobot=false;
-        setSuitableResponders(new ColonyMemebers[2]);
-        for(int i=0;i<getResponders().size();i++)
-        {
-            if(getResponders().get(i).canHandleEmergency(this) )
-            {
-                if(getResponders().get(i) instanceof Engineer && foundEngineer==false)
-                {
-                    foundEngineer=true;
-                    getSuitableResponders()[numResponders]=getResponders().get(i);
-                    numResponders++;
-                }
-                if(getResponders().get(i) instanceof RepairRobot && foundRepairRobot==false)
-                {
-                    foundRepairRobot=true;
-                    getSuitableResponders()[numResponders]=getResponders().get(i);
-                    numResponders++;
-                }
-                
+        if (!penaltyApplied) {
+            penaltyApplied = true;
+            if (affectedHabitat != null) {
+                affectedHabitat.reduceOxygen(oxygenLoss);
             }
-            if(foundEngineer&&foundRepairRobot)
-            {
+            if (colony != null && colony.getTotalResources() != null) {
+                colony.deductTotalResource("oxygen", oxygenLoss);
+            }
+            setResolvedState("UNRESOLVED");
+        }
+    }
+
+    @Override
+    public ColonyMemebers[] findResponders() {
+        if (getResponders() == null) {
+            setFailureReason("There are no suitable responders.");
+            setSuitableResponders(null);
+            return null;
+        }
+
+        int numResponders = 0;
+        boolean foundEngineer = false; 
+        boolean foundRepairRobot = false;
+        setSuitableResponders(new ColonyMemebers[2]);
+
+        for (int i = 0; i < getResponders().size(); i++) {
+            ColonyMemebers candidate = getResponders().get(i);
+            if (candidate != null && candidate.canHandleEmergency(this)) {
+                if (candidate instanceof Engineer && !foundEngineer) {
+                    foundEngineer = true;
+                    getSuitableResponders()[numResponders] = candidate;
+                    numResponders++;
+                }
+                if (candidate instanceof RepairRobot && !foundRepairRobot) {
+                    foundRepairRobot = true;
+                    getSuitableResponders()[numResponders] = candidate;
+                    numResponders++;
+                }
+            }
+            if (foundEngineer && foundRepairRobot) {
                 return getSuitableResponders();
             }
-            
-            
         }
         setFailureReason("There are no suitable responders.");
         setSuitableResponders(null);
         return null;
-        
     }
-    // responders will go to the emergency location
-    private void dispatchResponders(Colony colony) {
-    if (getSuitableResponders() == null) {
-        System.out.println("No responders.");
-        applyUnresolvedLoss(colony); 
-        return;
-    }
-    for (ColonyMemebers r : getSuitableResponders()) {
-        if (r != null) {
-            r.setCurrentLocation(getEmergencyLocation());  
-            r.setIsAvaialble(false);                     
-        }
-        System.out.println("Dispatch successful");
-    }
-    affectedHabitat.setCapacity(affectedHabitat.getCapacity()+2);
     
-}
-    public void releaseResponders(){
-        if (getSuitableResponders() == null) 
-        {
+    public int totalOxygenLoss() {
+        return "RESOLVED".equals(getResolvedState()) ? oxygenLoss : 2 * oxygenLoss;
+    }
+
+    private void dispatchResponders(Colony colony) {
+        if (getSuitableResponders() == null) {
+            System.out.println("No responders.");
+            applyUnresolvedLoss(colony); 
+            return;
+        }
+        for (ColonyMemebers r : getSuitableResponders()) {
+            if (r != null) {
+                r.setCurrentLocation(getEmergencyLocation());  
+                r.setIsAvaialble(false);                     
+            }
+        }
+        
+        System.out.println("Dispatch successful");
+        if (affectedHabitat != null) {
+            affectedHabitat.setCapacity(affectedHabitat.getCapacity() + 2);
+        }
+    }
+
+    public void releaseResponders() {
+        if (getSuitableResponders() == null) {
             System.out.println("No responders");
             return;
         }
-    for (ColonyMemebers r : getSuitableResponders()) {
-        if (r != null)  
-            r.setIsAvaialble(true);                     
-    }
+        for (ColonyMemebers r : getSuitableResponders()) {
+            if (r != null) {
+                r.setIsAvaialble(true);                     
+            }
+        }
         System.out.println("Responders are now available");
-        affectedHabitat.setCapacity(affectedHabitat.getCapacity()-2);
-        
+        if (affectedHabitat != null) {
+            affectedHabitat.setCapacity(affectedHabitat.getCapacity() - 2);
+        }
     }
     
-    public void repairLeak(Colony colony){
-        if(getResolvedState().equals("UNRESOLVED"))
-        {
-        if(getSuitableResponders()==null ){
-            System.out.println("No responders, Leak can't be repaired");
-      
-            return;
-        }
-        
-        if(!colony.getTotalResources().areSparePartsSufficient(2))
-        {
-            System.out.println("Insufficient spareparts, leak can't be repaired.");
-            setFailureReason("Insufficient spareparts");
-             applyUnresolvedLoss(colony);
-            return;
-        }
-        else 
-        {colony.deductTotalResource("spareparts", 2);
-            colony.distributeSpareParts();
-        }    
-        
-            for(ColonyMemebers r:getSuitableResponders())
-            {if(r instanceof Engineer){
-              ((Engineer)r).repair(affectedHabitat);
-              ((Engineer) r).incFatigue(20);
+    public void repairLeak(Colony colony) {
+        if (getResolvedState() != null && getResolvedState().equals("UNRESOLVED")) {
+            if (getSuitableResponders() == null) {
+                System.out.println("No responders, Leak can't be repaired");
+                return;
             }
-            else{
-                ((RepairRobot)r).repair(affectedHabitat);
-                ((RepairRobot)r).drainBattery(10);
-            }
-             } 
-            // resources consumption (colony-wide)add after colony class is done
-            colony.deductTotalResource("oxygen", oxygenLoss);
-            colony.distributeOxygen();
-            setResolvedState("RESOLVED");
-            System.out.println("Leak got repaired successfully");
             
-        
-        
-        } 
-        else 
-        System.out.println("No leak to be resolved.");
+            if (colony != null && colony.getTotalResources() != null) {
+                if (!colony.getTotalResources().areSparePartsSufficient(2)) {
+                    System.out.println("Insufficient spareparts, leak can't be repaired.");
+                    setFailureReason("Insufficient spareparts");
+                    applyUnresolvedLoss(colony);
+                    return;
+                } else {
+                    colony.deductTotalResource("spareparts", 2);
+                    colony.distributeSpareParts();
+                }    
+            }
+            
+            for (ColonyMemebers r : getSuitableResponders()) {
+                if (r instanceof Engineer) {
+                    if (affectedHabitat != null) {
+                        ((Engineer) r).repair(affectedHabitat);
+                    }
+                    ((Engineer) r).incFatigue(20);
+                } else if (r instanceof RepairRobot) {
+                    if (affectedHabitat != null) {
+                        ((RepairRobot) r).repair(affectedHabitat);
+                    }
+                    ((RepairRobot) r).drainBattery(10);
+                }
+            } 
+            
+            
+            if (affectedHabitat != null) {
+                affectedHabitat.setOperationalStatus("OPERATIONAL");
+            }
+            setResolvedState("RESOLVED");
+            setFailureReason(null);
+            System.out.println("Leak got repaired successfully");
+        } else {
+            System.out.println("No leak to be resolved.");
+        }
     }
-    
-    
-    
 }
