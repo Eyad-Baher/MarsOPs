@@ -27,11 +27,15 @@ public abstract class Missions {
         this.currentCondition = new Normal();
     }
 
-    public void setCurrentCondition(Environment currentCondition) {
-        this.currentCondition = currentCondition;
+    public Environment getCurrentCondition() {
+        return currentCondition;
     }
-    
-    
+
+    public void setCurrentCondition(Environment currentCondition) {
+        if (currentCondition != null) {
+            this.currentCondition = currentCondition;
+        }
+    }
 
     public String getMissionID() {
         return missionID;
@@ -57,8 +61,20 @@ public abstract class Missions {
         return missionResources;
     }
 
+    public void setMissionResources(Resources missionResources) {
+        if (missionResources != null) {
+            this.missionResources = missionResources;
+        }
+    }
+
     public Equipment getMissionEquipment() {
         return missionEquipment;
+    }
+
+    public void setMissionEquipment(Equipment missionEquipment) {
+        if (missionEquipment != null) {
+            this.missionEquipment = missionEquipment;
+        }
     }
 
     public abstract boolean acceptMission(ArrayList<ColonyMemebers> candidates,

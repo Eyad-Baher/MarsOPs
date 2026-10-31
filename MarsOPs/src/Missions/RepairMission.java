@@ -36,6 +36,8 @@ public class RepairMission extends Missions {
         super(missionID, duration, missionResources, missionEquipment);
         this.targetFacility = targetFacility;
     }
+    
+    
 
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {

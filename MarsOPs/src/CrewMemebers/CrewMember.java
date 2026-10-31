@@ -11,7 +11,7 @@ package CrewMemebers;
 public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
 
     private String name;
-    private String healthStatus; // IMJURED  or HEALTHY
+    private String healthStatus; // INJURED  or HEALTHY
     private int fatigueLevel;
 
     public CrewMember(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
@@ -26,7 +26,9 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null && !name.isEmpty()) {
+            this.name = name;
+        }
     }
 
     public String getHealthStatus() {
@@ -34,7 +36,9 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
 
     public void setHealthStatus(String healthStatus) {
-        this.healthStatus = healthStatus;
+        if (healthStatus != null && (healthStatus.equals("INJURED") || healthStatus.equals("HEALTHY"))) {
+            this.healthStatus = healthStatus;
+        }
     }
 
     
@@ -43,7 +47,9 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     }
 
     public void setFatigueLevel(int fatigueLevel) {
-        this.fatigueLevel = fatigueLevel;
+        if (fatigueLevel >= 0) {
+            this.fatigueLevel = fatigueLevel;
+        }
     }
     
     
@@ -81,9 +87,5 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
     {
         this.fatigueLevel+=amount;
     }
-    
-    
-    
-    
 
 }

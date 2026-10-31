@@ -26,14 +26,14 @@ public abstract class ColonyMemebers {
         return IdNo;
     }
 
-
-
     public String getCurrentLocation() {
         return currentLocation;
     }
 
     public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
+        if (currentLocation != null && !currentLocation.isEmpty()) {
+            this.currentLocation = currentLocation;
+        }
     }
 
     public boolean isIsAvaialble() {
@@ -49,6 +49,4 @@ public abstract class ColonyMemebers {
     public abstract boolean canHandleEmergency(Emergency emergency);
     public abstract void advanceTime();
     public abstract void getStatusSummary();
-    
-    
 }
