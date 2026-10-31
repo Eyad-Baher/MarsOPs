@@ -26,6 +26,7 @@ public class OxygenLeak extends Emergency {
         this.affectedHabitat = affectedHabitat;
         this.oxygenLoss = oxygenLoss;
         this.detected = false;
+        this.penaltyApplied = false;
     }
     
     private void detectOxygenLoss() {
@@ -134,10 +135,6 @@ public class OxygenLeak extends Emergency {
         setFailureReason("There are no suitable responders.");
         setSuitableResponders(null);
         return null;
-    }
-    
-    public int totalOxygenLoss() {
-        return "RESOLVED".equals(getResolvedState()) ? oxygenLoss : 2 * oxygenLoss;
     }
 
     private void dispatchResponders(Colony colony) {
