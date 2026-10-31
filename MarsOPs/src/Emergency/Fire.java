@@ -11,6 +11,7 @@ import CrewMemebers.MedicalOfficer;
 import Facility.Laboratory;
 import MyResources.Equipment;
 import Robots.RepairRobot;
+import TheColony.Colony;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +25,7 @@ public class Fire extends Emergency {
     public Fire(Laboratory affectedLaboratory, ArrayList<ColonyMemebers> responders) {
         super("Laboratory: " + affectedLaboratory.getLocation(), null, responders);
         this.triggered=false;
+        this.affectedLaboratory=affectedLaboratory;
         
     }
 
@@ -53,10 +55,10 @@ public class Fire extends Emergency {
         }
     } 
     
-    public void handleFire(){
+    public void handleFire(Colony colony){
         findResponders();
         dispatchResponders();
-        resolveFire();
+        resolveFire(colony);
         releaseResponders();   
     }
     
@@ -67,7 +69,8 @@ public class Fire extends Emergency {
     
     private void dispatchResponders() {
     if (getSuitableResponders() == null) {
-        return;
+        System.out.println("No responders.");
+        return;    
     }
     for (ColonyMemebers r : getSuitableResponders()) {
         if (r != null) {
@@ -75,23 +78,26 @@ public class Fire extends Emergency {
             r.setIsAvaialble(false);                     
         }
     }
-    
+    affectedLaboratory.setCapacity(affectedLaboratory.getCapacity()+3);
+        System.out.println("Responders are dispatched.");
 }
      public void releaseResponders(){
         if (getSuitableResponders() == null) {
-            System.out.println("No responders to be returned");
+            System.out.println("No responders");
         return;
         }
     for (ColonyMemebers r : getSuitableResponders()) {
         if (r != null)  
             r.setIsAvaialble(true);                     
     }
-        
+    affectedLaboratory.setCapacity(affectedLaboratory.getCapacity()-3);
+      System.out.println("Responders are now available");  
     }
     
     @Override
            public ColonyMemebers[] findResponders()
     {
+        
         int numResponders=0;
         boolean foundEngineer=false; 
         boolean foundRepairRobot=false;
@@ -129,22 +135,41 @@ public class Fire extends Emergency {
             
         }
         setFailureReason("There are no suitable responders.");
+        setSuitableResponders(null);
         return null;
         
     }
            
-     public void resolveFire(){
+     public void resolveFire(Colony colony){
         if(getResolvedState().equals("UNRESOLVED"))
         {
         if(getSuitableResponders()==null ){
             System.out.println("No responders, Leak can't be repaired");
-            
+            return;
         }
-        else 
+        if(!colony.getTotalResources().areSparePartsSufficient(3))
         {
+            System.out.println("Insufficient spareparts, leak can't be repaired.");
+            setFailureReason("Insufficient spareparts");
+            return;
+        }
+        
+        if(!colony.getTotalResources().areMedicalSuppliesSufficient(2))
+            {
+            System.out.println("Insufficient medical supplies, leak can't be repaired.");
+            setFailureReason("Insufficient medical supplies");
+            return;
+        }
+        else {
+            colony.deductTotalResource("spareparts", 3);
+            colony.distributeSpareParts();
+            colony.deductTotalResource("medicalSupplies", 2);
+            colony.distributeMedicalSupplies();
+        }
             for(ColonyMemebers r:getSuitableResponders())
             { if(r instanceof Engineer){// engineer rapairs laboratory , stopping fire
               ((Engineer)r).repair(affectedLaboratory);
+              ((Engineer) r).incFatigue(20);
             }
             else
                 if(r instanceof RepairRobot){ // robot repairs laboratory with engineer and fixes damaged equipment
@@ -152,7 +177,9 @@ public class Fire extends Emergency {
                 for(int i=0; i<affectedLaboratory.getEquipment().size();i++)
                         {
                             ((RepairRobot)r).repair(affectedLaboratory.getEquipment().get(i), affectedLaboratory.getEquipment().get(i).getTotalAmount());
+                            
                         }
+                    ((RepairRobot)r).drainBattery(10);
                 }
                 else
                     if(r instanceof MedicalOfficer) // medical officer heals lab personnel
@@ -160,15 +187,16 @@ public class Fire extends Emergency {
                         for(int i=0; i<affectedLaboratory.getPersonnelPresent().size();i++)
                         {
                             ((MedicalOfficer) r).heal(affectedLaboratory.getPersonnelPresent().get(i));
+                            ((MedicalOfficer) r).incFatigue(20);
                         }
                     }
              } 
-            // resources consumption (colony-wide),add after colony class is done
+            
             setResolvedState("RESOLVED");
             System.out.println("Fire got repaired successfully");
             System.out.println("All personnel in the Laboratory are healed");
             
-        }
+        
         
         } 
         else 

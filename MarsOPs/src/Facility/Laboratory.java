@@ -20,7 +20,7 @@ public class Laboratory extends ColonyFacility {
     private ArrayList<Equipment> equipment;
     private ArrayList<CrewMember> personnelPresent; // scientist or engineer or medical officer
 
-    public Laboratory(boolean isAvailable,int capacity, ArrayList<Equipment> equipment, ArrayList<ColonyMemebers> PersonnelPresent, String location, Resources resources) {
+    public Laboratory(boolean isAvailable,int capacity, ArrayList<Equipment> equipment, ArrayList<CrewMember> personnelPresent, String location, Resources resources) {
         super(location, capacity, "OPERATIONAL", resources);
         this.available = true;
         this.equipment = equipment;
