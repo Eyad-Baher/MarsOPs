@@ -198,5 +198,7 @@ public class Colony {
         colonyResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
         colonyResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
+    
+    
 
 }
