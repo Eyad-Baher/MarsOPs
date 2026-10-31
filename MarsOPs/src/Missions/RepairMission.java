@@ -80,9 +80,6 @@ public class RepairMission extends Missions {
                 return true;
             }
             
-                    fail("Not Enough Qualified Agents.");
-                
-            
         }
         fail("Not Enough Qualified Agents.");
         return false;
