@@ -49,10 +49,10 @@ public class Colony {
                 ((Fire) e).handleFire(this);
             } else if (e instanceof Medical) {
                 ((Medical) e).triggerMedical();
-                ((Medical) e).handleMedical();
+                ((Medical) e).handleMedical(this);
             } else {
                 ((RoverBreakdown) e).triggerRoverBreakdown();
-                ((RoverBreakdown) e).handleRoverBreakdown();
+                ((RoverBreakdown) e).handleRoverBreakdown(this);
             }
         }
 
