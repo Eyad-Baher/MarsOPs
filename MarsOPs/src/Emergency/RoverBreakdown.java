@@ -96,8 +96,7 @@ public class RoverBreakdown extends Emergency {
         this.dispatchResponders();
         this.makeRespondersUnavailable();
         this.respondersRepair();
-        colony.getTotalResources().useSpareParts(numOfSpareParts);
-        colony.distributeSpareParts();
+        consumeResources(colony);
         releaseResponders();
         setResolvedState("RESOLVED");
         
@@ -113,6 +112,14 @@ public class RoverBreakdown extends Emergency {
         {
             availableResponder.setCurrentLocation(getEmergencyLocation());
             
+        }
+    }
+    
+    private void makeRespondersUnavailable()
+    {
+        for(ColonyMemebers availableResponder : availableResponders)
+        {
+            availableResponder.setIsAvaialble(false);
         }
     }
     
@@ -134,13 +141,10 @@ public class RoverBreakdown extends Emergency {
         }
     }
     
-    
-    private void makeRespondersUnavailable()
+    private void consumeResources(Colony colony)
     {
-        for(ColonyMemebers availableResponder : availableResponders)
-        {
-            availableResponder.setIsAvaialble(false);
-        }
+        colony.getTotalResources().useSpareParts(numOfSpareParts);
+        colony.distributeSpareParts();
     }
     
     private void releaseResponders()
@@ -181,7 +185,7 @@ public class RoverBreakdown extends Emergency {
         //ColonyMemebers[] availableResponders=new ColonyMemebers[2];
         for(int i=0;i<getResponders().size();i++)
         {
-            if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
+            if(getResponders().get(i).canHandleEmergency(this) )
             {
                 if(getResponders().get(i) instanceof Engineer && foundEngineer==false)
                 {
