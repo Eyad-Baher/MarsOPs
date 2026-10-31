@@ -159,6 +159,13 @@ public class Colony {
                     + " (" + m.getElapsedTime() + "/" + m.getDuration() + ")"
                     + (m.getFailureReason() != null ? " reason: " + m.getFailureReason() : ""));
         }
+        System.out.println();
+        System.out.println("Emergencies ("+emergencies.size()+"):");
+        int eNo=1;
+        for (Emergency e: emergencies){
+            System.out.println("  E-"+eNo+" -> "+e.getResolvedState());
+            eNo++;
+        }
     }
 
     public void startMission(Missions currentMission) {
