@@ -16,9 +16,9 @@ public abstract class CrewMember extends ColonyMemebers.ColonyMemebers{
 
     public CrewMember(String name, String healthStatus, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
         super(IdNo, currentLocation, isAvaialble);
-        this.name = name;
-        this.healthStatus = healthStatus;
-        this.fatigueLevel = fatigueLevel;
+        setName(name);
+        setHealthStatus(healthStatus);
+        setFatigueLevel(fatigueLevel); 
     }
 
     public String getName() {

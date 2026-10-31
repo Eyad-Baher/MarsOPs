@@ -2,6 +2,7 @@ package ColonyMemebers;
 
 import Missions.Missions;
 import Emergency.Emergency;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -12,13 +13,14 @@ import Emergency.Emergency;
  * @author HP
  */
 public abstract class ColonyMemebers {
-    private  String IdNo;
+
+    private String IdNo;
     private String currentLocation;
     private boolean isAvaialble;
 
     public ColonyMemebers(String IdNo, String currentLocation, boolean isAvaialble) {
-        this.IdNo = IdNo;
-        this.currentLocation = currentLocation;
+        setIdNo(IdNo);
+        setCurrentLocation(currentLocation);
         this.isAvaialble = isAvaialble;
     }
 
@@ -43,10 +45,23 @@ public abstract class ColonyMemebers {
     public void setIsAvaialble(boolean isAvaialble) {
         this.isAvaialble = isAvaialble;
     }
-    
+
+    protected void setIdNo(String IdNo) {
+        if (!IdNo.isBlank()) {
+            this.IdNo = IdNo;
+
+        }
+            
+        
+    }
+
     public abstract boolean isUseable();
+
     public abstract boolean canPerformMission(Missions mission);
+
     public abstract boolean canHandleEmergency(Emergency emergency);
+
     public abstract void advanceTime();
+
     public abstract void getStatusSummary();
 }
