@@ -77,6 +77,8 @@ public class ExplorationMission extends Missions {
                     }
                     assignAgents(readyAgents);
                     return true;
+                }else{
+                    fail("Not Enough Qualified Agents.");
                 }
             }
         }

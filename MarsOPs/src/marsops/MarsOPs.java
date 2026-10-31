@@ -86,6 +86,10 @@ public static void scenarioTWO()
     System.out.println("Mission ever active: " + (mission.getElapsedTime() > 0 || mission.getState().equals("IN PROGRESS")));
     System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
 }
+public static void scenarioTHREE()
+{
+    
+}
     public static void main(String[] args) {
        // new MarsOPs().scenarioONE();
        scenarioTWO();
