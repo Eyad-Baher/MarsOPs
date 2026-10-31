@@ -30,6 +30,7 @@ public abstract class RoboticUnit extends ColonyMemebers{
     }
     
     public void setBatteryLevel(int batteryLevel) {
+        if (batteryLevel>=0)
         this.batteryLevel = batteryLevel;
     }
     
