@@ -22,6 +22,17 @@ public class Scientist extends CrewMember {
         this.skill = skill;
     }
 
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        if(skill!=null && !skill.isBlank())
+        this.skill = skill;
+    }
+    
+    
+
     public void research() {
         System.out.println(getName() + " is researching.");
     }

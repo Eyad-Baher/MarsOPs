@@ -24,19 +24,27 @@ public abstract class Emergency {
     }
 
     public void setFailureReason(String failureReason) {
-        this.failureReason = failureReason;
+        if (failureReason != null && !failureReason.isEmpty()) {
+            this.failureReason = failureReason;
+        }
     }
     
     public void setEmergencyLocation(String emergencyLocation) {
-        this.emergencyLocation = emergencyLocation;
+        if (emergencyLocation != null && !emergencyLocation.isEmpty()) {
+            this.emergencyLocation = emergencyLocation;
+        }
     }
 
     public void setResolvedState(String resolvedState) {
-        this.resolvedState = resolvedState;
+        if (resolvedState != null && (resolvedState.equals("RESOLVED") || resolvedState.equals("UNRESOLVED"))) {
+            this.resolvedState = resolvedState;
+        }
     }
 
     public void setResponders(ArrayList<ColonyMemebers> responders) {
-        this.responders = responders;
+        if (responders != null) {
+            this.responders = responders;
+        }
     }
 
     public ColonyMemebers[] getSuitableResponders() {
@@ -44,7 +52,9 @@ public abstract class Emergency {
     }
 
     public void setSuitableResponders(ColonyMemebers[] suitableResponders) {
-        this.suitableResponders = suitableResponders;
+        if (suitableResponders != null) {
+            this.suitableResponders = suitableResponders;
+        }
     }
     
 

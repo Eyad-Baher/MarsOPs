@@ -24,6 +24,7 @@ public class ExplorationMission extends Missions {
     }
 
     public void setTargetLocation(Location targetLocation) {
+        if (targetLocation!=null)
         this.targetLocation = targetLocation;
     }
 
@@ -36,6 +37,7 @@ public class ExplorationMission extends Missions {
     }
 
     public void setRequiredSkill(String requiredSkill) {
+        if (requiredSkill!=null && !requiredSkill.isBlank())
         this.requiredSkill = requiredSkill;
     }
 

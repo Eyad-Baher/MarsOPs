@@ -28,6 +28,23 @@ public class Fire extends Emergency {
         this.affectedLaboratory = affectedLaboratory;
     }
 
+    public Laboratory getAffectedLaboratory() {
+        return affectedLaboratory;
+    }
+
+    public void setAffectedLaboratory(Laboratory affectedLaboratory) {
+        this.affectedLaboratory = affectedLaboratory;
+    }
+
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+    
+
     public void damageAllEquipment() {
         if (affectedLaboratory != null && affectedLaboratory.getEquipment() != null) {
             for (Equipment e : affectedLaboratory.getEquipment()) {
