@@ -19,60 +19,59 @@ import CrewMemebers.Engineer;
  * @author HP
  */
 public class RepairMission extends Missions {
-
+    
     private Equipment targetEquipment;
     private int numOfBroken;
     private ColonyFacility targetFacility = null;
-
+    
     public RepairMission(Equipment targetEquipment, int numOfBroken, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
-        this.targetEquipment = targetEquipment;
-        this.numOfBroken = numOfBroken;
+        setTargetEquipment(targetEquipment);
+        setNumOfBroken(numOfBroken);
     }
-
-        
-
+    
     public RepairMission(ColonyFacility targetFacility, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
-        this.targetFacility = targetFacility;
+        setTargetFacility(targetFacility);
     }
-
+    
     public Equipment getTargetEquipment() {
         return targetEquipment;
     }
-
+    
     public void setTargetEquipment(Equipment targetEquipment) {
-        if (targetEquipment!=null)
-        this.targetEquipment = targetEquipment;
+        if (targetEquipment != null) {
+            this.targetEquipment = targetEquipment;
+        }
     }
-
+    
     public int getNumOfBroken() {
         return numOfBroken;
     }
-
+    
     public void setNumOfBroken(int numOfBroken) {
-        if(numOfBroken>=0)
-        this.numOfBroken = numOfBroken;
+        if (numOfBroken >= 0) {
+            this.numOfBroken = numOfBroken;
+        }
     }
-
+    
     public ColonyFacility getTargetFacility() {
         return targetFacility;
     }
-
+    
     public void setTargetFacility(ColonyFacility targetFacility) {
-        if (targetFacility!=null)
-        this.targetFacility = targetFacility;
+        if (targetFacility != null) {
+            this.targetFacility = targetFacility;
+        }
     }
     
-    
-
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {
         if (candidates == null) {
             fail("not enough agents.");
             return false;
         }
-
+        
         if (anotherMissionActive == true) {
             fail("Another active mission");
             return false;
@@ -80,16 +79,16 @@ public class RepairMission extends Missions {
         if (enoughResources == false) {
             fail("Not enough Resources");
             return false;
-
+            
         }
-
+        
         ArrayList<ColonyMemebers> readyAgents = new ArrayList<>();
-
+        
         int numRobots = 0;
         int numCrew = 0;
-
+        
         for (ColonyMemebers candidate : candidates) {
-
+            
             if (candidate.canPerformMission(this)) {
                 if (candidate instanceof CrewMember && numCrew != 1) {
                     numCrew++;
@@ -99,63 +98,52 @@ public class RepairMission extends Missions {
                     readyAgents.add(candidate);
                 }
             }
-                
-
             
-            if(numCrew>0 && numRobots>0)
-            {
+            if (numCrew > 0 && numRobots > 0) {
                 assignAgents(readyAgents);
-      
+                
                 return true;
             }
             
         }
         fail("Not Enough Qualified Agents.");
         return false;
-
+        
     }
     
     @Override
-    public void advanceTime()
-    {
+    public void advanceTime() {
         boolean object_break = true;
         
-        if (this.targetEquipment == null)
-        {
-         object_break = false;
+        if (this.targetEquipment == null) {
+            object_break = false;
         }
         for (ColonyMemebers missionAgent : this.agents) {
             
-            if(object_break == true)
-            {
-               if(missionAgent instanceof CrewMember)
-               {
-                   ((Engineer)missionAgent).repair(targetEquipment,numOfBroken);
-                   missionAgent.advanceTime();
-               }else
-               {
-                   ((RepairRobot)missionAgent).repair(targetEquipment,numOfBroken);
-                   missionAgent.advanceTime();
-                   
-               }
-            }else{
-                if(missionAgent instanceof CrewMember)
-               {
-                   ((Engineer)missionAgent).repair(targetFacility);
-                   missionAgent.advanceTime();
-
-               }else
-               {
-                   ((RepairRobot)missionAgent).repair(targetFacility);
-                   missionAgent.advanceTime();
-
-               }
-
-            }
+            if (object_break == true) {
+                if (missionAgent instanceof CrewMember) {
+                    ((Engineer) missionAgent).repair(targetEquipment, numOfBroken);
+                    missionAgent.advanceTime();
+                } else {
+                    ((RepairRobot) missionAgent).repair(targetEquipment, numOfBroken);
+                    missionAgent.advanceTime();
+                    
+                }
+            } else {
+                if (missionAgent instanceof CrewMember) {
+                    ((Engineer) missionAgent).repair(targetFacility);
+                    missionAgent.advanceTime();
+                    
+                } else {
+                    ((RepairRobot) missionAgent).repair(targetFacility);
+                    missionAgent.advanceTime();
+                    
+                }
                 
-                        
+            }
+            
         }
         
     }
-
+    
 }

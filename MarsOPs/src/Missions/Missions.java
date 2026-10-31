@@ -27,6 +27,7 @@ public abstract class Missions {
         this.currentCondition = new Normal();
     }
 
+    
     public Environment getCurrentCondition() {
         return currentCondition;
     }

@@ -17,9 +17,9 @@ public class ResearchMission extends Missions {
 
     public ResearchMission(String scientificSkill, Laboratory experimentLab, String experimentName, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
-        this.scientificSkill = scientificSkill;
-        this.experimentLab = experimentLab;
-        this.experimentName = experimentName;
+        setScientificSkill(scientificSkill);      
+        setExperimentLab(experimentLab);       
+        setExperimentName(experimentName);     
         this.experimentStatus = false;
     }
 
