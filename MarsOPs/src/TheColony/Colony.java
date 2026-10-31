@@ -14,13 +14,9 @@ import EnvironmentConditions.Environment;
 import EnvironmentConditions.Normal;
 import Facility.ColonyFacility;
 import Facility.CommunicationStation;
-import Facility.Habitat;
 import Missions.Missions;
-import MyResources.Equipment;
-import MyResources.LifeSupportSystem;
 import MyResources.Resources;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 public class Colony {
 
@@ -198,7 +194,26 @@ public class Colony {
         colonyResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
         colonyResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
+
+    public void setCurrentCondition(Environment currentCondition) {
+        
+        if(currentCondition.canShutDownLocation() == true)
+        {
+            for (ColonyFacility colonyFacility : allFacility) {
+                
+                if(colonyFacility instanceof CommunicationStation)
+                {
+                    colonyFacility.setOperationalStatus("NON-OPERATIONAL");
+                }
+                
+            }
+        }
+        
+        this.currentCondition = currentCondition;
+            
+        
+    }
     
-    
+   
 
 }
