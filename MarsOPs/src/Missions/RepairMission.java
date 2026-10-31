@@ -36,6 +36,33 @@ public class RepairMission extends Missions {
         super(missionID, duration, missionResources, missionEquipment);
         this.targetFacility = targetFacility;
     }
+
+    public Equipment getTargetEquipment() {
+        return targetEquipment;
+    }
+
+    public void setTargetEquipment(Equipment targetEquipment) {
+        if (targetEquipment!=null)
+        this.targetEquipment = targetEquipment;
+    }
+
+    public int getNumOfBroken() {
+        return numOfBroken;
+    }
+
+    public void setNumOfBroken(int numOfBroken) {
+        if(numOfBroken>=0)
+        this.numOfBroken = numOfBroken;
+    }
+
+    public ColonyFacility getTargetFacility() {
+        return targetFacility;
+    }
+
+    public void setTargetFacility(ColonyFacility targetFacility) {
+        if (targetFacility!=null)
+        this.targetFacility = targetFacility;
+    }
     
     
 

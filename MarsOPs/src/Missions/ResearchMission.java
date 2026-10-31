@@ -28,8 +28,37 @@ public class ResearchMission extends Missions {
     }
 
     public void setScientificSkill(String scientificSkill) {
+        if (scientificSkill!=null && !scientificSkill.isBlank())
         this.scientificSkill = scientificSkill;
     }
+
+    public Laboratory getExperimentLab() {
+        return experimentLab;
+    }
+
+    public void setExperimentLab(Laboratory experimentLab) {
+        if (experimentLab!=null)
+        this.experimentLab = experimentLab;
+    }
+
+    public String getExperimentName() {
+        return experimentName;
+    }
+
+    public void setExperimentName(String experimentName) {
+        if (experimentName!=null && !experimentName.isBlank())
+        this.experimentName = experimentName;
+    }
+
+    public boolean isExperimentStatus() {
+        return experimentStatus;
+    }
+
+    public void setExperimentStatus(boolean experimentStatus) {
+        this.experimentStatus = experimentStatus;
+    }
+    
+    
 
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {

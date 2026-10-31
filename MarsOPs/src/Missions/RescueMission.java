@@ -29,6 +29,34 @@ public class RescueMission extends Missions {
         this.missingLocation = missingLocation;
     }
 
+    public ColonyMemebers getStrandedEntity() {
+        return strandedEntity;
+    }
+
+    public void setStrandedEntity(ColonyMemebers strandedEntity) {
+        if (strandedEntity!=null)
+        this.strandedEntity = strandedEntity;
+    }
+
+    public String getMissingLocation() {
+        return missingLocation;
+    }
+
+    public void setMissingLocation(String missingLocation) {
+        if (missingLocation!=null && !missingLocation.isBlank())
+        this.missingLocation = missingLocation;
+    }
+
+    public boolean isEntityFound() {
+        return entityFound;
+    }
+
+    public void setEntityFound(boolean entityFound) {
+        this.entityFound = entityFound;
+    }
+
+    
+    
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {
 
