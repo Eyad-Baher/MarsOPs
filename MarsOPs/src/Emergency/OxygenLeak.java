@@ -87,6 +87,9 @@ public class OxygenLeak extends Emergency {
         releaseResponders();   
     }
     
+    public int totalOxygenLoss() {
+        return "RESOLVED".equals(getResolvedState()) ? oxygenLoss : 2 * oxygenLoss;
+    }
 
     private void applyUnresolvedLoss(Colony colony) {
         if (!penaltyApplied) {
