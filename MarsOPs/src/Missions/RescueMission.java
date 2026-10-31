@@ -83,9 +83,9 @@ public class RescueMission extends Missions {
             return true;
 
         }
-        else{
+        
                     fail("Not Enough Qualified Agents.");
-                }
+               
         return false;
     }
 

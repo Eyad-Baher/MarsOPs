@@ -83,7 +83,7 @@ public class MarsOPs {
     }
 // Scenario 5: Environmental Effect
 
-    public void scenarioFIVE() {
+    public static void scenarioFIVE() {
         System.out.println("\n===== Scenario 5: Environmental Effect =====");
 
         Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
@@ -118,7 +118,8 @@ public class MarsOPs {
 
     public static void main(String[] args) {
         // new MarsOPs().scenarioONE();
-        scenarioTWO();
+        //scenarioTWO();
+        scenarioFIVE();
     }
 
 }
