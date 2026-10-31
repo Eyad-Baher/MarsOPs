@@ -6,7 +6,9 @@ package marsops;
 
 import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
+import CrewMemebers.MedicalOfficer;
 import CrewMemebers.Scientist;
+import Emergency.Medical;
 import Emergency.OxygenLeak;
 import Emergency.RoverBreakdown;
 import Facility.Habitat;
@@ -151,9 +153,48 @@ public static void scenarioTWO()
         OxygenLeak oxygenLeak = new OxygenLeak(habitat, 5, colonyFOUR.getResponders());
         colonyFOUR.addEmergency(oxygenLeak);
         
+        
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyFOUR.showState();
+        System.out.println("\n---Starting oxygen leak emergency---");
         colonyFOUR.startEmergency();
+        System.out.println("\n--- System state AFTER submission ---");
+        colonyFOUR.showState();
+        
+    }
+    
+    public static void scenarioSIX()
+    {
+        System.out.println("\n===== Scenario 6: Emergency Handling =====");
+        
+        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
+        Colony colonySIX = new Colony(colonyResources);
+        
+        Resources habitatResources= new Resources(50,50,50,50,50,50,50);
+        Habitat habitat= new Habitat("Sector 01", 400, "OPERATIONAL", habitatResources);
+        colonySIX.addFacility(habitat);
+        
+        //Engineer engineer= new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
+        Scientist scientist= new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
+        MedicalOfficer medic=new MedicalOfficer("Dr. Farah", "HEALTHY", 2,"M-01", "Hellas Basin", false);
+        RepairRobot repairRobot= new RepairRobot("R-01", "Hellas Basin", true, 100, true);
+        
+        //colonySIX.addAgent(engineer);
+        colonySIX.addAgent(scientist);
+        colonySIX.addAgent(repairRobot);
+        colonySIX.addAgent(medic);
         
         
+        Medical medicalEmergency = new Medical(habitat, colonySIX.getResponders(), scientist);
+        colonySIX.addEmergency(medicalEmergency);
+        
+        
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonySIX.showState();
+        System.out.println("\n---Starting medical emergency---");
+        colonySIX.startEmergency();
+        System.out.println("\n--- System state AFTER submission ---");
+        colonySIX.showState();
     }
     
 
@@ -162,7 +203,8 @@ public static void scenarioTWO()
        // new MarsOPs().scenarioONE();
        //scenarioTWO();
        //scenarioTHREE();
-       scenarioFOUR();
+       //scenarioFOUR();
+       scenarioSIX();
     }
     
 }
