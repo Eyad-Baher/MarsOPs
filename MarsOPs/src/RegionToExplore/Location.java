@@ -22,6 +22,7 @@ public class Location {
     }
 
     public void setLocationName(String locationName) {
+        if (locationName!=null && !locationName.isBlank())
         this.locationName = locationName;
     }
 
