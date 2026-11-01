@@ -165,7 +165,7 @@ public static void scenarioTWO()
     
     public static void scenarioSIX()
     {
-        System.out.println("\n===== Scenario 6: Emergency Handling =====");
+        System.out.println("\n===== Scenario 6: Medical Emergency Handling =====");
         
         Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
         Colony colonySIX = new Colony(colonyResources);
@@ -174,12 +174,11 @@ public static void scenarioTWO()
         Habitat habitat= new Habitat("Sector 01", 400, "OPERATIONAL", habitatResources);
         colonySIX.addFacility(habitat);
         
-        //Engineer engineer= new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
+        
         Scientist scientist= new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
-        MedicalOfficer medic=new MedicalOfficer("Dr. Farah", "HEALTHY", 2,"M-01", "Hellas Basin", false);
+        MedicalOfficer medic=new MedicalOfficer("Dr. Farah", "HEALTHY", 2,"M-01", "Hellas Basin", true);
         RepairRobot repairRobot= new RepairRobot("R-01", "Hellas Basin", true, 100, true);
         
-        //colonySIX.addAgent(engineer);
         colonySIX.addAgent(scientist);
         colonySIX.addAgent(repairRobot);
         colonySIX.addAgent(medic);
@@ -197,6 +196,37 @@ public static void scenarioTWO()
         colonySIX.showState();
     }
     
+    public static void scenarioSEVEN()
+    {
+        System.out.println("===== Scenario 7: Rover breakdown emergency =====");
+
+        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 0);
+        Colony colonySEVEN = new Colony(colonyResources);
+
+        Scientist scientist = new Scientist("Dr. Sara", "HEALTHY", "Geology", 10, "S-01", "Habitat", true);
+        ExplorationRover rover = new ExplorationRover("R-01", "Habitat", true, 100, true);
+        RepairRobot repairRobot = new RepairRobot("R-02", "Sector 5", true, 100, true);
+        Engineer engineer= new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
+        colonySEVEN.addAgent(scientist);
+        colonySEVEN.addAgent(rover);
+        colonySEVEN.addAgent(repairRobot);
+        colonySEVEN.addAgent(engineer);
+
+        Equipment equipment = new Equipment("Sample Drill", 5, false);
+        Resources missionResources = new Resources(10, 10, 10, 10, 10, 0, 0);
+        Location  target = new Location("Olympus Ridge");
+
+        ExplorationMission mission = new ExplorationMission(target, "Geology", "EXP-01", 3, missionResources, equipment);
+        RoverBreakdown roverBreakdown= new RoverBreakdown(rover, mission, colonySEVEN.getResponders());
+        colonySEVEN.addEmergency(roverBreakdown);
+
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonySEVEN.showState();
+        System.out.println("\n---Starting rover breakdown emergency---");
+        colonySEVEN.startEmergency();
+        System.out.println("\n--- System state after submission ---");
+        colonySEVEN.showState();
+    }
 
 
     public static void main(String[] args) {
@@ -204,7 +234,8 @@ public static void scenarioTWO()
        //scenarioTWO();
        //scenarioTHREE();
        //scenarioFOUR();
-       scenarioSIX();
+       //scenarioSIX();
+       //scenarioSEVEN();
     }
     
 }
