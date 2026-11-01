@@ -61,7 +61,7 @@ public class Colony {
         int numOfFacilities = allFacility.size();
         for (ColonyFacility f : allFacility) {
             f.getResources().setOxygen(totalResources.getOxygen() / numOfFacilities);
-            f.getResources().setFood(totalResources.getFuel() / numOfFacilities);
+            f.getResources().setFood(totalResources.getFood() / numOfFacilities);
             f.getResources().setFuel(totalResources.getFuel() / numOfFacilities);
             f.getResources().setMedicalSupplies(totalResources.getMedicalSupplies() / numOfFacilities);
             f.getResources().setSpareParts(totalResources.getSpareParts() / numOfFacilities);
