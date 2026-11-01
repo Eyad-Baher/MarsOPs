@@ -17,9 +17,9 @@ public class ResearchMission extends Missions {
 
     public ResearchMission(String scientificSkill, Laboratory experimentLab, String experimentName, String missionID, int duration, Resources missionResources, Equipment missionEquipment) {
         super(missionID, duration, missionResources, missionEquipment);
-        this.scientificSkill = scientificSkill;
-        this.experimentLab = experimentLab;
-        this.experimentName = experimentName;
+        setScientificSkill(scientificSkill);      
+        setExperimentLab(experimentLab);       
+        setExperimentName(experimentName);     
         this.experimentStatus = false;
     }
 
@@ -28,8 +28,37 @@ public class ResearchMission extends Missions {
     }
 
     public void setScientificSkill(String scientificSkill) {
+        if (scientificSkill!=null && !scientificSkill.isBlank())
         this.scientificSkill = scientificSkill;
     }
+
+    public Laboratory getExperimentLab() {
+        return experimentLab;
+    }
+
+    public void setExperimentLab(Laboratory experimentLab) {
+        if (experimentLab!=null)
+        this.experimentLab = experimentLab;
+    }
+
+    public String getExperimentName() {
+        return experimentName;
+    }
+
+    public void setExperimentName(String experimentName) {
+        if (experimentName!=null && !experimentName.isBlank())
+        this.experimentName = experimentName;
+    }
+
+    public boolean isExperimentStatus() {
+        return experimentStatus;
+    }
+
+    public void setExperimentStatus(boolean experimentStatus) {
+        this.experimentStatus = experimentStatus;
+    }
+    
+    
 
     @Override
     public boolean acceptMission(ArrayList<ColonyMemebers> candidates, boolean anotherMissionActive, boolean enoughResources) {
@@ -67,6 +96,8 @@ public class ResearchMission extends Missions {
             assignAgents(readyAgents);
             return true;
         }
+         fail("Not Enough Qualified Agents.");
+                
         return false;
     }
 

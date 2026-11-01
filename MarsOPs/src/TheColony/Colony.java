@@ -14,13 +14,9 @@ import EnvironmentConditions.Environment;
 import EnvironmentConditions.Normal;
 import Facility.ColonyFacility;
 import Facility.CommunicationStation;
-import Facility.Habitat;
 import Missions.Missions;
-import MyResources.Equipment;
-import MyResources.LifeSupportSystem;
 import MyResources.Resources;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 public class Colony {
 
@@ -65,7 +61,7 @@ public class Colony {
         int numOfFacilities = allFacility.size();
         for (ColonyFacility f : allFacility) {
             f.getResources().setOxygen(totalResources.getOxygen() / numOfFacilities);
-            f.getResources().setFood(totalResources.getFuel() / numOfFacilities);
+            f.getResources().setFood(totalResources.getFood() / numOfFacilities);
             f.getResources().setFuel(totalResources.getFuel() / numOfFacilities);
             f.getResources().setMedicalSupplies(totalResources.getMedicalSupplies() / numOfFacilities);
             f.getResources().setSpareParts(totalResources.getSpareParts() / numOfFacilities);
@@ -225,5 +221,27 @@ public class Colony {
         totalResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
         totalResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
+
+    public void setCurrentCondition(Environment currentCondition) {
+        
+        if(currentCondition.canShutDownLocation() == true)
+        {
+            for (ColonyFacility colonyFacility : allFacility) {
+                
+                if(colonyFacility instanceof CommunicationStation)
+                {
+                    colonyFacility.setOperationalStatus("NON-OPERATIONAL");
+                }
+                
+            }
+        }
+        
+        this.currentCondition = currentCondition;
+            
+        
+    }
+    
+    
+   
 
 }

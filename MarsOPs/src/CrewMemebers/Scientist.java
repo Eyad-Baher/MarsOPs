@@ -19,8 +19,18 @@ public class Scientist extends CrewMember {
 
     public Scientist(String name, String healthStatus, String skill, int fatigueLevel, String IdNo, String currentLocation, boolean isAvaialble) {
         super(name, healthStatus, fatigueLevel, IdNo, currentLocation, isAvaialble);
+        setSkill(skill);    }
+
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        if(skill!=null && !skill.isBlank())
         this.skill = skill;
     }
+    
+    
 
     public void research() {
         System.out.println(getName() + " is researching.");
