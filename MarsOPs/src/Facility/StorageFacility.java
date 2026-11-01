@@ -9,11 +9,7 @@ import MyResources.Resources;
 public class StorageFacility extends ColonyFacility{
 
     public StorageFacility(String location, int capacity, String operationalStatus, Resources resources) {
-        super(location, capacity, operationalStatus, resources);
-        if( resources==null || resources.getTotalResources() > getCapacity() )
-        {
-            throw new IllegalArgumentException("Rejected. (Initial stock exceeds max capacity)");
-        }    
+        super(location, capacity, operationalStatus, resources);   
     }
     
 
