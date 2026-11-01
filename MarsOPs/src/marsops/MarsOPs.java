@@ -4,15 +4,12 @@ import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
 import CrewMemebers.MedicalOfficer;
 import CrewMemebers.Scientist;
+import Emergency.OxygenLeak;
 import EnvironmentConditions.DustStorm;
 import EnvironmentConditions.Normal;
-import Facility.Laboratory;
-import Facility.PowerStation;
-import Emergency.Medical;
-import Emergency.OxygenLeak;
-import Emergency.RoverBreakdown;
 import Facility.Habitat;
 import Facility.Laboratory;
+import Facility.PowerStation;
 import Missions.ExplorationMission;
 import Missions.RepairMission;
 import Missions.RescueMission;
@@ -88,72 +85,119 @@ public class MarsOPs {
         System.out.println();
     }
 
+    // Scenario 3: mission rejected because the colony doesn't have enough resources
     public static void scenarioTHREE() {
-        System.out.println("\n===== Scenario 3: Resource Shortage =====");
-        Resources colonyResources = new Resources(10, 10, 10, 10, 10, 10, 10);
-        Colony colonyTHREE = new Colony(colonyResources);
+        System.out.println("---------- Scenario 3: Resource Shortage ----------");
 
+        Colony colony = new Colony(new Resources(10, 10, 10, 10, 10, 10, 10));
+
+        Engineer ahmed = new Engineer("Eng. Ahmed", "HEALTHY", 4, "E-01", "Arcadia Outpost", true);
+        Scientist mohamed = new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
+        colony.addAgent(ahmed);
+        colony.addAgent(mohamed);
+
+        Equipment seismometer = new Equipment("Seismometer", 3, false);
+        Equipment microscope = new Equipment("Microscope", 10, false);
         ArrayList<Equipment> labEquipment = new ArrayList<>();
-        Equipment equipment1 = new Equipment("Seismometer", 3, false);
-        Equipment equipment2 = new Equipment("Microscope", 10, false);
-        labEquipment.add(equipment1);
-        labEquipment.add(equipment2);
+        labEquipment.add(seismometer);
+        labEquipment.add(microscope);
 
         ArrayList<CrewMember> labPersonnel = new ArrayList<>();
-        Engineer e1 = new Engineer("Eng. Ahmed", "HEALTHY", 4, "E-01", "Arcadia Outpost", true);
-        Scientist s1 = new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
-        labPersonnel.add(e1);
-        labPersonnel.add(s1);
-        colonyTHREE.addAgent(e1);
-        colonyTHREE.addAgent(s1);
+        labPersonnel.add(ahmed);
+        labPersonnel.add(mohamed);
 
-        Resources labResources = new Resources(10, 10, 10, 10, 10, 10, 10);
-        Laboratory lab = new Laboratory(true, 5, labEquipment, labPersonnel, "Sector 04", labResources);
-        colonyTHREE.addFacility(lab);
+        Laboratory lab = new Laboratory(true, 5, labEquipment, labPersonnel, "Sector 04", new Resources(10, 10, 10, 10, 10, 10, 10));
+        colony.addFacility(lab);
 
-        Resources missionResources = new Resources(50, 50, 0, 0, 50, 0, 0);
-        ResearchMission researchMission = new ResearchMission("Soil analysis", lab, "Marsquake Monitoring", "M-01", 3, missionResources, equipment1);
+        // the mission needs far more than the colony has (50 vs 10)
+        Resources needed = new Resources(50, 50, 0, 0, 50, 0, 0);
+        ResearchMission mission = new ResearchMission("Soil analysis", lab, "Marsquake Monitoring", "RES-03", 3, needed, seismometer);
 
-        System.out.println("\n--- System state BEFORE submission ---");
-        colonyTHREE.showState();
-        System.out.println("Mission " + researchMission.getMissionID() + ": " + researchMission.getState());
+        System.out.println("\nBefore:");
+        colony.showState();
+        System.out.println("Mission state: " + mission.getState());
 
-        System.out.println("---Starting Research Mission---");
-        colonyTHREE.startMission(researchMission);
+        System.out.println("\nSubmitting mission...");
+        colony.startMission(mission);
 
-        System.out.println("---System state AFTER submission---");
-        colonyTHREE.showState();
+        System.out.println("\nAfter:");
+        colony.showState();
+        System.out.println("Mission state: " + mission.getState());
         System.out.println();
-        System.out.println();
-
     }
 
+    // Scenario 4: oxygen leak in a habitat, handled by an engineer and a repair robot
     public static void scenarioFOUR() {
-        System.out.println("\n===== Scenario 4: Emergency Handling =====");
+        System.out.println("---------- Scenario 4: Emergency Handling (Oxygen Leak) ----------");
 
-        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
-        Colony colonyFOUR = new Colony(colonyResources);
+        Colony colony = new Colony(new Resources(100, 100, 100, 100, 100, 100, 100));
 
-        Engineer engineer = new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
-        RepairRobot repairRobot = new RepairRobot("R-01", "Hellas Basin", true, 100, true);
-        colonyFOUR.addAgent(engineer);
-        colonyFOUR.addAgent(repairRobot);
+        Engineer alia = new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
+        RepairRobot robot = new RepairRobot("R-01", "Hellas Basin", true, 100, true);
+        colony.addAgent(alia);
+        colony.addAgent(robot);
 
-        Resources habitatResources = new Resources(50, 50, 50, 50, 50, 50, 50);
-        Habitat habitat = new Habitat("Sector 01", 400, "OPERATIONAL", habitatResources);
-        colonyFOUR.addFacility(habitat);
-        OxygenLeak oxygenLeak = new OxygenLeak(habitat, 5, colonyFOUR.getResponders());
-        colonyFOUR.addEmergency(oxygenLeak);
+        Habitat habitat = new Habitat("Sector 01", 400, "OPERATIONAL", new Resources(50, 50, 50, 50, 50, 50, 50));
+        colony.addFacility(habitat);
 
-        System.out.println("\n--- System state BEFORE submission ---");
-        colonyFOUR.showState();
-        System.out.println("\n---Starting oxygen leak emergency---");
-        colonyFOUR.startEmergency();
-        System.out.println("\n--- System state AFTER submission ---");
-        colonyFOUR.showState();
+        OxygenLeak leak = new OxygenLeak(habitat, 5, colony.getResponders());
+        colony.addEmergency(leak);
+
+        System.out.println("\nBefore:");
+        colony.showState();
+        System.out.println("Habitat oxygen: " + habitat.getOxygen());
+
+        System.out.println("\nStarting oxygen leak emergency...");
+        colony.startEmergency();
+
+        System.out.println("\nAfter:");
+        colony.showState();
+        System.out.println("Habitat oxygen: " + habitat.getOxygen());
+        System.out.println("Leak state: " + leak.getResolvedState());
         System.out.println();
-        System.out.println();
+    }
 
+    // Scenario 5: dust storm
+    public static void scenarioFIVE() {
+        System.out.println("---------- Scenario 5: Environmental Effect ----------");
+
+        Colony colony = new Colony(new Resources(100, 100, 100, 100, 100, 100, 100));
+
+        Scientist sara = new Scientist("Dr. Sara", "HEALTHY", "Geology", 10, "S-05", "Habitat", true);
+        ExplorationRover rover = new ExplorationRover("R-05", "Habitat", true, 100, true);
+        colony.addAgent(sara);
+        colony.addAgent(rover);
+
+        Location gale = new Location("Gale Crater");
+        Equipment drill = new Equipment("Sample Drill", 5, false);
+        Resources needed = new Resources(10, 10, 10, 10, 10, 0, 0);
+        ExplorationMission mission = new ExplorationMission(gale, "Geology", "EXP-05", 3, needed, drill);
+
+        System.out.println("\nA dust storm hits the colony.");
+        colony.setCurrentCondition(new DustStorm());
+
+        System.out.println("\nBefore:");
+        colony.showState();
+
+        System.out.println("\nSubmitting mission during the storm...");
+        colony.startMission(mission);
+
+        System.out.println("\nAfter:");
+        colony.showState();
+        System.out.println("Gale Crater explored? " + gale.isExplored());
+
+        // storm is over, try again with a new mission
+        System.out.println("\nThe storm clears.");
+        System.out.println("\nMission can't be retried. Creating new mission.");
+        colony.setCurrentCondition(new Normal());
+
+        Location jezero = new Location("Jezero Crater");
+        ExplorationMission retry = new ExplorationMission(jezero, "Geology", "EXP-05B", 3, needed, drill);
+        colony.startMission(retry);
+
+        colony.showState();
+        System.out.println("Jezero Crater explored? " + jezero.isExplored());
+        System.out.println();
     }
 
     // Research mission in the lab
@@ -242,46 +286,14 @@ public class MarsOPs {
         System.out.println();
     }
 
-    // Scenario 5: dust storm
-    public static void scenarioFIVE() {
-        System.out.println("---------- Scenario 5: Environmental Effect ----------");
-
-        Colony colony = new Colony(new Resources(100, 100, 100, 100, 100, 100, 100));
-
-        Scientist sara = new Scientist("Dr. Sara", "HEALTHY", "Geology", 10, "S-05", "Habitat", true);
-        ExplorationRover rover = new ExplorationRover("R-05", "Habitat", true, 100, true);
-        colony.addAgent(sara);
-        colony.addAgent(rover);
-
-        Location gale = new Location("Gale Crater");
-        Equipment drill = new Equipment("Sample Drill", 5, false);
-        Resources needed = new Resources(10, 10, 10, 10, 10, 0, 0);
-        ExplorationMission mission = new ExplorationMission(gale, "Geology", "EXP-05", 3, needed, drill);
-
-        System.out.println("\nA dust storm hits the colony.");
-        colony.setCurrentCondition(new DustStorm());
-
-        System.out.println("\nBefore:");
-        colony.showState();
-
-        System.out.println("\nSubmitting mission during the storm...");
-        colony.startMission(mission);
-
-        System.out.println("\nAfter:");
-        colony.showState();
-        System.out.println("Gale Crater explored? " + gale.isExplored());
-
-        // storm is over, try again with a new mission
-        System.out.println("\nThe storm clears.");
-        System.out.println("\nMission Can't be retried. Creating new mission.");
-        colony.setCurrentCondition(new Normal());
-
-        Location jezero = new Location("Jezero Crater");
-        ExplorationMission retry = new ExplorationMission(jezero, "Geology", "EXP-05B", 3, needed, drill);
-        colony.startMission(retry);
-
-        colony.showState();
-        System.out.println("Jezero Crater explored? " + jezero.isExplored());
-        System.out.println();
+    public static void main(String[] args) {
+        scenarioONE();
+        scenarioTWO();
+        scenarioTHREE();
+        scenarioFOUR();
+        scenarioFIVE();
+        scenarioResearch();
+        scenarioRepair();
+        scenarioRescue();
     }
 }
