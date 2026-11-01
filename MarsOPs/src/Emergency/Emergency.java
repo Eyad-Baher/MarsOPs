@@ -14,7 +14,10 @@ public abstract class Emergency {
     private String failureReason;
 
     public Emergency(String emergencyLocation, String resolvedState, ArrayList<ColonyMemebers> responders) {
-        this.emergencyLocation = emergencyLocation;
+        if(emergencyLocation==null || emergencyLocation.equals(""))
+            this.emergencyLocation="Unknown Location";
+        else
+            this.emergencyLocation = emergencyLocation;
         this.resolvedState = resolvedState;
         this.responders = responders;
     }

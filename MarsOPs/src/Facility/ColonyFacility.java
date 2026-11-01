@@ -14,19 +14,30 @@ public abstract class ColonyFacility {
     private Resources resources;
 
     public ColonyFacility(String location, int capacity, String operationalStatus, Resources resources) {
-        this.location = location;
+        if(location==null || location.equals(""))
+            this.location="Unknown location";
+        else
+            this.location=location;
+        
         if(capacity<=0)
             this.capacity=0;
         else
             this.capacity = capacity;
-        this.operationalStatus = operationalStatus;
+        
+        if(operationalStatus==null || (!operationalStatus.equals("OPERATIONAL") && !operationalStatus.equals("NON-OPERATIONAL")))
+            this.operationalStatus="NON-OPERATIONAL";
+        else
+            this.operationalStatus=operationalStatus;
         this.resources = resources;
     }
     
     
     
     public void setLocation(String location) {
-        this.location = location;
+        if(location==null || location.equals(""))
+            this.location="Unknown location";
+        else
+            this.location=location;
     }
 
     public void setCapacity(int capacity) {
@@ -37,7 +48,10 @@ public abstract class ColonyFacility {
     }
 
     public void setOperationalStatus(String operationalStatus) {
-        this.operationalStatus = operationalStatus;
+        if(operationalStatus==null || (!operationalStatus.equals("OPERATIONAL") && !operationalStatus.equals("NON-OPERATIONAL")))
+            this.operationalStatus="NON-OPERATIONAL";
+        else
+            this.operationalStatus=operationalStatus;
     }
 
     public String getLocation() {
