@@ -5,6 +5,9 @@
 package CrewMemebers;
 
 import Emergency.Emergency;
+import Emergency.Fire;
+import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
 import Missions.Missions;
 import Missions.RepairMission;
 import MyResources.Equipment;
@@ -51,7 +54,10 @@ public class Engineer extends CrewMember {
 
     @Override
     public boolean canHandleEmergency(Emergency emergency) {
-        return false;
+        if(( (emergency instanceof OxygenLeak) || (emergency instanceof Fire) || (emergency instanceof RoverBreakdown) ) && isUseable()&&isIsAvaialble())
+            return true;
+        else
+            return false;
     }
 
 }

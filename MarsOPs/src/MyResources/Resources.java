@@ -114,19 +114,19 @@ public class Resources {
     {
         if(!isValidName(name))
             return -1;
-        if(OXYGEN.equals(name))
+        if(OXYGEN.equalsIgnoreCase(name))
             return oxygen;
-        if(WATER.equals(name))
+        if(WATER.equalsIgnoreCase(name))
             return water;
-        if(FOOD.equals(name))
+        if(FOOD.equalsIgnoreCase(name))
             return food;
-        if(FUEL.equals(name))
+        if(FUEL.equalsIgnoreCase(name))
             return fuel;
-        if(BATTERYPOWER.equals(name))
+        if(BATTERYPOWER.equalsIgnoreCase(name))
             return batteryPower;
-        if(MEDICALSUPPLIES.equals(name))
+        if(MEDICALSUPPLIES.equalsIgnoreCase(name))
             return medicalSupplies;
-        if(SPAREPARTS.equals(name))
+        if(SPAREPARTS.equalsIgnoreCase(name))
             return spareParts;
         return -1;
     }
@@ -137,19 +137,19 @@ public class Resources {
             return false;
         if(amount> getAmount(name))
             return false;
-        if(OXYGEN.equals(name))
+        if(OXYGEN.equalsIgnoreCase(name))
             oxygen-=amount;
-        else if(WATER.equals(name))
+        else if(WATER.equalsIgnoreCase(name))
             water-=amount;
-        else if(FOOD.equals(name))
+        else if(FOOD.equalsIgnoreCase(name))
             food-=amount;
-        else if(FUEL.equals(name))
+        else if(FUEL.equalsIgnoreCase(name))
             fuel-=amount;
-        else if(BATTERYPOWER.equals(name))
+        else if(BATTERYPOWER.equalsIgnoreCase(name))
             batteryPower-=amount;
-        else if(MEDICALSUPPLIES.equals(name))
+        else if(MEDICALSUPPLIES.equalsIgnoreCase(name))
             medicalSupplies-=amount;
-        else if(SPAREPARTS.equals(name))
+        else if(SPAREPARTS.equalsIgnoreCase(name))
             spareParts-=amount;
         else
             return false;
@@ -160,19 +160,19 @@ public class Resources {
     {
         if(!isValidName(name) || amount<0 )
             return false;
-        if(OXYGEN.equals(name))
+        if(OXYGEN.equalsIgnoreCase(name))
             oxygen+=amount;
-        else if(WATER.equals(name))
+        else if(WATER.equalsIgnoreCase(name))
             water+=amount;
-        else if(FOOD.equals(name))
+        else if(FOOD.equalsIgnoreCase(name))
             food+=amount;
-        else if(FUEL.equals(name))
+        else if(FUEL.equalsIgnoreCase(name))
             fuel+=amount;
-        else if(BATTERYPOWER.equals(name))
+        else if(BATTERYPOWER.equalsIgnoreCase(name))
             batteryPower+=amount;
-        else if(MEDICALSUPPLIES.equals(name))
+        else if(MEDICALSUPPLIES.equalsIgnoreCase(name))
             medicalSupplies+=amount;
-        else if(SPAREPARTS.equals(name))
+        else if(SPAREPARTS.equalsIgnoreCase(name))
             spareParts+=amount;
         else
             return false;
@@ -222,7 +222,7 @@ public class Resources {
     //helper method
     private boolean isValidName(String name)
     {
-        if(name!= null && (OXYGEN.equals(name) || WATER.equals(name) || FOOD.equals(name) || FUEL.equals(name) || BATTERYPOWER.equals(name) || MEDICALSUPPLIES.equals(name) || SPAREPARTS.equals(name) ))
+        if(name!= null && (OXYGEN.equalsIgnoreCase(name) || WATER.equalsIgnoreCase(name) || FOOD.equalsIgnoreCase(name) || FUEL.equalsIgnoreCase(name) || BATTERYPOWER.equalsIgnoreCase(name) || MEDICALSUPPLIES.equalsIgnoreCase(name) || SPAREPARTS.equalsIgnoreCase(name) ))
             return true;
         return false;
     }

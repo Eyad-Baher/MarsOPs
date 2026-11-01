@@ -3,11 +3,12 @@ package Emergency;
 import ColonyMemebers.ColonyMemebers;
 import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
-import CrewMemebers.MedicalOfficer;
+import CrewMemebers.MedicalOfficer; 
 import Facility.ColonyFacility;
 import MyResources.Equipment;
 import MyResources.Resources;
 import Robots.RepairRobot;
+import TheColony.Colony;
 import java.util.ArrayList;
 
 /**
@@ -22,11 +23,12 @@ public class Medical extends Emergency{
     private Resources resources;
     private final int fatigueAmount=8;
     private final int numOfMedicalSupplies=10;
+    private final int oxygenNeeded=5;
     
     
     
-    public Medical(ColonyFacility facility, String resolvedState, ArrayList<ColonyMemebers> responders, CrewMember patient) {
-        super("Facility: "+facility.getLocation(), "UNRESOLVED", responders);
+    public Medical(ColonyFacility facility, ArrayList<ColonyMemebers> responders, CrewMember patient) {
+        super("Facility: "+facility.getLocation(), "PENDING", responders);
         this.patient=patient;
         this.facility=facility;
     }
@@ -34,17 +36,26 @@ public class Medical extends Emergency{
     public void triggerMedical()
     {
         patient.setHealthStatus("INJURED");
+        System.out.println("---!!MEDICAL EMERGENCY: PATIENT "+patient.getIdNo()+" IS INJURED!!---");
     }
     
-    public void handleMedical()
+    public void handleMedical(Colony colony)
     {
+        if(getResolvedState().equals("RESOLVED"))
+        {
+            System.out.println("__MEDICAL EMERGENCY IS RESOLVED__");
+            return;
+        }
         availableResponder=findResponders();
-        //SCENARIOS TO MAKE HANDLING EMERGENCY FAIL
+        //WHAT COULD MAKE HANDLING EMERGENCY FAIL
         //if there are no responders:
         if(availableResponder==null)
         {
+            setFailureReason("There are no suitable medical officers.");
             System.out.println(getFailureReason());
             setResolvedState("UNRESOLVED");
+            System.out.println("__FAILED TO HANDLE EMERGENCY. EMERGENCY UNRESOLVED__");
+            return;     
         }
         //if facility is not operational
         if(facility.isOperationalStatus().equals("NON-OPERATIONAL"))
@@ -53,8 +64,8 @@ public class Medical extends Emergency{
             System.out.println(getFailureReason());
             setResolvedState("UNRESOLVED");
         }
-        //if there isn't enough medical supplies
-        if(resources.areMedicalSuppliesSufficient(numOfMedicalSupplies))
+        //if there aren't enough medical supplies
+        if(!colony.getTotalResources().areMedicalSuppliesSufficient(numOfMedicalSupplies))
         {
             setFailureReason("Insufficient medical supplies.");
             System.out.println(getFailureReason());
@@ -75,15 +86,19 @@ public class Medical extends Emergency{
         }
         
         //emergency can be handled
-        changeRespondersLocation();
-        resources.useMedicalSupplies(numOfMedicalSupplies);
+        dispatchResponder();
+        consumeResources(colony);
         changeResponderAvailability(false);
         responderHealsPatient();
         setResolvedState("RESOLVED");
         releaseResponder();
         
         if(getResolvedState().equals("RESOLVED"))
+        {
             System.out.println("__MEDICAL EMERGENCY IS SUCCESSFULLY RESOLVED__");
+            System.out.println("Medical officer is now available.");   
+        }
+            
     }
     
     private boolean isResponderEenergySufficient()
@@ -93,9 +108,10 @@ public class Medical extends Emergency{
         return false;
     }
     
-    private void changeRespondersLocation()
+    private void dispatchResponder()
     {
         ((MedicalOfficer)availableResponder[0]).setCurrentLocation("Facility: "+facility.getLocation());
+        System.out.println("Dispatching medical officer "+((MedicalOfficer)availableResponder[0]).getIdNo()+"...");      ////////
     }
     
     private void changeResponderAvailability(boolean a)
@@ -107,6 +123,15 @@ public class Medical extends Emergency{
     {
         ((MedicalOfficer)availableResponder[0]).heal(patient);
         ((MedicalOfficer)availableResponder[0]).incFatigue(fatigueAmount);
+        System.out.println("Medical officer is healing patient...");   
+    }
+    
+    private void consumeResources(Colony colony)
+    {
+        colony.getTotalResources().useMedicalSupplies(numOfMedicalSupplies);
+        colony.distributeMedicalSupplies();
+        colony.deductTotalResource("oxygen",oxygenNeeded);
+        colony.distributeOxygen();
     }
     
     private void releaseResponder()
@@ -120,7 +145,7 @@ public class Medical extends Emergency{
         boolean foundMedic=false; 
         for(int i=0;i<getResponders().size();i++)
         {
-            if(getResponders().get(i).canHandleEmergency(this) && getResponders().get(i).isIsAvaialble() && getResponders().get(i).isUseable())
+            if(! (getResponders().get(i).getIdNo().equals(patient.getIdNo())) && getResponders().get(i).canHandleEmergency(this))
             {
                 if(getResponders().get(i) instanceof MedicalOfficer && foundMedic==false)
                 {
@@ -132,7 +157,6 @@ public class Medical extends Emergency{
             }   
         }
         
-        setFailureReason("There are no suitable medical officers");
         return null;
     }
     

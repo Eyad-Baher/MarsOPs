@@ -14,13 +14,9 @@ import EnvironmentConditions.Environment;
 import EnvironmentConditions.Normal;
 import Facility.ColonyFacility;
 import Facility.CommunicationStation;
-import Facility.Habitat;
 import Missions.Missions;
-import MyResources.Equipment;
-import MyResources.LifeSupportSystem;
 import MyResources.Resources;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 public class Colony {
 
@@ -28,11 +24,100 @@ public class Colony {
     private ArrayList<ColonyMemebers> allAgents = new ArrayList<>();
     private ArrayList<Missions> allMissions = new ArrayList<>();
     private Environment currentCondition = new Normal();
+    private ArrayList<Emergency> emergencies = new ArrayList<>();
+    //private ArrayList<ColonyMemebers> responders = new ArrayList<>();
+    private int numEmergencyResources;
+    private Resources totalResources;
     private boolean activeMission;
-    private Resources colonyResources;
 
-    public Colony(Resources colonyResources) {
-        this.colonyResources = colonyResources;
+    public Colony(Resources totalResources) {
+        this.totalResources = totalResources;
+    }
+
+    public void startEmergency() {
+        for (Emergency e : emergencies) {
+            if (e instanceof OxygenLeak) {
+                ((OxygenLeak) e).triggerOxygenLeak();
+                ((OxygenLeak) e).handleOxygenLeak(this);
+            } else if (e instanceof Fire) {
+                ((Fire) e).triggerFire(numEmergencyResources);
+                ((Fire) e).handleFire(this);
+            } else if (e instanceof Medical) {
+                ((Medical) e).triggerMedical();
+                ((Medical) e).handleMedical(this);
+            } else {
+                ((RoverBreakdown) e).triggerRoverBreakdown();
+                ((RoverBreakdown) e).handleRoverBreakdown(this);
+            }
+        }
+
+    }
+
+    public void deductTotalResource(String name, int amount) {
+        totalResources.deductResource(name, amount);
+    }
+
+    public void distributeTotalResources() {
+        int numOfFacilities = allFacility.size();
+        for (ColonyFacility f : allFacility) {
+            f.getResources().setOxygen(totalResources.getOxygen() / numOfFacilities);
+            f.getResources().setFood(totalResources.getFood() / numOfFacilities);
+            f.getResources().setFuel(totalResources.getFuel() / numOfFacilities);
+            f.getResources().setMedicalSupplies(totalResources.getMedicalSupplies() / numOfFacilities);
+            f.getResources().setSpareParts(totalResources.getSpareParts() / numOfFacilities);
+            f.getResources().setWater(totalResources.getWater() / numOfFacilities);
+            f.getResources().setBatteryPower(totalResources.getBatteryPower() / numOfFacilities);
+        }
+
+    }
+
+    
+    public ArrayList<ColonyMemebers> getResponders()
+    {
+        return allAgents;
+    }
+
+    public Resources getTotalResources() {
+        return totalResources;
+    }
+
+    public void distributeOxygen() {
+        int numOfFacilities = allFacility.size();
+        if (numOfFacilities == 0) {
+            // avoids division by zero
+            System.out.println("0 facilities");
+            return;
+
+        }
+        for (ColonyFacility f : allFacility) {
+            f.getResources().setOxygen(totalResources.getOxygen() / numOfFacilities);
+        }
+    }
+
+    public void distributeSpareParts() {
+        int numOfFacilities = allFacility.size();
+        if (numOfFacilities == 0) {
+            // avoids division by zero
+            System.out.println("0 facilities");
+            return;
+
+        }
+        for (ColonyFacility f : allFacility) {
+            f.getResources().setSpareParts(totalResources.getSpareParts() / numOfFacilities);
+        }
+    }
+
+    public void distributeMedicalSupplies() {
+        int numOfFacilities = allFacility.size();
+        if (numOfFacilities == 0) {
+            // avoids division by zero
+            System.out.println("0 facilities");
+            return;
+
+        }
+        for (ColonyFacility f : allFacility) {
+            f.getResources().setMedicalSupplies(totalResources.getMedicalSupplies() / numOfFacilities);
+        }
     }
 
     public void addAgent(ColonyMemebers agent) {
@@ -40,9 +125,24 @@ public class Colony {
             allAgents.add(agent);
         }
     }
+    
+    public void addFacility(ColonyFacility facility)
+    {
+        if(facility!=null)
+        {
+            allFacility.add(facility);
+            distributeTotalResources();
+        }
+    }
+    
+    public void addEmergency(Emergency emergency)
+    {
+        if(emergency!=null)
+            emergencies.add(emergency);
+    }
 
     public void showState() {
-        System.out.println("Resources: " + colonyResources);
+        System.out.println("Resources: " + totalResources);
         System.out.println("Active mission: " + activeMission);
         System.out.println("Agents (" + allAgents.size() + "):");
         for (ColonyMemebers agent : allAgents) {
@@ -54,6 +154,13 @@ public class Colony {
             System.out.println("  " + m.getMissionID() + " -> " + m.getState()
                     + " (" + m.getElapsedTime() + "/" + m.getDuration() + ")"
                     + (m.getFailureReason() != null ? " reason: " + m.getFailureReason() : ""));
+        }
+        System.out.println();
+        System.out.println("Emergencies ("+emergencies.size()+"):");
+        int eNo=1;
+        for (Emergency e: emergencies){
+            System.out.println("  E-"+eNo+" -> "+e.getResolvedState());
+            eNo++;
         }
     }
 
@@ -93,26 +200,48 @@ public class Colony {
         if (needed == null) {
             return true;
         }
-        return colonyResources.getOxygen() >= needed.getOxygen()
-                && colonyResources.getWater() >= needed.getWater()
-                && colonyResources.getFood() >= needed.getFood()
-                && colonyResources.getFuel() >= needed.getFuel()
-                && colonyResources.getBatteryPower() >= needed.getBatteryPower()
-                && colonyResources.getMedicalSupplies() >= needed.getMedicalSupplies()
-                && colonyResources.getSpareParts() >= needed.getSpareParts();
+        return totalResources.getOxygen() >= needed.getOxygen()
+                && totalResources.getWater() >= needed.getWater()
+                && totalResources.getFood() >= needed.getFood()
+                && totalResources.getFuel() >= needed.getFuel()
+                && totalResources.getBatteryPower() >= needed.getBatteryPower()
+                && totalResources.getMedicalSupplies() >= needed.getMedicalSupplies()
+                && totalResources.getSpareParts() >= needed.getSpareParts();
     }
 
     private void deductResources(Resources used) {
         if (used == null) {
             return;
         }
-        colonyResources.deductResource(Resources.OXYGEN, used.getOxygen());
-        colonyResources.deductResource(Resources.WATER, used.getWater());
-        colonyResources.deductResource(Resources.FOOD, used.getFood());
-        colonyResources.deductResource(Resources.FUEL, used.getFuel());
-        colonyResources.deductResource(Resources.BATTERYPOWER, used.getBatteryPower());
-        colonyResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
-        colonyResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
+        totalResources.deductResource(Resources.OXYGEN, used.getOxygen());
+        totalResources.deductResource(Resources.WATER, used.getWater());
+        totalResources.deductResource(Resources.FOOD, used.getFood());
+        totalResources.deductResource(Resources.FUEL, used.getFuel());
+        totalResources.deductResource(Resources.BATTERYPOWER, used.getBatteryPower());
+        totalResources.deductResource(Resources.MEDICALSUPPLIES, used.getMedicalSupplies());
+        totalResources.deductResource(Resources.SPAREPARTS, used.getSpareParts());
     }
+
+    public void setCurrentCondition(Environment currentCondition) {
+        
+        if(currentCondition.canShutDownLocation() == true)
+        {
+            for (ColonyFacility colonyFacility : allFacility) {
+                
+                if(colonyFacility instanceof CommunicationStation)
+                {
+                    colonyFacility.setOperationalStatus("NON-OPERATIONAL");
+                }
+                
+            }
+        }
+        
+        this.currentCondition = currentCondition;
+            
+        
+    }
+    
+    
+   
 
 }

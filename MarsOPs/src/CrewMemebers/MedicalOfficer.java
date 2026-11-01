@@ -5,6 +5,8 @@
 package CrewMemebers;
 
 import Emergency.Emergency;
+import Emergency.Fire;
+import Emergency.Medical;
 import Missions.Missions;
 import Missions.RescueMission;
 
@@ -40,7 +42,10 @@ public class MedicalOfficer extends CrewMember{
     @Override
     public boolean canHandleEmergency(Emergency emergency)
     {
-        return false;
+        if( (  (emergency instanceof Medical) || (emergency instanceof Fire)  ) && isUseable()&&isIsAvaialble())
+            return true;
+        else
+            return false;
     }
     
 }

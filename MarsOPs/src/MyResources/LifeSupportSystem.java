@@ -29,7 +29,7 @@ public class LifeSupportSystem {
     }
     
     public void addOxygen(int oxygen){
-        resources.setOxygen(((resources.getOxygen())- oxygen));
+        resources.setOxygen(((resources.getOxygen())+oxygen));
     }
     
     
