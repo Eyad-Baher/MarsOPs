@@ -10,6 +10,10 @@ public class StorageFacility extends ColonyFacility{
 
     public StorageFacility(String location, int capacity, String operationalStatus, Resources resources) {
         super(location, capacity, operationalStatus, resources);   
+        if(resources.getTotalResources()>getCapacity())
+        {
+            setCapacity(resources.getTotalResources());
+        }
     }
     
 
