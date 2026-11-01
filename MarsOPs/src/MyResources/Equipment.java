@@ -12,8 +12,15 @@ public class Equipment {
     private int numBroken;
 
     public Equipment(String name, int TotalAmount, boolean broken) {
-        this.name = name;
-        this.TotalAmount = TotalAmount;
+        if(name==null || name.equals(""))
+            this.name="Unknown equipment";
+        else
+            this.name = name;
+        
+        if (TotalAmount>0)
+            this.TotalAmount = TotalAmount;
+        else
+            this.TotalAmount=0;
         this.broken = broken;
     }
 
@@ -22,7 +29,10 @@ public class Equipment {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name==null || name.equals(""))
+            this.name="Unknown equipment";
+        else
+            this.name = name;
     }
 
     public int getTotalAmount() {

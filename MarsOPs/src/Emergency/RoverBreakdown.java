@@ -49,6 +49,20 @@ public class RoverBreakdown extends Emergency {
     
     public void handleRoverBreakdown(Colony colony)
     {
+        if(colony==null)
+        {
+            setFailureReason("Failure. Colony does not exist.");
+            System.out.println(getFailureReason());
+            System.out.println("__FAILED TO HANDLE EMERGENCY. EMERGENCY UNRESOLVED__");
+            return;    
+        }
+        else if(colony.getTotalResources()==null)
+        {
+            setFailureReason("Failure. Colony resources are not initialised.");
+            System.out.println(getFailureReason());
+            System.out.println("__FAILED TO HANDLE EMERGENCY. EMERGENCY UNRESOLVED__");
+            return;
+        }
         if(getResolvedState().equals("RESOLVED"))
         {
             System.out.println("__ROVER BREAKDOWN EMERGENCY IS RESOLVED__");

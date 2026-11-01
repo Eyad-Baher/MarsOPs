@@ -19,13 +19,40 @@ public class Resources {
   public static final String SPAREPARTS="spareParts";
 
     public Resources(int oxygen, int water, int food, int fuel, int batteryPower, int medicalSupplies, int spareParts) {
-        this.oxygen = oxygen;
-        this.water = water;
-        this.food = food;
-        this.fuel = fuel;
-        this.batteryPower = batteryPower;
-        this.medicalSupplies = medicalSupplies;
-        this.spareParts = spareParts;
+        if(oxygen>0)
+            this.oxygen = oxygen;
+        else
+            this.oxygen=0;
+        
+        if (water>0)
+            this.water = water;
+        else
+            this.water=0;
+        
+        if (food>0)
+            this.food = food;
+        else
+           this.food=0;
+        
+        if(fuel>0)
+            this.fuel = fuel;
+        else 
+            this.fuel=0;
+        
+        if (batteryPower>0)
+            this.batteryPower = batteryPower;
+        else
+            this.batteryPower=0;
+        
+        if (medicalSupplies>0)
+            this.medicalSupplies = medicalSupplies;
+        else
+            this.medicalSupplies=0;
+        
+        if (spareParts>0)
+            this.spareParts = spareParts;
+        else
+            this.spareParts=0;
     }
 
     public int getOxygen() {

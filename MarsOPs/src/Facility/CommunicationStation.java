@@ -36,7 +36,7 @@ public class CommunicationStation extends ColonyFacility {
 
     public boolean isAvailable()
     {
-        if(isOperationalStatus().equals("NON-OPERATIONAL")&&isChannelOpen())
+        if(isOperationalStatus().equals("OPERATIONAL")&&isChannelOpen())
             return true;
         else
             return false;
