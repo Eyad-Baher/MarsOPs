@@ -55,10 +55,14 @@ public abstract class Emergency {
     }
 
     public void setSuitableResponders(ColonyMemebers[] suitableResponders) {
-        if (suitableResponders != null) {
+        if(suitableResponders==null)
+            this.suitableResponders=null;
+        else
             this.suitableResponders = suitableResponders;
-        }
-            this.suitableResponders = null;
+
+        
+           
+
     }
     
 
