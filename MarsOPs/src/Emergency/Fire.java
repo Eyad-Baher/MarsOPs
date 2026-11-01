@@ -23,7 +23,7 @@ public class Fire extends Emergency {
     private boolean triggered;
 
     public Fire(Laboratory affectedLaboratory, ArrayList<ColonyMemebers> responders) {
-        super(affectedLaboratory != null ? "Laboratory: " + affectedLaboratory.getLocation() : "Unknown Laboratory", null, responders);
+        super(affectedLaboratory != null ? "Laboratory: " + affectedLaboratory.getLocation() : "Unknown Laboratory", "Not triggered", responders);
         this.triggered = false;
         this.affectedLaboratory = affectedLaboratory;
     }

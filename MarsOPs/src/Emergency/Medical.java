@@ -28,7 +28,7 @@ public class Medical extends Emergency{
     
     
     public Medical(ColonyFacility facility, ArrayList<ColonyMemebers> responders, CrewMember patient) {
-        super("Facility: "+facility.getLocation(), "PENDING", responders);
+        super("Facility: "+facility.getLocation(), "Not triggered", responders);
         this.patient=patient;
         this.facility=facility;
     }

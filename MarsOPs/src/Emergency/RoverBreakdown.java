@@ -31,7 +31,7 @@ public class RoverBreakdown extends Emergency {
     
     //constructor
     public RoverBreakdown( ExplorationRover brokenRover, ExplorationMission mission, ArrayList<ColonyMemebers> responders) {
-        super(mission.getTargetLocation().getLocationName(), "PENDING", responders);
+        super(mission.getTargetLocation().getLocationName(), "Not triggered", responders);
         this.brokenRover=brokenRover;
         this.mission=mission;
         
