@@ -1,5 +1,6 @@
 package marsops;
 
+import CrewMemebers.CrewMember;
 import CrewMemebers.Engineer;
 import CrewMemebers.MedicalOfficer;
 import CrewMemebers.Scientist;
@@ -7,6 +8,11 @@ import EnvironmentConditions.DustStorm;
 import EnvironmentConditions.Normal;
 import Facility.Laboratory;
 import Facility.PowerStation;
+import Emergency.Medical;
+import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
+import Facility.Habitat;
+import Facility.Laboratory;
 import Missions.ExplorationMission;
 import Missions.RepairMission;
 import Missions.RescueMission;
@@ -18,6 +24,7 @@ import Robots.Drone;
 import Robots.ExplorationRover;
 import Robots.RepairRobot;
 import TheColony.Colony;
+import java.util.ArrayList;
 
 /**
  *
@@ -79,6 +86,74 @@ public class MarsOPs {
         colony.showState();
         System.out.println("Mission state: " + mission.getState());
         System.out.println();
+    }
+
+    public static void scenarioTHREE() {
+        System.out.println("\n===== Scenario 3: Resource Shortage =====");
+        Resources colonyResources = new Resources(10, 10, 10, 10, 10, 10, 10);
+        Colony colonyTHREE = new Colony(colonyResources);
+
+        ArrayList<Equipment> labEquipment = new ArrayList<>();
+        Equipment equipment1 = new Equipment("Seismometer", 3, false);
+        Equipment equipment2 = new Equipment("Microscope", 10, false);
+        labEquipment.add(equipment1);
+        labEquipment.add(equipment2);
+
+        ArrayList<CrewMember> labPersonnel = new ArrayList<>();
+        Engineer e1 = new Engineer("Eng. Ahmed", "HEALTHY", 4, "E-01", "Arcadia Outpost", true);
+        Scientist s1 = new Scientist("Scientist Mohamed", "HEALTHY", "Soil analysis", 5, "S-01", "Arcadia Outpost", true);
+        labPersonnel.add(e1);
+        labPersonnel.add(s1);
+        colonyTHREE.addAgent(e1);
+        colonyTHREE.addAgent(s1);
+
+        Resources labResources = new Resources(10, 10, 10, 10, 10, 10, 10);
+        Laboratory lab = new Laboratory(true, 5, labEquipment, labPersonnel, "Sector 04", labResources);
+        colonyTHREE.addFacility(lab);
+
+        Resources missionResources = new Resources(50, 50, 0, 0, 50, 0, 0);
+        ResearchMission researchMission = new ResearchMission("Soil analysis", lab, "Marsquake Monitoring", "M-01", 3, missionResources, equipment1);
+
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyTHREE.showState();
+        System.out.println("Mission " + researchMission.getMissionID() + ": " + researchMission.getState());
+
+        System.out.println("---Starting Research Mission---");
+        colonyTHREE.startMission(researchMission);
+
+        System.out.println("---System state AFTER submission---");
+        colonyTHREE.showState();
+        System.out.println();
+        System.out.println();
+
+    }
+
+    public static void scenarioFOUR() {
+        System.out.println("\n===== Scenario 4: Emergency Handling =====");
+
+        Resources colonyResources = new Resources(100, 100, 100, 100, 100, 100, 100);
+        Colony colonyFOUR = new Colony(colonyResources);
+
+        Engineer engineer = new Engineer("Eng. Alia", "HEALTHY", 5, "E-01", "Hellas Basin", true);
+        RepairRobot repairRobot = new RepairRobot("R-01", "Hellas Basin", true, 100, true);
+        colonyFOUR.addAgent(engineer);
+        colonyFOUR.addAgent(repairRobot);
+
+        Resources habitatResources = new Resources(50, 50, 50, 50, 50, 50, 50);
+        Habitat habitat = new Habitat("Sector 01", 400, "OPERATIONAL", habitatResources);
+        colonyFOUR.addFacility(habitat);
+        OxygenLeak oxygenLeak = new OxygenLeak(habitat, 5, colonyFOUR.getResponders());
+        colonyFOUR.addEmergency(oxygenLeak);
+
+        System.out.println("\n--- System state BEFORE submission ---");
+        colonyFOUR.showState();
+        System.out.println("\n---Starting oxygen leak emergency---");
+        colonyFOUR.startEmergency();
+        System.out.println("\n--- System state AFTER submission ---");
+        colonyFOUR.showState();
+        System.out.println();
+        System.out.println();
+
     }
 
     // Research mission in the lab
@@ -209,14 +284,4 @@ public class MarsOPs {
         System.out.println("Jezero Crater explored? " + jezero.isExplored());
         System.out.println();
     }
-
-    public static void main(String[] args) {
-        scenarioONE();
-        scenarioTWO();
-        scenarioResearch();
-        scenarioRepair();
-        scenarioRescue();
-        scenarioFIVE();
-    }
-
 }

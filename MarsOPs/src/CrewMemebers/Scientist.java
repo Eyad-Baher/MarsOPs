@@ -55,10 +55,7 @@ public class Scientist extends CrewMember {
 
     @Override
     public boolean canHandleEmergency(Emergency emergency) {
-        if(isUseable()&&isIsAvaialble())
-            return true;
-        else
-            return false;
+        return false;
     }
 
 }

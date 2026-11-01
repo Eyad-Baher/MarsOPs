@@ -59,7 +59,7 @@ public class OxygenLeak extends Emergency {
     
     public void handleOxygenLeak(Colony colony) {
         
-        findResponders();
+        findResponders(); 
 
         
         if (getSuitableResponders() == null) {

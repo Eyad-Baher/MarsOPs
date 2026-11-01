@@ -5,6 +5,9 @@
 package Robots;
 
 import Emergency.Emergency;
+import Emergency.Fire;
+import Emergency.OxygenLeak;
+import Emergency.RoverBreakdown;
 import Facility.ColonyFacility;
 import Missions.Missions;
 import MyResources.Equipment;
@@ -28,7 +31,7 @@ public class RepairRobot extends RoboticUnit {
     @Override
     public boolean canHandleEmergency(Emergency emergency)
     {
-        if(isUseable()&&isIsAvaialble())
+        if((  (emergency instanceof OxygenLeak) || (emergency instanceof RoverBreakdown) || (emergency instanceof Fire) ) && isUseable()&&isIsAvaialble())
             return true;
         else
             return false;

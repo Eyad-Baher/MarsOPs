@@ -15,8 +15,7 @@ public class Drone extends RoboticUnit {
     
     
     @Override
-    //problem: it's not directly mentioned that drones perform missions
-    //Maybe it's part of the exploration mission?
+    
     public boolean canPerformMission(Missions mission)
     {
         if(isUseable()&&isIsAvaialble()&& mission instanceof RescueMission)
@@ -29,7 +28,7 @@ public class Drone extends RoboticUnit {
     
     
     @Override
-    //problem: drones do not handle emergencies.
+    
     public boolean canHandleEmergency(Emergency emergency)
     {
         return false;
