@@ -59,6 +59,10 @@ public abstract class Emergency {
             this.suitableResponders=null;
         else
             this.suitableResponders = suitableResponders;
+
+        
+           
+
     }
     
 
