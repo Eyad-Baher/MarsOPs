@@ -65,6 +65,8 @@ public class MarsOPs {
         System.out.println("\n--- System state AFTER execution ---");
         colonyONE.showState();
         System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
+        System.out.println();
+        System.out.println();
     }
 
     // Scenario 2: Mission Rejection
@@ -95,6 +97,8 @@ public static void scenarioTWO()
     System.out.println("Mission " + mission.getMissionID() + ": " + mission.getState());
     System.out.println("Mission ever active: " + (mission.getElapsedTime() > 0 || mission.getState().equals("IN PROGRESS")));
     System.out.println("Location " + target.getLocationName() + " explored: " + target.isExplored());
+    System.out.println();
+    System.out.println();
 }
     
 
@@ -131,6 +135,8 @@ public static void scenarioTWO()
         
         System.out.println("---System state AFTER submission---");
         colonyTHREE.showState();
+        System.out.println();
+        System.out.println();
         
         
     }
@@ -160,6 +166,8 @@ public static void scenarioTWO()
         colonyFOUR.startEmergency();
         System.out.println("\n--- System state AFTER submission ---");
         colonyFOUR.showState();
+        System.out.println();
+        System.out.println();
         
     }
     
@@ -194,6 +202,8 @@ public static void scenarioTWO()
         colonySIX.startEmergency();
         System.out.println("\n--- System state AFTER submission ---");
         colonySIX.showState();
+        System.out.println();
+        System.out.println();
     }
     
     public static void scenarioSEVEN()
@@ -226,6 +236,8 @@ public static void scenarioTWO()
         colonySEVEN.startEmergency();
         System.out.println("\n--- System state after submission ---");
         colonySEVEN.showState();
+        System.out.println();
+        System.out.println();
     }
 
 
