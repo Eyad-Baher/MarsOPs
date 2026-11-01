@@ -86,6 +86,29 @@ public class Fire extends Emergency {
     
     public void handleFire(Colony colony) {
         findResponders();
+        if (getSuitableResponders() == null) {
+            System.out.println("No responders.");
+            return;
+        }
+
+        if (colony != null && colony.getTotalResources() != null) {
+            if (!colony.getTotalResources().areSparePartsSufficient(3)) {
+                    System.out.println("Insufficient spare parts, fire can't be resolved.");
+                    setFailureReason("Insufficient spareparts");
+                    return;
+                }
+                
+               else if (!colony.getTotalResources().areMedicalSuppliesSufficient(2)) {
+                    System.out.println("Insufficient medical supplies, fire can't be resolved.");
+                    setFailureReason("Insufficient medical supplies");
+                    return;}
+                
+        }
+        if (colony != null && colony.getTotalResources() == null) {
+            System.out.println("Colony resources are not initialized. Cannot verify spare parts.");
+            setFailureReason("Colony resources unavailable");
+            return;
+        }
         dispatchResponders();
         resolveFire(colony);
         releaseResponders();   
