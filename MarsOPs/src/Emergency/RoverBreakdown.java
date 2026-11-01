@@ -31,7 +31,7 @@ public class RoverBreakdown extends Emergency {
     
     //constructor
     public RoverBreakdown( ExplorationRover brokenRover, ExplorationMission mission, ArrayList<ColonyMemebers> responders) {
-        super(mission.getTargetLocation().getLocationName(), "UNRESOLVED", responders);
+        super(mission.getTargetLocation().getLocationName(), "PENDING", responders);
         this.brokenRover=brokenRover;
         this.mission=mission;
         
@@ -44,8 +44,6 @@ public class RoverBreakdown extends Emergency {
         mission.fail("Rover breakdwown");
         brokenRover.setCurrentLocation(mission.getTargetLocation().getLocationName());
         System.out.println("----!!EMERGENCY: ROVER "+ brokenRover.getIdNo()+" BROKE DOWN!!----");
-        this.repairCosts.setBatteryPower(batteryDrainage);
-        this.repairCosts.setBatteryPower(numOfSpareParts);
         
     }
     
@@ -65,6 +63,8 @@ public class RoverBreakdown extends Emergency {
             setFailureReason("There are no suitable responders.");
             System.out.println(getFailureReason());
             setResolvedState("UNRESOLVED");
+            System.out.println("__FAILED TO HANDLE EMERGENCY. EMERGENCY UNRESOLVED__");
+            return;
         }
         //if spare parts are insufficient 
         if(!colony.getTotalResources().areSparePartsSufficient(numOfSpareParts))
@@ -101,7 +101,11 @@ public class RoverBreakdown extends Emergency {
         setResolvedState("RESOLVED");
         
         if(getResolvedState().equals("RESOLVED"))
+        {
             System.out.println("__ROVER BREAKDOWN EMERGENCY IS SUCCESSFULLY RESOLVED__");
+            System.out.println("Responders are now available.");
+        }
+            
             
     }
     
@@ -111,6 +115,7 @@ public class RoverBreakdown extends Emergency {
         for(ColonyMemebers availableResponder : availableResponders)
         {
             availableResponder.setCurrentLocation(getEmergencyLocation());
+            System.out.println("Dispatching responder "+availableResponder.getIdNo()+" ...");
             
         }
     }
@@ -139,6 +144,7 @@ public class RoverBreakdown extends Emergency {
             }
             
         }
+        System.out.println("Responders are repairing...");
     }
     
     private void consumeResources(Colony colony)
