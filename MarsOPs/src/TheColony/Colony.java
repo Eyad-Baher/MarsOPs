@@ -223,24 +223,25 @@ public class Colony {
     }
 
     public void setCurrentCondition(Environment currentCondition) {
-        
-        if(currentCondition.canShutDownLocation() == true)
-        {
-            for (ColonyFacility colonyFacility : allFacility) {
-                
-                if(colonyFacility instanceof CommunicationStation)
-                {
-                    colonyFacility.setOperationalStatus("NON-OPERATIONAL");
-                }
-                
+    if (currentCondition.canShutDownLocation()) {
+        for (ColonyFacility f : allFacility) {
+            if (f instanceof CommunicationStation) {
+                ((CommunicationStation) f).disruptChannel();
+                f.setOperationalStatus("NON-OPERATIONAL");
             }
         }
-        
-        this.currentCondition = currentCondition;
-            
-        
+    } else {
+        for (ColonyFacility f : allFacility) {
+            if (f instanceof CommunicationStation) {
+                CommunicationStation cs = (CommunicationStation) f;
+                if (!cs.isChannelOpen()) {                          cs.restoreChannel();
+                    cs.setOperationalStatus("OPERATIONAL");
+                }
+            }
+        }
     }
-    
+    this.currentCondition = currentCondition;   
+}    
     
    
 
