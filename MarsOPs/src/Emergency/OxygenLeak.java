@@ -219,7 +219,6 @@ public class OxygenLeak extends Emergency {
                 affectedHabitat.setOperationalStatus("OPERATIONAL");
             }
             colony.deductTotalResource("oxygen", oxygenLoss);
-            colony.distributeOxygen();
             setResolvedState("RESOLVED");
             setFailureReason(null);
             System.out.println("Leak got repaired successfully");
