@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Fire extends Emergency {
     private Laboratory affectedLaboratory;
     private boolean triggered;
+    private boolean handled= false;
 
     public Fire(Laboratory affectedLaboratory, ArrayList<ColonyMemebers> responders) {
         super(affectedLaboratory != null ? "Laboratory: " + affectedLaboratory.getLocation() : "Unknown Laboratory", "Not triggered", responders);
@@ -85,6 +86,11 @@ public class Fire extends Emergency {
     } 
     
     public void handleFire(Colony colony) {
+         if (handled) {
+        System.out.println("Emergency already handled.");
+        return;
+    }
+    handled = true;
         findResponders();
         if (getSuitableResponders() == null) {
             System.out.println("No responders.");

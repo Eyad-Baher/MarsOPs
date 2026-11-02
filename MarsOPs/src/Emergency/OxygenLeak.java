@@ -20,6 +20,7 @@ public class OxygenLeak extends Emergency {
     private int oxygenLoss;
     private boolean detected;
     private boolean penaltyApplied;
+    private boolean handled= false;
     
     public OxygenLeak(Habitat affectedHabitat, int oxygenLoss, ArrayList<ColonyMemebers> responders) {
         super(affectedHabitat != null ? "Habitat: " + affectedHabitat.getLocation() : "Unknown Habitat", "Not triggered", responders);
@@ -58,6 +59,11 @@ public class OxygenLeak extends Emergency {
     }
     
     public void handleOxygenLeak(Colony colony) {
+        if (handled) {
+        System.out.println("Emergency already handled.");
+        return;
+    }
+    handled = true;
         
         findResponders(); 
 
@@ -98,7 +104,7 @@ public class OxygenLeak extends Emergency {
                 affectedHabitat.reduceOxygen(oxygenLoss);
             }
             if (colony != null && colony.getTotalResources() != null) {
-                colony.deductTotalResource("oxygen", oxygenLoss);
+                colony.deductTotalResource("oxygen",2* oxygenLoss);
             }
             setResolvedState("UNRESOLVED");
         }
@@ -212,6 +218,7 @@ public class OxygenLeak extends Emergency {
             if (affectedHabitat != null) {
                 affectedHabitat.setOperationalStatus("OPERATIONAL");
             }
+            colony.deductTotalResource("oxygen", oxygenLoss);
             setResolvedState("RESOLVED");
             setFailureReason(null);
             System.out.println("Leak got repaired successfully");
